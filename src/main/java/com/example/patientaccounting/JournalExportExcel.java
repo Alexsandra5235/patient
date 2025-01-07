@@ -26,6 +26,9 @@ public class JournalExportExcel {
 
     public void setDefaultSettings(int firstRow, int endRow, int firstCol, int endCol, String nameCol){
 
+        Row rowCurrent;
+        Cell cellCurrent;
+
         // Создаем стиль для выравнивания по центру
         centeredStyle.setAlignment(HorizontalAlignment.CENTER); // Выравнивание по горизонтали
         centeredStyle.setVerticalAlignment(VerticalAlignment.CENTER); // Выравнивание по вертикали
@@ -36,25 +39,33 @@ public class JournalExportExcel {
         font.setFontHeightInPoints((short) 10); // Размер шрифта
         centeredStyle.setFont(font); // Применяем шрифт к стилю
 
+        // Устанавливаем наклон для текста
         rotationStyle.cloneStyleFrom(centeredStyle);
         rotationStyle.setRotation((short) 90);
 
 
+        // Объединяем ячейки
         if ((firstRow != endRow) || (firstCol != endCol)) {
-            // Объединяем ячейки с 14 по 18 строку в первой колонке
             sheet.addMergedRegion(new CellRangeAddress(firstRow, endRow, firstCol, endCol));
         }
 
+        rowCurrent = sheet.getRow(firstRow);
+        if (rowCurrent == null) {
+            rowCurrent = sheet.createRow(firstRow);
+        }
 
-        Row row18 = sheet.createRow(firstRow);
-        Cell cell1 = row18.createCell(firstCol);
-        cell1.setCellValue(nameCol); // Установка значения
+        cellCurrent = rowCurrent.getCell(firstCol);
+        if (cellCurrent == null) {
+            cellCurrent = rowCurrent.createCell(firstCol);
+        }
+
+        cellCurrent.setCellValue(nameCol); // Установка значения
 
         if ((endCol == firstCol) && (endCol != 0)){
-            cell1.setCellStyle(rotationStyle);
+            cellCurrent.setCellStyle(rotationStyle);
         }
         else {
-            cell1.setCellStyle(centeredStyle);
+            cellCurrent.setCellStyle(centeredStyle);
         }
     }
 
@@ -254,16 +265,13 @@ public class JournalExportExcel {
         }
 
 
+        for (int i = 1; i < 25; i++){
+            int firstRow = cellsFirst.get(i-1);
+            String nameCol = nameColumnsVerticals.get(i-1);
 
+            setDefaultSettings(firstRow,17, i, i, nameCol);
 
-
-//        for (int i = 1; i < 25; i++){
-//            int firstRow = cellsFirst.get(i-1);
-//            String nameCol = nameColumnsVerticals.get(i-1);
-//
-//            setDefaultSettings(firstRow,17, i, i, nameCol);
-//
-//        }
+        }
 
 
     }
