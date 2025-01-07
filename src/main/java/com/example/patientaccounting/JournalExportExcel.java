@@ -20,6 +20,7 @@ public class JournalExportExcel {
     Sheet sheet = workbook.createSheet("Результат");
 
     // Создаем стиль для границ
+    CellStyle borderStyle = workbook.createCellStyle();
     CellStyle centeredStyle = workbook.createCellStyle();
     CellStyle rotationStyle = workbook.createCellStyle();
     Font font = workbook.createFont();
@@ -29,7 +30,14 @@ public class JournalExportExcel {
         Row rowCurrent;
         Cell cellCurrent;
 
+        // создаем стиль для обводки
+        borderStyle.setBorderTop(BorderStyle.THIN);
+        borderStyle.setBorderBottom(BorderStyle.THIN);
+        borderStyle.setBorderLeft(BorderStyle.THIN);
+        borderStyle.setBorderRight(BorderStyle.THIN);
+
         // Создаем стиль для выравнивания по центру
+        centeredStyle.cloneStyleFrom(borderStyle);
         centeredStyle.setAlignment(HorizontalAlignment.CENTER); // Выравнивание по горизонтали
         centeredStyle.setVerticalAlignment(VerticalAlignment.CENTER); // Выравнивание по вертикали
         centeredStyle.setWrapText(true); // Включаем перенос текста
@@ -49,6 +57,10 @@ public class JournalExportExcel {
             sheet.addMergedRegion(new CellRangeAddress(firstRow, endRow, firstCol, endCol));
         }
 
+
+
+        setBordersForMergedRegion(firstRow,endRow,firstCol,endCol, centeredStyle);
+
         rowCurrent = sheet.getRow(firstRow);
         if (rowCurrent == null) {
             rowCurrent = sheet.createRow(firstRow);
@@ -61,11 +73,27 @@ public class JournalExportExcel {
 
         cellCurrent.setCellValue(nameCol); // Установка значения
 
+        // Применение угла наклона текста
         if ((endCol == firstCol) && (endCol != 0)){
             cellCurrent.setCellStyle(rotationStyle);
         }
-        else {
-            cellCurrent.setCellStyle(centeredStyle);
+
+
+    }
+
+    private void setBordersForMergedRegion(int startRow, int endRow, int startColumn, int endColumn, CellStyle borderStyle) {
+        for (int rowIndex = startRow; rowIndex <= endRow; rowIndex++) {
+            Row row = sheet.getRow(rowIndex);
+            if (row == null) {
+                row = sheet.createRow(rowIndex);
+            }
+            for (int colIndex = startColumn; colIndex <= endColumn; colIndex++) {
+                Cell cell = row.getCell(colIndex);
+                if (cell == null) {
+                    cell = row.createCell(colIndex);
+                }
+                cell.setCellStyle(borderStyle); // Применяем стиль границы
+            }
         }
     }
 
@@ -287,7 +315,6 @@ public class JournalExportExcel {
 
             String nameCol = nameColumnsHorizontal.get(i);
 
-
             setDefaultSettings(firstRow,rowEnd, colFirst, colEnd, nameCol);
 
         }
@@ -310,7 +337,7 @@ public class JournalExportExcel {
 //        createColumn4();
 
         createColumnVertical();
-        //createColumnHorizontal();
+        createColumnHorizontal();
 
 
 
