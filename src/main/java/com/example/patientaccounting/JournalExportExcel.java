@@ -97,7 +97,6 @@ public class JournalExportExcel {
         }
     }
 
-
     public void createHeadLeft(){
 
         Row row1 = sheet.getRow(0);
@@ -270,12 +269,13 @@ public class JournalExportExcel {
         Cell cellTitle = rowTitle.getCell(0);
         cellTitle.setCellStyle(styleTitleEndRow);
 
-        // Устанавливаем ширину столбца для лучшего отображения
-        sheet.setColumnWidth(0, 9000); // Измените значение по необходимости
+
     }
 
+    public void setSizeColumn(){
 
-    public void createColumnVertical(){
+        // Устанавливаем ширину столбца для лучшего отображения
+        sheet.setColumnWidth(0, 9000); // Измените значение по необходимости
 
         Row rowI;
 
@@ -291,6 +291,9 @@ public class JournalExportExcel {
 
 
         }
+    }
+
+    public void createColumnVertical(){
 
 
         for (int i = 1; i < 25; i++){
@@ -328,29 +331,15 @@ public class JournalExportExcel {
 
 
 
+        setSizeColumn();
+
         createHeadRight();
         createHeadLeft();
         createTitle(date1,date2);
-//        createColumn1();
-//        createColumn2();
-//        createColumn3();
-//        createColumn4();
 
         createColumnVertical();
         createColumnHorizontal();
 
-
-
-//        // Пример данных для таблицы
-//        Row headerRow = sheet.createRow(0);
-//        headerRow.createCell(0).setCellValue("Кол-во поступивших");
-//        headerRow.createCell(1).setCellValue("Возраст меньше 16 лет");
-//
-//        Row row = sheet.createRow(1);
-//        row.createCell(0).setCellValue(journals.size());
-//        row.createCell(1).setCellValue(journals.stream().filter(journal ->
-//                        ((LocalDate.now().getYear() - journal.getBirth_day().getYear() < 16)))
-//                .toList().size());
 
         // Запись в поток
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
