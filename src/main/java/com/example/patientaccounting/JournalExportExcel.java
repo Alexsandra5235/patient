@@ -36,12 +36,6 @@ public class JournalExportExcel {
     public void setDefaultSettings(int firstRow, int endRow, int firstCol, int endCol, String nameCol,
                                    HorizontalAlignment alignment, Boolean border, int rotation){
 
-//        // создаем стиль для обводки
-//        borderStyle.setBorderTop(BorderStyle.THIN);
-//        borderStyle.setBorderBottom(BorderStyle.THIN);
-//        borderStyle.setBorderLeft(BorderStyle.THIN);
-//        borderStyle.setBorderRight(BorderStyle.THIN);
-
         CellStyle style = workbook.createCellStyle();
 
         // Устанавливаем выравнивание текста
@@ -68,51 +62,11 @@ public class JournalExportExcel {
         }
 
 
-
-//        // Создаем стиль
-//        if (border) style.cloneStyleFrom(borderStyle);
-//        style.setWrapText(true); // Включаем перенос текста
-//
-//        // Устанавливаем шрифт
-//        font.setFontName("Times New Roman"); // Название шрифта
-//        font.setFontHeightInPoints((short) 10); // Размер шрифта
-//        style.setFont(font); // Применяем шрифт к стилю
-//
-//        switch (alignment) {
-//            case "center":
-//                centeredStyle.cloneStyleFrom(style);
-//                centeredStyle.setRotation((short) 0);
-//                centeredStyle.setAlignment(HorizontalAlignment.CENTER); // Выравнивание по горизонтали
-//                centeredStyle.setVerticalAlignment(VerticalAlignment.CENTER); // Выравнивание по вертикали
-//                break;
-//            case "left":
-//                leftStyle.cloneStyleFrom(style);
-//                leftStyle.setRotation((short) 0);
-//                leftStyle.setAlignment(HorizontalAlignment.LEFT); // Выравнивание по горизонтали
-//                leftStyle.setVerticalAlignment(VerticalAlignment.CENTER); // Выравнивание по вертикали
-//                break;
-//            case "right":
-//                rightStyle.cloneStyleFrom(style);
-//                rightStyle.setRotation((short) 0);
-//                rightStyle.setAlignment(HorizontalAlignment.RIGHT); // Выравнивание по горизонтали
-//                rightStyle.setVerticalAlignment(VerticalAlignment.CENTER); // Выравнивание по вертикали
-//                break;
-//            case "centerRotation":
-//                rotationStyle.cloneStyleFrom(style);
-//                rotationStyle.setRotation((short) 90);
-//                rotationStyle.setAlignment(HorizontalAlignment.CENTER); // Выравнивание по горизонтали
-//                rotationStyle.setVerticalAlignment(VerticalAlignment.CENTER); // Выравнивание по вертикали
-//                break;
-//        }
-
-
         // Объединяем ячейки
         if ((firstRow != endRow) || (firstCol != endCol)) {
             sheet.addMergedRegion(new CellRangeAddress(firstRow, endRow, firstCol, endCol));
         }
 
-//        // Добавляем границы
-//        if (border) setBordersForMergedRegion(firstRow,endRow,firstCol, endCol, style);
 
         rowCurrent = sheet.getRow(firstRow);
         if (rowCurrent == null) {
@@ -139,19 +93,6 @@ public class JournalExportExcel {
                 cell.setCellStyle(style); // Применяем стиль границы
             }
         }
-        //cellCurrent.setCellStyle(style); // Применяем стиль к объединенной ячейке
-
-
-//        // Применение стилей
-//        switch (typeAlignment) {
-//            case "centerRotation" -> cellCurrent.setCellStyle(rotationStyle);
-//            case "left" -> cellCurrent.setCellStyle(leftStyle);
-//            case "right" -> cellCurrent.setCellStyle(rightStyle);
-//            case "center" -> cellCurrent.setCellStyle(centeredStyle);
-//        }
-
-
-
 
     }
 
