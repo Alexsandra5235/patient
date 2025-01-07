@@ -1,13 +1,13 @@
 package com.example.patientaccounting;
 
 import com.example.patientaccounting.models.Journal;
-import org.apache.commons.math3.geometry.euclidean.threed.Rotation;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.ss.util.CellRangeAddress;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -20,21 +20,13 @@ public class JournalExportExcel {
     Workbook workbook = new XSSFWorkbook();
     Sheet sheet = workbook.createSheet("Результат");
 
-    // Создаем стиль для границ
-    CellStyle borderStyle = workbook.createCellStyle();
-    CellStyle currentStyle = workbook.createCellStyle();
-
-    CellStyle centeredStyle = workbook.createCellStyle();
-    CellStyle leftStyle = workbook.createCellStyle();
-    CellStyle rightStyle = workbook.createCellStyle();
-    CellStyle rotationStyle = workbook.createCellStyle();
-
     Row rowCurrent;
     Cell cellCurrent;
 
-    public void setDefaultSettings(int firstRow, int endRow, int firstCol, int endCol, String nameCol,
-                                   HorizontalAlignment alignment, Boolean border, int rotation,
-                                   boolean underline, int fontHeight, boolean bold){
+    private void setDefaultSettings(int firstRow, int endRow, int firstCol, int endCol, String nameCol,
+                                    HorizontalAlignment alignment, Boolean border, int rotation,
+                                    boolean underline, int fontHeight, boolean bold, boolean borderButton,
+                                    boolean backgroundColorWhite){
 
         CellStyle style = workbook.createCellStyle();
         Font font = workbook.createFont();
@@ -44,6 +36,9 @@ public class JournalExportExcel {
         style.setVerticalAlignment(VerticalAlignment.CENTER);
         style.setRotation((short) rotation);
         style.setWrapText(true); // Включаем перенос текста
+
+
+
         // Устанавливаем шрифт
         font.setFontName("Times New Roman"); // Название шрифта
         font.setFontHeightInPoints((short) fontHeight); // Размер шрифта
@@ -63,6 +58,8 @@ public class JournalExportExcel {
             style.setBorderTop(BorderStyle.THIN);
             style.setBorderLeft(BorderStyle.THIN);
             style.setBorderRight(BorderStyle.THIN);
+        } else if (borderButton) {
+            style.setBorderBottom(BorderStyle.THIN);
         } else {
             style.setBorderBottom(BorderStyle.NONE);
             style.setBorderTop(BorderStyle.NONE);
@@ -71,6 +68,10 @@ public class JournalExportExcel {
         }
 
 
+        if (backgroundColorWhite){
+            style.setFillForegroundColor(IndexedColors.WHITE.getIndex()); // Устанавливаем цвет заливки
+            style.setFillPattern(FillPatternType.SOLID_FOREGROUND); // Задаем тип заливки
+        }
 
 
         // Объединяем ячейки
@@ -89,7 +90,7 @@ public class JournalExportExcel {
             cellCurrent = rowCurrent.createCell(firstCol);
         }
 
-        cellCurrent.setCellValue(nameCol); // Установка значения
+        if (nameCol != null) cellCurrent.setCellValue(nameCol); // Установка значения
 
         for (int rowIndex = firstRow; rowIndex <= endRow; rowIndex++) {
             Row row = sheet.getRow(rowIndex);
@@ -113,75 +114,29 @@ public class JournalExportExcel {
 
             if (i == 4) setDefaultSettings(i,i,0,4,headsLeft.get(i),
                     HorizontalAlignment.CENTER, false,0, true, fontHeightHead,
-                    false);
+                    false, false, false);
 
             else setDefaultSettings(i,i,0,4,headsLeft.get(i),HorizontalAlignment.LEFT,
-                    false,0, false, fontHeightHead, false);
+                    false,0, false, fontHeightHead, false, false,
+                    false);
         }
 
     }
 
     public void createHeadRight(){
 
-        // Создайте строки для заголовка
-        for (int i = 2; i <= 6; i++) {
-            Row row = sheet.createRow(i);
-            Cell cell = row.createCell(19);
-            cell.setCellValue(headsRight.get(i - 2));
-            // Объединяем ячейки
-            sheet.addMergedRegion(new CellRangeAddress(i, i, 19, 24));
+        for (int i = 2; i < 6; i++){
+            setDefaultSettings(i,i,19,24, headsRight.get(i-2),HorizontalAlignment.CENTER,
+                    false,0, false, fontHeightHead, false, false,
+                    false);
         }
 
-        Row row = sheet.createRow(0);
-        Cell cell = row.createCell(19);
-        cell.setCellValue(order);
-        sheet.addMergedRegion(new CellRangeAddress(0, 0, 19, 24));
-
-        // Создаем стиль для заголовка
-        CellStyle centerAlignStyle = workbook.createCellStyle();
-        Font fontCenterAlign = workbook.createFont();
-
-        centerAlignStyle.setAlignment(HorizontalAlignment.CENTER);
-        fontCenterAlign.setFontHeightInPoints((short) fontHeightHead);
-        fontCenterAlign.setFontName("Times New Roman");
-        centerAlignStyle.setFont(fontCenterAlign);
-
-        // Создаем стиль для order
-        CellStyle orderStyle = workbook.createCellStyle();
-        Font orderFont = workbook.createFont();
-
-        orderStyle.setAlignment(HorizontalAlignment.LEFT);
-        orderFont.setFontHeightInPoints((short) fontHeightHead);
-        orderFont.setFontName("Times New Roman");
-        orderStyle.setFont(orderFont);
-
-        // Создание стиля для нижней границы
-        CellStyle borderStyle = workbook.createCellStyle();
-        borderStyle.setBorderBottom(BorderStyle.THIN);
-        borderStyle.setBottomBorderColor(IndexedColors.BLACK.getIndex());
-
-        // Применяем стиль к заголовку
-        for (int i = 2; i <= 6; i++) {
-            Row rowFill = sheet.getRow(i);
-            Cell cellFill = rowFill.getCell(19);
-            cellFill.setCellStyle(centerAlignStyle);
-        }
-
-        Row rowOrder = sheet.getRow(0);
-        Cell cellOrder = rowOrder.getCell(19);
-        cellOrder.setCellStyle(orderStyle);
-
-        // Применяем стиль к заголовку
-        for (int i = 21; i <= 24; i++) {
-            Row rowBorder = sheet.getRow(0);
-            Cell cellBorder = rowBorder.createCell(i);
-            cellBorder.setCellStyle(borderStyle);
-        }
-
-
-        Row rowBorder = sheet.getRow(0);
-        Cell cellBorder = rowBorder.createCell(22);
-        cellBorder.setCellStyle(borderStyle);
+        setDefaultSettings(0,0,19,21,order,HorizontalAlignment.RIGHT,
+                false,0, false, fontHeightHead, false, false,
+                false);
+        setDefaultSettings(0,0,22,24,null, HorizontalAlignment.CENTER,
+                false,0, false, fontHeightHead, false, true,
+                true);
 
     }
 
@@ -194,54 +149,12 @@ public class JournalExportExcel {
 
         for (int i = 8; i < 12; i++){
             if (i == 11) setDefaultSettings(i,i,0,24, titles.get(i-8), HorizontalAlignment.CENTER,
-                    false,0,false, fontHeightHead,false);
+                    false,0,false, fontHeightHead,false, false,
+                    false);
             else setDefaultSettings(i,i,0,24, titles.get(i-8), HorizontalAlignment.CENTER,
-                    false,0,false, fontHeightTitle,true);
+                    false,0,false, fontHeightTitle,true, false,
+                    false);
         }
-
-
-//        // Создайте строки для заголовка
-//        for (int i = 8; i <= 11; i++) {
-//            Row row = sheet.createRow(i);
-//            Cell cell = row.createCell(0);
-//            cell.setCellValue(titles.get(i - 8));
-//            // Объединяем ячейки
-//            sheet.addMergedRegion(new CellRangeAddress(i, i, 0, 24));
-//        }
-//
-//
-//
-//        // Создаем стиль для заголовка
-//        CellStyle styleTitle = workbook.createCellStyle();
-//        Font fontTitle = workbook.createFont();
-//        fontTitle.setBold(true);
-//        fontTitle.setFontHeightInPoints((short) fontHeightTitle); // Установите размер шрифта
-//        fontTitle.setFontName("Times New Roman"); // Устанавливаем шрифт Times New Roman
-//        styleTitle.setFont(fontTitle);
-//        styleTitle.setAlignment(HorizontalAlignment.CENTER);
-//        styleTitle.setVerticalAlignment(VerticalAlignment.CENTER);
-//
-//        // Применяем стиль к заголовку
-//        for (int i = 8; i <= 11; i++) {
-//            Row row = sheet.getRow(i);
-//            Cell cell = row.getCell(0);
-//            cell.setCellStyle(styleTitle);
-//        }
-//
-//        CellStyle styleTitleEndRow = workbook.createCellStyle();
-//        Font fontTitleEndRow = workbook.createFont();
-//        fontTitleEndRow.setFontHeightInPoints((short) fontHeightHead); // Установите размер шрифта
-//        fontTitleEndRow.setFontName("Times New Roman"); // Устанавливаем шрифт Times New Roman
-//        fontTitleEndRow.setBold(false);
-//        styleTitleEndRow.setAlignment(HorizontalAlignment.CENTER);
-//        styleTitleEndRow.setVerticalAlignment(VerticalAlignment.CENTER);
-//        styleTitleEndRow.setFont(fontTitleEndRow);
-//
-//        Row rowTitle = sheet.getRow(11);
-//        Cell cellTitle = rowTitle.getCell(0);
-//        cellTitle.setCellStyle(styleTitleEndRow);
-//
-
     }
 
     public void setSizeColumn(){
@@ -273,7 +186,8 @@ public class JournalExportExcel {
             String nameCol = nameColumnsVerticals.get(i-1);
 
             setDefaultSettings(firstRow,17, i, i, nameCol,HorizontalAlignment.CENTER,
-                    true, 90, false, fontHeightHead, false);
+                    true, 90, false, fontHeightHead, false, false,
+                    false);
 
         }
 
@@ -292,7 +206,8 @@ public class JournalExportExcel {
             String nameCol = nameColumnsHorizontal.get(i);
 
             setDefaultSettings(firstRow,rowEnd, colFirst, colEnd, nameCol,HorizontalAlignment.CENTER,
-                    true, 0, false, fontHeightHead, false);
+                    true, 0, false, fontHeightHead, false, false,
+                    false);
 
         }
 
@@ -305,7 +220,7 @@ public class JournalExportExcel {
 
         setSizeColumn();
 
-        //createHeadRight();
+        createHeadRight();
         createHeadLeft();
         createTitle(date1,date2);
 
