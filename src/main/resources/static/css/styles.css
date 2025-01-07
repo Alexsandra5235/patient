@@ -1,0 +1,44 @@
+/* Hover */
+.table .hover td:after {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    width: 105%;
+    border-top: 3px solid #ffe5c5;
+    border-bottom: 3px solid #ffe5c5;
+}
+.table .hover td:first-child:after {
+    border-left: 3px solid #ffe5c5;
+}
+.table .hover td:last-child:after {
+    border-right: 3px solid #ffe5c5;
+    width: auto;
+}
+
+/* Click */
+.table .active td:after {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    width: 105%;
+    border-top: 3px solid orange;
+    border-bottom: 3px solid orange;
+}
+.table .active td:first-child:after {
+    border-left: 3px solid orange;
+}
+.table .active td:last-child:after {
+    border-right: 3px solid orange;
+    width: auto;
+}
+
+.table {
+    border: 1px;
+}
+
