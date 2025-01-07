@@ -28,15 +28,16 @@ public class JournalExportExcel {
     CellStyle leftStyle = workbook.createCellStyle();
     CellStyle rightStyle = workbook.createCellStyle();
     CellStyle rotationStyle = workbook.createCellStyle();
-    Font font = workbook.createFont();
 
     Row rowCurrent;
     Cell cellCurrent;
 
     public void setDefaultSettings(int firstRow, int endRow, int firstCol, int endCol, String nameCol,
-                                   HorizontalAlignment alignment, Boolean border, int rotation){
+                                   HorizontalAlignment alignment, Boolean border, int rotation,
+                                   boolean underline){
 
         CellStyle style = workbook.createCellStyle();
+        Font font = workbook.createFont();
 
         // Устанавливаем выравнивание текста
         style.setAlignment(alignment);
@@ -46,6 +47,13 @@ public class JournalExportExcel {
         // Устанавливаем шрифт
         font.setFontName("Times New Roman"); // Название шрифта
         font.setFontHeightInPoints((short) 10); // Размер шрифта
+
+        if (underline) {
+            font.setUnderline(FontUnderline.SINGLE.getByteValue()); // Устанавливаем нижнее подчеркивание
+        } else {
+            font.setUnderline(FontUnderline.NONE.getByteValue()); // Убираем подчеркивание
+        }
+
         style.setFont(font); // Применяем шрифт к стилю
 
         // Устанавливаем границы
@@ -60,6 +68,8 @@ public class JournalExportExcel {
             style.setBorderLeft(BorderStyle.NONE);
             style.setBorderRight(BorderStyle.NONE);
         }
+
+
 
 
         // Объединяем ячейки
@@ -114,6 +124,8 @@ public class JournalExportExcel {
 
     public void setDefaultStyle10(int firstRow, int endRow, int firstCol, int endCol, String nameCol, String typeAlignment){
 
+        Font font = workbook.createFont();
+
         Row rowCurrent;
         Cell cellCurrent;
 
@@ -146,10 +158,10 @@ public class JournalExportExcel {
         for(int i = 0; i < 5; i++){
 
             if (i == 4) setDefaultSettings(i,i,0,4,headsLeft.get(i),
-                    HorizontalAlignment.CENTER, false,0);
+                    HorizontalAlignment.CENTER, false,0, true);
 
             else setDefaultSettings(i,i,0,4,headsLeft.get(i),HorizontalAlignment.LEFT,
-                    false,0);
+                    false,0, false);
         }
 
 
@@ -356,7 +368,7 @@ public class JournalExportExcel {
             String nameCol = nameColumnsVerticals.get(i-1);
 
             setDefaultSettings(firstRow,17, i, i, nameCol,HorizontalAlignment.CENTER,
-                    true, 90);
+                    true, 90, false);
 
         }
 
@@ -375,7 +387,7 @@ public class JournalExportExcel {
             String nameCol = nameColumnsHorizontal.get(i);
 
             setDefaultSettings(firstRow,rowEnd, colFirst, colEnd, nameCol,HorizontalAlignment.CENTER,
-                    true, 0);
+                    true, 0, false);
 
         }
 
