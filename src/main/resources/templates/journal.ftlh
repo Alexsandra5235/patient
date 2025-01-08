@@ -41,7 +41,7 @@
         <h4>Добавление записи</h4>
         <hr>
         <label>Дата поступления: <input type="date" name="date_receipt" value="${date_now}"></label><br><br>
-        <label>время поступления: <input type="text" name="time_receipt" value="${time_now}"></label><br><br>
+        <label>время поступления: <input type="text" name="string_time_receipt" value="${time_now}"></label><br><br>
         <label>ФИО: <input type="text" name="full_name"></label><br><br>
         <label>Дата рождения: <input type="date" name="birth_day"></label><br><br>
         <input type="submit" value="Добавить запись"><br>

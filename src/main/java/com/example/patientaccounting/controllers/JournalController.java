@@ -40,7 +40,7 @@ public class JournalController {
 
         model.addAttribute("journals", journalService.journalList(fullName));
         model.addAttribute("date_now", LocalDate.now());
-        model.addAttribute("time_now", LocalTime.now());
+        model.addAttribute("time_now", journalService.getLocalTime());
         if (fullName != null) {
             model.addAttribute("full_name", fullName);
         }
@@ -79,7 +79,6 @@ public class JournalController {
 
         List<Journal> journals = journalService.getFilterByDate(data1, data2);
 
-        log.info("Count item: {}",journals.size());
         return journalExportExcel.exportToExcel(journals, journalService.getNormalDate(data1), journalService.getNormalDate(data2));
     }
 

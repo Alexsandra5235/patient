@@ -96,6 +96,28 @@ public interface Constants {
 
     String endRow = "Подпись медсестры";
 
+    String nameColumnSheetPatient1 = "Фамилия, имя, отчество (при наличии) поступившего пациента";
+    String nameColumnsSheetPatient2 = "Фамилия, имя, отчество (при наличии) поступившего пациента из " +
+            "иной медицинской организации, оказывающей медицинскую помощь в условиях стационара";
+    String nameColumnsSheetPatient3 = "Фамилия, имя, отчество (при наличии) выписаного пациента";
+    String nameColumnsSheetPatient4 = "Фамилия, имя, отчество (при наличии) переведенного пациента";
+    String nameColumnsSheetPatient5 = "в другие отделения данной медицинской организации";
+    String nameColumnsSheetPatient6 = "в иную медицинскую организацию, оказывающую медицинскую помощь " +
+            "в условиях стационара";
+    String nameColumnsSheetPatient7 = "Фамилия, имя, отчество (при наличии) умершего пациента";
+
+
+    List<String> nameColumnsSheetPatient = List.of(nameColumnSheetPatient1,nameColumnsSheetPatient2,
+            nameColumnsSheetPatient3, nameColumnsSheetPatient4, nameColumnsSheetPatient5,
+            nameColumnsSheetPatient6, nameColumnsSheetPatient7);
+
+    List<Integer> rowFirstSheetPatient = List.of(0,0,0,0,2,2,0);
+    List<Integer> rowEndSheetPatient = List.of(3,3,3,1,3,3,3);
+    List<Integer> colFirstSheetPatient = List.of(0,3,6,9,9,12,16);
+    List<Integer> colEndSheetPatient = List.of(2,5,8,15,11,15,18);
+
+
+
 
 
 

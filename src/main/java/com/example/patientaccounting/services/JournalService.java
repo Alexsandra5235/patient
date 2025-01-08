@@ -24,6 +24,9 @@ public class JournalService {
     }
 
     public void saveRecord(Journal journal) {
+
+//        LocalTime time = LocalTime.of(journal.getHour(), journal.getMinute());
+//        journal.setTime_receipt(time);
         journalRepository.save(journal);
         log.info("Save record with id = {}", journal.getId());
     }
@@ -56,6 +59,14 @@ public class JournalService {
         return journalRepository.findAll().stream().map(Journal::getDate_receipt).toList();
     }
 
+    public String getLocalTime(){
+
+        int minute = LocalTime.now().getMinute();
+        int hour = LocalTime.now().getHour();
+
+        return String.format("%02d:%02d", hour, minute);
+    }
+
     public String getNormalDate(LocalDate date){
         int day = date.getDayOfMonth();
         int mouth = date.getMonthValue();
@@ -75,22 +86,7 @@ public class JournalService {
         LocalDateTime startDateTime = LocalDateTime.of(data1, time1);
         LocalDateTime endDateTime = LocalDateTime.of(data2, time2);
 
-
         log.info("Create report with data1 = {}, data2 = {}", getNormalDate(data1), getNormalDate(data2));
-
-//        // Поиск пациентов в заданном интервале
-//        for (journalList(null) patient : journal) {
-//            LocalDateTime admissionDateTime = patient.getAdmissionDateTime();
-//            if (!admissionDateTime.isBefore(startDateTime) && !admissionDateTime.isAfter(endDateTime)) {
-//                System.out.println(patient.getName() + " поступил в " + admissionDateTime);
-//            }
-//        }
-
-//        return journalList(null).stream()
-//                .filter(journal -> ((journal.getDate_receipt().isAfter(data1)) || (journal.getDate_receipt().isEqual(data1)))
-//                        && ((journal.getTime_receipt().isAfter(time1)))
-//                        && ((journal.getTime_receipt().isBefore(time2)))
-//                        && ((journal.getDate_receipt().isBefore(data2)) || (journal.getDate_receipt().isEqual(data2)))).toList();
 
         return journalList(null).stream()
                 .filter(journal ->

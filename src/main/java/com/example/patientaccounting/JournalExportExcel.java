@@ -17,13 +17,10 @@ import static com.example.patientaccounting.Constants.*;
 
 public class JournalExportExcel {
 
-    Workbook workbook = new XSSFWorkbook();
-    Sheet sheet = workbook.createSheet("Результат");
-
     Row rowCurrent;
     Cell cellCurrent;
 
-    private void setDefaultSettings(int firstRow, int endRow, int firstCol, int endCol, String nameCol,
+    private void setDefaultSettings(Workbook workbook,Sheet sheet, int firstRow, int endRow, int firstCol, int endCol, String nameCol,
                                     HorizontalAlignment alignment, Boolean border, int rotation,
                                     boolean underline, int fontHeight, boolean bold, boolean borderButton,
                                     boolean wrapText, boolean background){
@@ -113,42 +110,42 @@ public class JournalExportExcel {
 
     }
 
-    public void createHeadLeft(){
+    public void createHeadLeft(Workbook workbook,Sheet sheet){
 
 
 
         for(int i = 0; i < 5; i++){
 
-            if (i == 4) setDefaultSettings(i,i,0,4,headsLeft.get(i),
+            if (i == 4) setDefaultSettings(workbook,sheet,i,i,0,4,headsLeft.get(i),
                     HorizontalAlignment.CENTER, false,0, true, fontHeightHead,
                     false, false, true, false);
 
-            else setDefaultSettings(i,i,0,4,headsLeft.get(i),HorizontalAlignment.LEFT,
+            else setDefaultSettings(workbook,sheet,i,i,0,4,headsLeft.get(i),HorizontalAlignment.LEFT,
                     false,0, false, fontHeightHead, false, false,
                     true, true);
         }
 
     }
 
-    public void createHeadRight(){
+    public void createHeadRight(Workbook workbook,Sheet sheet){
 
 
         for (int i = 2; i < 6; i++){
-            setDefaultSettings(i,i,19,24, headsRight.get(i-2),HorizontalAlignment.CENTER,
+            setDefaultSettings(workbook,sheet,i,i,19,24, headsRight.get(i-2),HorizontalAlignment.CENTER,
                     false,0, false, fontHeightHead, false, false,
                     true, true);
         }
 
-        setDefaultSettings(0,0,19,21,order,HorizontalAlignment.RIGHT,
+        setDefaultSettings(workbook,sheet,0,0,19,21,order,HorizontalAlignment.RIGHT,
                 false,0, false, fontHeightHead, false, false,
                 true, false);
-        setDefaultSettings(0,0,22,24,null, HorizontalAlignment.CENTER,
+        setDefaultSettings(workbook,sheet,0,0,22,24,null, HorizontalAlignment.CENTER,
                 false,0, false, fontHeightHead, false, true,
                 true, false);
 
     }
 
-    public void createTitle(String date1, String date2){
+    public void createTitle(Workbook workbook, Sheet sheet,String date1, String date2){
 
         String title3 = "за период с " + date1 + " 08:00 по " + date2 + " 07:59";
 
@@ -156,43 +153,43 @@ public class JournalExportExcel {
 
 
         for (int i = 8; i < 12; i++){
-            if (i == 11) setDefaultSettings(i,i,0,24, titles.get(i-8), HorizontalAlignment.CENTER,
+            if (i == 11) setDefaultSettings(workbook,sheet,i,i,0,24, titles.get(i-8), HorizontalAlignment.CENTER,
                     false,0,false, fontHeightHead,false, false,
                     true, false);
-            else setDefaultSettings(i,i,0,24, titles.get(i-8), HorizontalAlignment.CENTER,
+            else setDefaultSettings(workbook,sheet,i,i,0,24, titles.get(i-8), HorizontalAlignment.CENTER,
                     false,0,false, fontHeightTitle,true, false,
                     true, false);
         }
     }
 
-    public void createNumsRow(){
+    public void createNumsRow(Workbook workbook, Sheet sheet){
 
         for (int i = 0; i < 10; i++){
-            setDefaultSettings(18,18,i,i, String.valueOf(i+1),HorizontalAlignment.CENTER,
+            setDefaultSettings(workbook,sheet,18,18,i,i, String.valueOf(i+1),HorizontalAlignment.CENTER,
                     true,0,false,fontHeightHead,false,false,
                     true, false);
         }
 
         for (int i = 13; i < 25; i++){
-            setDefaultSettings(18,18,i,i, String.valueOf(i-1),HorizontalAlignment.CENTER,
+            setDefaultSettings(workbook,sheet,18,18,i,i, String.valueOf(i-1),HorizontalAlignment.CENTER,
                     true,0,false,fontHeightHead,false,false,
                     true, false);
         }
 
-        setDefaultSettings(18,18,10,10, "10A",HorizontalAlignment.CENTER,
+        setDefaultSettings(workbook,sheet,18,18,10,10, "10A",HorizontalAlignment.CENTER,
                 true,0,false,fontHeightHead,false,false,
                 true, false);
 
-        setDefaultSettings(18,18,11,11, "11",HorizontalAlignment.CENTER,
+        setDefaultSettings(workbook,sheet,18,18,11,11, "11",HorizontalAlignment.CENTER,
                 true,0,false,fontHeightHead,false,false,
                 true, false);
 
-        setDefaultSettings(18,18,12,12, "11A",HorizontalAlignment.CENTER,
+        setDefaultSettings(workbook,sheet,18,18,12,12, "11A",HorizontalAlignment.CENTER,
                 true,0,false,fontHeightHead,false,false,
                 true, false);
     }
 
-    public void setSizeColumn(){
+    public void setSizeColumn(Sheet sheet){
 
         // Устанавливаем ширину столбца для лучшего отображения
         sheet.setColumnWidth(0, 9000); // Измените значение по необходимости
@@ -213,39 +210,39 @@ public class JournalExportExcel {
         }
     }
 
-    public void createColumnReport(){
+    public void createColumnReport(Workbook workbook,Sheet sheet){
 
-        setDefaultSettings(19,19,0,0,nameRowTotal,HorizontalAlignment.RIGHT,
+        setDefaultSettings(workbook,sheet,19,19,0,0,nameRowTotal,HorizontalAlignment.RIGHT,
                 true,0,false,fontHeightHead,true,false,
                 true, false);
 
-        setDefaultSettings(20,20,0,0,nameRowDayHospital,HorizontalAlignment.LEFT,
+        setDefaultSettings(workbook,sheet,20,20,0,0,nameRowDayHospital,HorizontalAlignment.LEFT,
                 true,0,false,fontHeightTableReport,true,false,
                 true, false);
 
         for (int i = 21; i < 23; i++){
-            setDefaultSettings(i,i,0,0, nameRowsReport.get(i-21), HorizontalAlignment.RIGHT,
+            setDefaultSettings(workbook,sheet,i,i,0,0, nameRowsReport.get(i-21), HorizontalAlignment.RIGHT,
                     true,0,false,fontHeightHead,false,false,
                     false, false);
         }
 
-        setDefaultSettings(25,25,16,18,endRow,HorizontalAlignment.RIGHT,
+        setDefaultSettings(workbook,sheet,25,25,16,18,endRow,HorizontalAlignment.RIGHT,
                 false,0,false,fontHeightHead,false,false,
                 true, true);
 
-        setDefaultSettings(25,25,19,21,null,HorizontalAlignment.CENTER,
+        setDefaultSettings(workbook,sheet,25,25,19,21,null,HorizontalAlignment.CENTER,
                 false,0,false,fontHeightHead,false,true,
                 false, true);
     }
 
-    public void createColumnVertical(){
+    public void createColumnVertical(Workbook workbook, Sheet sheet){
 
 
         for (int i = 1; i < 25; i++){
             int firstRow = cellsFirst.get(i-1);
             String nameCol = nameColumnsVerticals.get(i-1);
 
-            setDefaultSettings(firstRow,17, i, i, nameCol,HorizontalAlignment.CENTER,
+            setDefaultSettings(workbook,sheet,firstRow,17, i, i, nameCol,HorizontalAlignment.CENTER,
                     true, 90, false, fontHeightHead, false, false,
                     true, false);
 
@@ -254,7 +251,7 @@ public class JournalExportExcel {
 
     }
 
-    public void createBorder(){
+    public void createBorder(Workbook workbook, Sheet sheet){
 
         for (int row = 19; row < 23; row++){
             Row rowCurrent = sheet.getRow(row);
@@ -262,14 +259,14 @@ public class JournalExportExcel {
             for (int col = 1; col < 25; col++){
                 Cell cell = rowCurrent.getCell(col);
                 if (cell == null) cell = rowCurrent.createCell(col);
-                setDefaultSettings(row,row,col,col,null,HorizontalAlignment.CENTER,
+                setDefaultSettings(workbook,sheet,row,row,col,col,null,HorizontalAlignment.CENTER,
                         true,0,false,fontHeightHead,false,false,
                         true, false);
             }
         }
     }
 
-    public void createColumnHorizontal(){
+    public void createColumnHorizontal(Workbook workbook, Sheet sheet){
 
 
         for (int i = 0; i < 12; i++){
@@ -280,7 +277,7 @@ public class JournalExportExcel {
 
             String nameCol = nameColumnsHorizontal.get(i);
 
-            setDefaultSettings(firstRow,rowEnd, colFirst, colEnd, nameCol,HorizontalAlignment.CENTER,
+            setDefaultSettings(workbook,sheet,firstRow,rowEnd, colFirst, colEnd, nameCol,HorizontalAlignment.CENTER,
                     true, 0, false, fontHeightHead, false, false,
                     true, false);
 
@@ -289,32 +286,70 @@ public class JournalExportExcel {
 
     }
 
-    public void setReportData(List<Journal> journals){
+    public void setReportData(Workbook workbook,Sheet sheet,List<Journal> journals){
 
-        setDefaultSettings(19,19,3,3,String.valueOf(journals.size()),
+        setDefaultSettings(workbook,sheet,19,19,3,3,String.valueOf(journals.size()),
                 HorizontalAlignment.CENTER,true,0,false,fontHeightHead,
                 true,false,true,false);
+
+        setDefaultSettings(workbook,sheet,19,19,20,20,String.valueOf(journals.size()),
+                HorizontalAlignment.CENTER,true,0,false,fontHeightHead,
+                true,false,true,false);
+
+        setDefaultSettings(workbook,sheet,20,20,3,3,String.valueOf(journals.size()),
+                HorizontalAlignment.CENTER,true,0,false,fontHeightTableReport,
+                true,false,true,false);
+
+        setDefaultSettings(workbook,sheet,20,20,20,20,String.valueOf(journals.size()),
+                HorizontalAlignment.CENTER,true,0,false,fontHeightTableReport,
+                true,false,true,false);
+
+        setDefaultSettings(workbook,sheet,22,22,3,3,String.valueOf(journals.size()),
+                HorizontalAlignment.CENTER,true,0,false,fontHeightHead,
+                false,false,true,false);
+
+        setDefaultSettings(workbook,sheet,22,22,20,20,String.valueOf(journals.size()),
+                HorizontalAlignment.CENTER,true,0,false,fontHeightHead,
+                false,false,true,false);
+    }
+
+    public void createColumnsSheetPatient(Workbook workbook, Sheet sheet){
+
+        for (int i = 0; i < rowFirstSheetPatient.size(); i++){
+            int firstRow = rowFirstSheetPatient.get(i);
+            int rowEnd = rowEndSheetPatient.get(i);
+            int colFirst = colFirstSheetPatient.get(i);
+            int colEnd = colEndSheetPatient.get(i);
+
+            setDefaultSettings(workbook,sheet,firstRow,rowEnd,colFirst,colEnd,
+                    nameColumnsSheetPatient.get(i),HorizontalAlignment.CENTER,true,0,
+                    false,fontHeightHead,false,false,true,false);
+        }
     }
 
     public ResponseEntity<byte[]> exportToExcel(List<Journal> journals, String date1, String date2) throws IOException {
 
+        Workbook workbook = new XSSFWorkbook();
+        Sheet sheet = workbook.createSheet("Результат");
+        Sheet sheetPatient = workbook.createSheet("стр.2");
 
+        setSizeColumn(sheet);
 
-        setSizeColumn();
+        createHeadRight(workbook,sheet);
+        createHeadLeft(workbook,sheet);
+        createTitle(workbook,sheet,date1,date2);
 
-        createHeadRight();
-        createHeadLeft();
-        createTitle(date1,date2);
+        createColumnVertical(workbook,sheet);
+        createColumnHorizontal(workbook,sheet);
 
-        createColumnVertical();
-        createColumnHorizontal();
+        createNumsRow(workbook,sheet);
+        createColumnReport(workbook,sheet);
 
-        createNumsRow();
-        createColumnReport();
+        createBorder(workbook,sheet);
 
-        createBorder();
+        setReportData(workbook,sheet,journals);
 
-        setReportData(journals);
+        createColumnsSheetPatient(workbook,sheetPatient);
 
         // Запись в поток
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
@@ -325,6 +360,7 @@ public class JournalExportExcel {
 
         HttpHeaders headers = new HttpHeaders();
         headers.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=data.xlsx");
+
 
 
         return ResponseEntity.ok()

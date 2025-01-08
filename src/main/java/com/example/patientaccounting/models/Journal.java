@@ -1,6 +1,7 @@
 package com.example.patientaccounting.models;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Pattern;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -8,6 +9,7 @@ import lombok.NoArgsConstructor;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 
 @Entity
 @Table(name = "journal")
@@ -26,8 +28,12 @@ public class Journal {
     @Column(name = "normal_date")
     private String normal_date;
 
+//    @Pattern(regexp = "^([01]\\d|2[0-3]):[0-5]\\d$", message = "Время должно быть в формате HH:mm")
     @Column(name = "time_receipt")
     private LocalTime time_receipt;
+
+    @Column(name = "string_time_receipt")
+    private String string_time_receipt;
 
     @Column(name = "full_name")
     private String full_name;
@@ -37,6 +43,14 @@ public class Journal {
 
     @Column(name = "normal_birth_day")
     private String normal_birth_day;
+
+    private int hour;
+
+    private int minute;
+
+//    public @Pattern(regexp = "^([01]\\d|2[0-3]):[0-5]\\d$", message = "Время должно быть в формате HH:mm") LocalTime getTime_receipt() {
+//        return time_receipt;
+//    }
 
     @PrePersist
     protected void onCreate() {
@@ -48,8 +62,15 @@ public class Journal {
         int monthBD = birth_day.getMonthValue();
         int dayBD = birth_day.getDayOfMonth();
 
+        DateTimeFormatter fmt = DateTimeFormatter.ofPattern("HH:mm");
+
+        time_receipt = LocalTime.parse(string_time_receipt, fmt);
+
         normal_date = String.format("%02d.%02d.%04d", day, month, year);
         normal_birth_day = String.format("%02d.%02d.%04d", dayBD, monthBD, yearBD);
+
+        hour = time_receipt.getHour();
+        minute = time_receipt.getMinute();
     }
 
 
