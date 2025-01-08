@@ -28,6 +28,7 @@ public interface Constants {
     String title4 = "Отделение Дневной стационар (ПНО)";
 
     int fontHeightTitle = 14;
+    int fontHeightTableReport = 11;
 
     String order = "Код формы по ОКУД";
 
@@ -89,8 +90,9 @@ public interface Constants {
             nameColumn29,nameColumn30,nameColumn31,nameColumn32,nameColumn33,nameColumn34,
             nameColumn35,nameColumn36);
 
-    List<String> numsRow = List.of("1","2","3","4","5","6","7","8","9","10","10A","11","11A",
-            "12","13","14","15","16","17","18","19","20","21","22","23");
+    String nameRowTotal = "Итого:";
+    String nameRowDayHospital = "Дневной стационар (ПНО)";
+    List<String> nameRowsReport = List.of("Дневной ПНО", "Психоневрологичсекие заболевания детей");
 
 
 

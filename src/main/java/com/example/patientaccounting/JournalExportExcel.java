@@ -26,7 +26,7 @@ public class JournalExportExcel {
     private void setDefaultSettings(int firstRow, int endRow, int firstCol, int endCol, String nameCol,
                                     HorizontalAlignment alignment, Boolean border, int rotation,
                                     boolean underline, int fontHeight, boolean bold, boolean borderButton,
-                                    boolean backgroundColorWhite){
+                                    boolean wrapText){
 
         CellStyle style = workbook.createCellStyle();
         CellStyle styleBackgroundWhite = workbook.createCellStyle();
@@ -37,7 +37,8 @@ public class JournalExportExcel {
         style.setAlignment(alignment);
         style.setVerticalAlignment(VerticalAlignment.CENTER);
         style.setRotation((short) rotation);
-        style.setWrapText(true); // Включаем перенос текста
+
+        style.setWrapText(wrapText); // Включаем перенос текста
 
 
 
@@ -68,7 +69,6 @@ public class JournalExportExcel {
             style.setBorderLeft(BorderStyle.NONE);
             style.setBorderRight(BorderStyle.NONE);
         }
-
 
         // Объединяем ячейки
         if ((firstRow != endRow) || (firstCol != endCol)) {
@@ -110,11 +110,11 @@ public class JournalExportExcel {
 
             if (i == 4) setDefaultSettings(i,i,0,4,headsLeft.get(i),
                     HorizontalAlignment.CENTER, false,0, true, fontHeightHead,
-                    false, false, false);
+                    false, false, true);
 
             else setDefaultSettings(i,i,0,4,headsLeft.get(i),HorizontalAlignment.LEFT,
                     false,0, false, fontHeightHead, false, false,
-                    false);
+                    true);
         }
 
     }
@@ -124,12 +124,12 @@ public class JournalExportExcel {
         for (int i = 2; i < 6; i++){
             setDefaultSettings(i,i,19,24, headsRight.get(i-2),HorizontalAlignment.CENTER,
                     false,0, false, fontHeightHead, false, false,
-                    false);
+                    true);
         }
 
         setDefaultSettings(0,0,19,21,order,HorizontalAlignment.RIGHT,
                 false,0, false, fontHeightHead, false, false,
-                false);
+                true);
         setDefaultSettings(0,0,22,24,null, HorizontalAlignment.CENTER,
                 false,0, false, fontHeightHead, false, true,
                 true);
@@ -146,10 +146,10 @@ public class JournalExportExcel {
         for (int i = 8; i < 12; i++){
             if (i == 11) setDefaultSettings(i,i,0,24, titles.get(i-8), HorizontalAlignment.CENTER,
                     false,0,false, fontHeightHead,false, false,
-                    false);
+                    true);
             else setDefaultSettings(i,i,0,24, titles.get(i-8), HorizontalAlignment.CENTER,
                     false,0,false, fontHeightTitle,true, false,
-                    false);
+                    true);
         }
     }
 
@@ -158,26 +158,26 @@ public class JournalExportExcel {
         for (int i = 0; i < 10; i++){
             setDefaultSettings(18,18,i,i, String.valueOf(i+1),HorizontalAlignment.CENTER,
                     true,0,false,fontHeightHead,false,false,
-                    false);
+                    true);
         }
 
         for (int i = 13; i < 25; i++){
             setDefaultSettings(18,18,i,i, String.valueOf(i-1),HorizontalAlignment.CENTER,
                     true,0,false,fontHeightHead,false,false,
-                    false);
+                    true);
         }
 
         setDefaultSettings(18,18,10,10, "10A",HorizontalAlignment.CENTER,
                 true,0,false,fontHeightHead,false,false,
-                false);
+                true);
 
         setDefaultSettings(18,18,11,11, "11",HorizontalAlignment.CENTER,
                 true,0,false,fontHeightHead,false,false,
-                false);
+                true);
 
         setDefaultSettings(18,18,12,12, "11A",HorizontalAlignment.CENTER,
                 true,0,false,fontHeightHead,false,false,
-                false);
+                true);
     }
 
     public void setSizeColumn(){
@@ -201,6 +201,23 @@ public class JournalExportExcel {
         }
     }
 
+    public void createColumnReport(){
+
+        setDefaultSettings(19,19,0,0,nameRowTotal,HorizontalAlignment.RIGHT,
+                true,0,false,fontHeightHead,true,false,
+                true);
+
+        setDefaultSettings(20,20,0,0,nameRowDayHospital,HorizontalAlignment.LEFT,
+                true,0,false,fontHeightTableReport,true,false,
+                true);
+
+        for (int i = 21; i < 23; i++){
+            setDefaultSettings(i,i,0,0, nameRowsReport.get(i-21), HorizontalAlignment.RIGHT,
+                    true,0,false,fontHeightHead,false,false,
+                    false);
+        }
+    }
+
     public void createColumnVertical(){
 
 
@@ -210,11 +227,26 @@ public class JournalExportExcel {
 
             setDefaultSettings(firstRow,17, i, i, nameCol,HorizontalAlignment.CENTER,
                     true, 90, false, fontHeightHead, false, false,
-                    false);
+                    true);
 
         }
 
 
+    }
+
+    public void createBorder(){
+
+        for (int row = 19; row < 23; row++){
+            Row rowCurrent = sheet.getRow(row);
+            if (rowCurrent == null) rowCurrent = sheet.createRow(row);
+            for (int col = 1; col < 25; col++){
+                Cell cell = rowCurrent.getCell(col);
+                if (cell == null) cell = rowCurrent.createCell(col);
+                setDefaultSettings(row,row,col,col,null,HorizontalAlignment.CENTER,
+                        true,0,false,fontHeightHead,false,false,
+                        true);
+            }
+        }
     }
 
     public void createColumnHorizontal(){
@@ -230,7 +262,7 @@ public class JournalExportExcel {
 
             setDefaultSettings(firstRow,rowEnd, colFirst, colEnd, nameCol,HorizontalAlignment.CENTER,
                     true, 0, false, fontHeightHead, false, false,
-                    false);
+                    true);
 
         }
 
@@ -251,6 +283,9 @@ public class JournalExportExcel {
         createColumnHorizontal();
 
         createNumsRow();
+        createColumnReport();
+
+        createBorder();
 
         // Запись в поток
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
