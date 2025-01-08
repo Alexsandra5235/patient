@@ -345,6 +345,37 @@ public class JournalExportExcel {
 
     }
 
+    public void setReportDataSheetTwo(Workbook workbook,Sheet sheet,List<Journal> journals){
+
+        for (int i = 0; i < journals.size(); i++){
+
+            setDefaultSettings(workbook,sheet,i+8,i+8,0,2,
+                    journals.get(i).getFull_name(),HorizontalAlignment.LEFT,true,0,false,
+                    fontHeightHead,false,false,true,false);
+
+            // Устанавливаем высоту 18-й строки
+            rowCurrent = sheet.getRow(i+8); // Индекс 17 соответствует 18-й строке
+            if (rowCurrent == null) {
+                rowCurrent = sheet.createRow(i+8);
+            }
+
+            rowCurrent.setHeightInPoints(45);
+
+            for (int j = 1; j < colFirstSheetPatientNums.size(); j++) {
+
+                int colEndNum = colEndSheetPatientNums.get(j);
+                int colStartNum = colFirstSheetPatientNums.get(j);
+
+                setDefaultSettings(workbook, sheet, i+8, i+8, colStartNum, colEndNum,
+                        null, HorizontalAlignment.CENTER, true, 0,
+                        false, fontHeightHead, false, false, true, false);
+
+            }
+        }
+
+
+    }
+
     public ResponseEntity<byte[]> exportToExcel(List<Journal> journals, String date1, String date2) throws IOException {
 
         Workbook workbook = new XSSFWorkbook();
@@ -368,6 +399,8 @@ public class JournalExportExcel {
         setReportData(workbook,sheet,journals);
 
         createColumnsSheetPatient(workbook,sheetPatient);
+
+        setReportDataSheetTwo(workbook,sheetPatient,journals);
 
         // Запись в поток
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
