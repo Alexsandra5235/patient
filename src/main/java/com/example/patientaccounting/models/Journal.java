@@ -1,5 +1,6 @@
 package com.example.patientaccounting.models;
 
+import com.example.patientaccounting.Gender;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Pattern;
 import lombok.AllArgsConstructor;
@@ -28,7 +29,6 @@ public class Journal {
     @Column(name = "normal_date")
     private String normal_date;
 
-//    @Pattern(regexp = "^([01]\\d|2[0-3]):[0-5]\\d$", message = "Время должно быть в формате HH:mm")
     @Column(name = "time_receipt")
     private LocalTime time_receipt;
 
@@ -47,6 +47,44 @@ public class Journal {
     private int hour;
 
     private int minute;
+
+    private Gender gender;
+
+    private String password;
+
+    private String nationality;
+
+    private String place_residence;
+
+    private String registration_place_stay;
+
+    private String number_phone_representative;
+
+    private String snils;
+
+    private String polis;
+
+    private String delivered;
+
+    private String medical_card;
+
+    private String diagnosis_disease;
+
+    private String cause_injury;
+
+    private String fact_alcohol;
+
+    private String department_medical_organization;
+
+    private String outcome_hospitalization;
+
+    private String date_time_discharge;
+
+    private String reason_refusal;
+
+    private String full_name_medical_worker;
+
+    private String additional_information;
 
 //    public @Pattern(regexp = "^([01]\\d|2[0-3]):[0-5]\\d$", message = "Время должно быть в формате HH:mm") LocalTime getTime_receipt() {
 //        return time_receipt;
