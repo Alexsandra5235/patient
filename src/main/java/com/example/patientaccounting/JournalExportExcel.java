@@ -350,8 +350,10 @@ public class JournalExportExcel {
         for (int i = 0; i < journals.size(); i++){
 
             setDefaultSettings(workbook,sheet,i+8,i+8,0,2,
-                    journals.get(i).getFull_name(),HorizontalAlignment.LEFT,true,0,false,
-                    fontHeightHead,false,false,true,false);
+                    String.join(" ",journals.get(i).getFull_name(), "\n№",
+                            journals.get(i).getId().toString()), HorizontalAlignment.LEFT,true,
+                    0,false, fontHeightHead,false,false,true,
+                    false);
 
             // Устанавливаем высоту 18-й строки
             rowCurrent = sheet.getRow(i+8); // Индекс 17 соответствует 18-й строке
