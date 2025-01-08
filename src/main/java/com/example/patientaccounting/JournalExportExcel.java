@@ -216,6 +216,14 @@ public class JournalExportExcel {
                     true,0,false,fontHeightHead,false,false,
                     false);
         }
+
+        setDefaultSettings(25,25,16,18,endRow,HorizontalAlignment.RIGHT,
+                false,0,false,fontHeightHead,false,false,
+                true);
+
+        setDefaultSettings(25,25,19,21,null,HorizontalAlignment.CENTER,
+                false,0,false,fontHeightHead,false,true,
+                false);
     }
 
     public void createColumnVertical(){

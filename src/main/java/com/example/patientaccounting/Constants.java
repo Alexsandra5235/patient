@@ -94,6 +94,8 @@ public interface Constants {
     String nameRowDayHospital = "Дневной стационар (ПНО)";
     List<String> nameRowsReport = List.of("Дневной ПНО", "Психоневрологичсекие заболевания детей");
 
+    String endRow = "Подпись медсестры";
+
 
 
 
