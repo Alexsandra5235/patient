@@ -29,6 +29,8 @@ public class JournalExportExcel {
                                     boolean backgroundColorWhite){
 
         CellStyle style = workbook.createCellStyle();
+        CellStyle styleBackgroundWhite = workbook.createCellStyle();
+
         Font font = workbook.createFont();
 
         // Устанавливаем выравнивание текста
@@ -65,12 +67,6 @@ public class JournalExportExcel {
             style.setBorderTop(BorderStyle.NONE);
             style.setBorderLeft(BorderStyle.NONE);
             style.setBorderRight(BorderStyle.NONE);
-        }
-
-
-        if (backgroundColorWhite){
-            style.setFillForegroundColor(IndexedColors.WHITE.getIndex()); // Устанавливаем цвет заливки
-            style.setFillPattern(FillPatternType.SOLID_FOREGROUND); // Задаем тип заливки
         }
 
 
@@ -157,6 +153,33 @@ public class JournalExportExcel {
         }
     }
 
+    public void createNumsRow(){
+
+        for (int i = 0; i < 10; i++){
+            setDefaultSettings(18,18,i,i, String.valueOf(i+1),HorizontalAlignment.CENTER,
+                    true,0,false,fontHeightHead,false,false,
+                    false);
+        }
+
+        for (int i = 13; i < 25; i++){
+            setDefaultSettings(18,18,i,i, String.valueOf(i-1),HorizontalAlignment.CENTER,
+                    true,0,false,fontHeightHead,false,false,
+                    false);
+        }
+
+        setDefaultSettings(18,18,10,10, "10A",HorizontalAlignment.CENTER,
+                true,0,false,fontHeightHead,false,false,
+                false);
+
+        setDefaultSettings(18,18,11,11, "11",HorizontalAlignment.CENTER,
+                true,0,false,fontHeightHead,false,false,
+                false);
+
+        setDefaultSettings(18,18,12,12, "11A",HorizontalAlignment.CENTER,
+                true,0,false,fontHeightHead,false,false,
+                false);
+    }
+
     public void setSizeColumn(){
 
         // Устанавливаем ширину столбца для лучшего отображения
@@ -227,6 +250,7 @@ public class JournalExportExcel {
         createColumnVertical();
         createColumnHorizontal();
 
+        createNumsRow();
 
         // Запись в поток
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
