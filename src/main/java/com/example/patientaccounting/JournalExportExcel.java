@@ -26,10 +26,13 @@ public class JournalExportExcel {
     private void setDefaultSettings(int firstRow, int endRow, int firstCol, int endCol, String nameCol,
                                     HorizontalAlignment alignment, Boolean border, int rotation,
                                     boolean underline, int fontHeight, boolean bold, boolean borderButton,
-                                    boolean wrapText){
+                                    boolean wrapText, boolean background){
 
         CellStyle style = workbook.createCellStyle();
-        CellStyle styleBackgroundWhite = workbook.createCellStyle();
+
+        // Создаем стиль для белой заливки
+        CellStyle whiteFillStyle = workbook.createCellStyle();
+
 
         Font font = workbook.createFont();
 
@@ -70,6 +73,11 @@ public class JournalExportExcel {
             style.setBorderRight(BorderStyle.NONE);
         }
 
+//        if (background) {
+//            style.setFillForegroundColor(IndexedColors.WHITE.getIndex());
+//            style.setFillPattern(FillPatternType.SOLID_FOREGROUND);
+//        }
+
         // Объединяем ячейки
         if ((firstRow != endRow) || (firstCol != endCol)) {
             sheet.addMergedRegion(new CellRangeAddress(firstRow, endRow, firstCol, endCol));
@@ -99,6 +107,7 @@ public class JournalExportExcel {
                     cell = row.createCell(colIndex);
                 }
                 cell.setCellStyle(style); // Применяем стиль границы
+
             }
         }
 
@@ -106,33 +115,36 @@ public class JournalExportExcel {
 
     public void createHeadLeft(){
 
+
+
         for(int i = 0; i < 5; i++){
 
             if (i == 4) setDefaultSettings(i,i,0,4,headsLeft.get(i),
                     HorizontalAlignment.CENTER, false,0, true, fontHeightHead,
-                    false, false, true);
+                    false, false, true, false);
 
             else setDefaultSettings(i,i,0,4,headsLeft.get(i),HorizontalAlignment.LEFT,
                     false,0, false, fontHeightHead, false, false,
-                    true);
+                    true, true);
         }
 
     }
 
     public void createHeadRight(){
 
+
         for (int i = 2; i < 6; i++){
             setDefaultSettings(i,i,19,24, headsRight.get(i-2),HorizontalAlignment.CENTER,
                     false,0, false, fontHeightHead, false, false,
-                    true);
+                    true, true);
         }
 
         setDefaultSettings(0,0,19,21,order,HorizontalAlignment.RIGHT,
                 false,0, false, fontHeightHead, false, false,
-                true);
+                true, false);
         setDefaultSettings(0,0,22,24,null, HorizontalAlignment.CENTER,
                 false,0, false, fontHeightHead, false, true,
-                true);
+                true, false);
 
     }
 
@@ -146,10 +158,10 @@ public class JournalExportExcel {
         for (int i = 8; i < 12; i++){
             if (i == 11) setDefaultSettings(i,i,0,24, titles.get(i-8), HorizontalAlignment.CENTER,
                     false,0,false, fontHeightHead,false, false,
-                    true);
+                    true, false);
             else setDefaultSettings(i,i,0,24, titles.get(i-8), HorizontalAlignment.CENTER,
                     false,0,false, fontHeightTitle,true, false,
-                    true);
+                    true, false);
         }
     }
 
@@ -158,26 +170,26 @@ public class JournalExportExcel {
         for (int i = 0; i < 10; i++){
             setDefaultSettings(18,18,i,i, String.valueOf(i+1),HorizontalAlignment.CENTER,
                     true,0,false,fontHeightHead,false,false,
-                    true);
+                    true, false);
         }
 
         for (int i = 13; i < 25; i++){
             setDefaultSettings(18,18,i,i, String.valueOf(i-1),HorizontalAlignment.CENTER,
                     true,0,false,fontHeightHead,false,false,
-                    true);
+                    true, false);
         }
 
         setDefaultSettings(18,18,10,10, "10A",HorizontalAlignment.CENTER,
                 true,0,false,fontHeightHead,false,false,
-                true);
+                true, false);
 
         setDefaultSettings(18,18,11,11, "11",HorizontalAlignment.CENTER,
                 true,0,false,fontHeightHead,false,false,
-                true);
+                true, false);
 
         setDefaultSettings(18,18,12,12, "11A",HorizontalAlignment.CENTER,
                 true,0,false,fontHeightHead,false,false,
-                true);
+                true, false);
     }
 
     public void setSizeColumn(){
@@ -205,25 +217,25 @@ public class JournalExportExcel {
 
         setDefaultSettings(19,19,0,0,nameRowTotal,HorizontalAlignment.RIGHT,
                 true,0,false,fontHeightHead,true,false,
-                true);
+                true, false);
 
         setDefaultSettings(20,20,0,0,nameRowDayHospital,HorizontalAlignment.LEFT,
                 true,0,false,fontHeightTableReport,true,false,
-                true);
+                true, false);
 
         for (int i = 21; i < 23; i++){
             setDefaultSettings(i,i,0,0, nameRowsReport.get(i-21), HorizontalAlignment.RIGHT,
                     true,0,false,fontHeightHead,false,false,
-                    false);
+                    false, false);
         }
 
         setDefaultSettings(25,25,16,18,endRow,HorizontalAlignment.RIGHT,
                 false,0,false,fontHeightHead,false,false,
-                true);
+                true, true);
 
         setDefaultSettings(25,25,19,21,null,HorizontalAlignment.CENTER,
                 false,0,false,fontHeightHead,false,true,
-                false);
+                false, true);
     }
 
     public void createColumnVertical(){
@@ -235,7 +247,7 @@ public class JournalExportExcel {
 
             setDefaultSettings(firstRow,17, i, i, nameCol,HorizontalAlignment.CENTER,
                     true, 90, false, fontHeightHead, false, false,
-                    true);
+                    true, false);
 
         }
 
@@ -252,7 +264,7 @@ public class JournalExportExcel {
                 if (cell == null) cell = rowCurrent.createCell(col);
                 setDefaultSettings(row,row,col,col,null,HorizontalAlignment.CENTER,
                         true,0,false,fontHeightHead,false,false,
-                        true);
+                        true, false);
             }
         }
     }
@@ -270,11 +282,18 @@ public class JournalExportExcel {
 
             setDefaultSettings(firstRow,rowEnd, colFirst, colEnd, nameCol,HorizontalAlignment.CENTER,
                     true, 0, false, fontHeightHead, false, false,
-                    true);
+                    true, false);
 
         }
 
 
+    }
+
+    public void setReportData(List<Journal> journals){
+
+        setDefaultSettings(19,19,3,3,String.valueOf(journals.size()),
+                HorizontalAlignment.CENTER,true,0,false,fontHeightHead,
+                true,false,true,false);
     }
 
     public ResponseEntity<byte[]> exportToExcel(List<Journal> journals, String date1, String date2) throws IOException {
@@ -294,6 +313,8 @@ public class JournalExportExcel {
         createColumnReport();
 
         createBorder();
+
+        setReportData(journals);
 
         // Запись в поток
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();

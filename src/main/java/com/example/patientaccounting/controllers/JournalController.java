@@ -78,6 +78,8 @@ public class JournalController {
                                                 @RequestParam(name = "data2", required = false) LocalDate data2) throws IOException {
 
         List<Journal> journals = journalService.getFilterByDate(data1, data2);
+
+        log.info("Count item: {}",journals.size());
         return journalExportExcel.exportToExcel(journals, journalService.getNormalDate(data1), journalService.getNormalDate(data2));
     }
 

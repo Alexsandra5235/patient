@@ -7,6 +7,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.List;
 
 @Service
@@ -61,12 +63,42 @@ public class JournalService {
         return String.format("%02d.%02d.%04d", day, mouth, year);
     }
 
+    public LocalDateTime getAdmissionDateTime(LocalDate date, LocalTime time) {
+        return LocalDateTime.of(date, time);
+    }
+
     public List<Journal> getFilterByDate(LocalDate data1, LocalDate data2) {
+
+        LocalTime time1 = LocalTime.of(8, 0);
+        LocalTime time2 = LocalTime.of(7, 59);
+        // Временной интервал
+        LocalDateTime startDateTime = LocalDateTime.of(data1, time1);
+        LocalDateTime endDateTime = LocalDateTime.of(data2, time2);
+
 
         log.info("Create report with data1 = {}, data2 = {}", getNormalDate(data1), getNormalDate(data2));
 
+//        // Поиск пациентов в заданном интервале
+//        for (journalList(null) patient : journal) {
+//            LocalDateTime admissionDateTime = patient.getAdmissionDateTime();
+//            if (!admissionDateTime.isBefore(startDateTime) && !admissionDateTime.isAfter(endDateTime)) {
+//                System.out.println(patient.getName() + " поступил в " + admissionDateTime);
+//            }
+//        }
+
+//        return journalList(null).stream()
+//                .filter(journal -> ((journal.getDate_receipt().isAfter(data1)) || (journal.getDate_receipt().isEqual(data1)))
+//                        && ((journal.getTime_receipt().isAfter(time1)))
+//                        && ((journal.getTime_receipt().isBefore(time2)))
+//                        && ((journal.getDate_receipt().isBefore(data2)) || (journal.getDate_receipt().isEqual(data2)))).toList();
+
         return journalList(null).stream()
-                .filter(journal -> ((journal.getDate_receipt().isAfter(data1)) || (journal.getDate_receipt().isEqual(data1)))
-                        && ((journal.getDate_receipt().isBefore(data2)) || (journal.getDate_receipt().isEqual(data2)))).toList();
+                .filter(journal ->
+                        (!getAdmissionDateTime(journal.getDate_receipt(),journal.getTime_receipt())
+                                .isBefore(startDateTime))
+                        && (!getAdmissionDateTime(journal.getDate_receipt(),journal.getTime_receipt())
+                                .isAfter(endDateTime))).toList();
+
+
     }
 }
