@@ -116,6 +116,9 @@ public interface Constants {
     List<Integer> colFirstSheetPatient = List.of(0,3,6,9,9,12,16);
     List<Integer> colEndSheetPatient = List.of(2,5,8,15,11,15,18);
 
+    List<Integer> colFirstSheetPatientNums = List.of(0,3,6,9,12,16);
+    List<Integer> colEndSheetPatientNums = List.of(2,5,8,11,15,18);
+
 
 
 

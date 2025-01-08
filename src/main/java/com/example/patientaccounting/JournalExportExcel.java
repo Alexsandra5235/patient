@@ -321,10 +321,28 @@ public class JournalExportExcel {
             int colFirst = colFirstSheetPatient.get(i);
             int colEnd = colEndSheetPatient.get(i);
 
+
+            if (i < 6) {
+                int colEndNum = colEndSheetPatientNums.get(i);
+                int colStartNum = colFirstSheetPatientNums.get(i);
+
+                setDefaultSettings(workbook,sheet,6,6,colStartNum,colEndNum,
+                        String.valueOf(i+1),HorizontalAlignment.CENTER,true,0,
+                        false,fontHeightHead,false,false,true,false);
+            }
+
+
             setDefaultSettings(workbook,sheet,firstRow,rowEnd,colFirst,colEnd,
                     nameColumnsSheetPatient.get(i),HorizontalAlignment.CENTER,true,0,
                     false,fontHeightHead,false,false,true,false);
+
         }
+
+        setDefaultSettings(workbook,sheet,7,7,0,18,
+                nameRowDayHospital,HorizontalAlignment.CENTER,true,0,
+                false,fontHeightTableReport,true,false,true,false);
+
+
     }
 
     public ResponseEntity<byte[]> exportToExcel(List<Journal> journals, String date1, String date2) throws IOException {
