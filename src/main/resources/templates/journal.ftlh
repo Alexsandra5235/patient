@@ -26,7 +26,7 @@
         В СТАЦИОНАРНЫХ УСЛОВИЯХ, В УСЛОВИЯХ ДНЕВНОГО СТАЦИОНАРА</h3>
 
     <hr>
-    <form action="/" method="get">
+    <form action="/" method="get" autocomplete="off">
         <label>Поиск пациента по ФИО<br><input type="text" name="full_name" <#if full_name??>value="${full_name}" </#if></label><a href="/">❌</a> <br><br>
         <input type="submit" value="Поиск">
         <hr>
@@ -55,7 +55,7 @@
 
     </table>
     <hr>
-    <form action="/journal/save" method="post" >
+    <form action="/journal/save" method="post" autocomplete="off">
         <h4>Добавление записи</h4>
         <hr>
         <label>Дата поступления: <input type="date" name="date_receipt" value="${date_now}"></label><br><br>
@@ -71,7 +71,7 @@
         <hr>
     </form>
 
-    <form id="dataForm">
+    <form id="dataForm" autocomplete="off">
         <label for="address">Введите адрес:</label>
         <input type="text" id="address" name="address" autocomplete="off" size="100">
         <div id="suggestions"></div>
@@ -104,8 +104,18 @@
             });
 
             $(document).on('click', '.suggestion-item', function() {
+
+                // Управление положением курсора
+                const input = document.getElementById('address');
+
+                input.focus();
+                input.setSelectionRange(input.value.length, input.value.length);
+
                 $('#address').val($(this).text());
                 $('#suggestions').hide();
+
+
+
 
             });
 
