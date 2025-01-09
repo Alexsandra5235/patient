@@ -1,7 +1,25 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>JOURNAL</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+        #suggestions {
+            border: 1px solid #ccc;
+            max-height: 150px;
+            overflow-y: auto;
+            display: none; /* Скрываем изначально */
+        }
+        .suggestion-item {
+            padding: 8px;
+            cursor: pointer;
+        }
+        .suggestion-item:hover {
+            background-color: #f0f0f0;
+        }
+    </style>
 </head>
 <body>
     <h3 align="center">ЖУРНАЛ УЧЕТА ПРИЕМА ПАЦИЕНТОВ И ОТКАЗОВ В ОКАЗАНИИ МЕДИЦИНСКОЙ ПОМОЩИ<br>
@@ -44,9 +62,59 @@
         <label>время поступления: <input type="text" name="string_time_receipt" value="${time_now}"></label><br><br>
         <label>ФИО: <input type="text" name="full_name"></label><br><br>
         <label>Дата рождения: <input type="date" name="birth_day"></label><br><br>
+        <label>Пол: <select name="gender" size="1">
+                        <option selected value="m">мужской</option>
+                        <option value="j">женский</option>
+                    </select>
+        </label><br><br>
         <input type="submit" value="Добавить запись"><br>
         <hr>
     </form>
+
+    <form id="dataForm">
+        <label for="address">Введите адрес:</label>
+        <input type="text" id="address" name="address" autocomplete="off" size="100">
+        <div id="suggestions"></div>
+        <button type="submit">Отправить</button>
+    </form>
+
+    <script>
+        $(document).ready(function() {
+            $('#address').on('input', function() {
+                const query = $(this).val();
+                if (query.length > 2) { // минимальная длина запроса
+                    $.ajax({
+                        url: '/api/suggest-address',
+                        method: 'GET',
+                        data: { query: query },
+                        success: function(data) {
+                            $('#suggestions').empty().show();
+                            data.forEach(function(item) {
+                                $('#suggestions').append('<div class="suggestion-item">' + item + '</div>');
+                            });
+
+                        },
+                        error: function(jqXHR, textStatus, errorThrown) {
+                            console.error('Ошибка запроса:', textStatus, errorThrown);
+                        }
+                    });
+                } else {
+                    $('#suggestions').hide();
+                }
+            });
+
+            $(document).on('click', '.suggestion-item', function() {
+                $('#address').val($(this).text());
+                $('#suggestions').hide();
+
+            });
+
+        });
+    </script>
+
+    <br><br>
+
+
 
     <form method="get" action="/export/excel">
         <label>С <input type="date" name="data1"></label>

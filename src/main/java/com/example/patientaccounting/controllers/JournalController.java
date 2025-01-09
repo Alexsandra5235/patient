@@ -2,30 +2,20 @@ package com.example.patientaccounting.controllers;
 
 import com.example.patientaccounting.JournalExportExcel;
 import com.example.patientaccounting.models.Journal;
+import com.example.patientaccounting.services.AddressService;
 import com.example.patientaccounting.services.JournalService;
-import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.ss.usermodel.Sheet;
-import org.apache.poi.ss.usermodel.Workbook;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.MediaType;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
-import java.time.chrono.ChronoLocalDate;
-import java.time.chrono.ChronoLocalDateTime;
 import java.util.List;
-import java.util.stream.Collectors;
+
 
 @Controller
 @RequiredArgsConstructor
@@ -35,12 +25,20 @@ public class JournalController {
     private final JournalService journalService;
     private final JournalExportExcel journalExportExcel = new JournalExportExcel();
 
+    private AddressService addressService;
+
+    @Autowired
+    public void AddressController(AddressService addressService) {
+        this.addressService = addressService;
+    }
+
     @GetMapping("/")
     public String journal(@RequestParam(name = "full_name", required = false) String fullName, Model model) {
 
         model.addAttribute("journals", journalService.journalList(fullName));
         model.addAttribute("date_now", LocalDate.now());
         model.addAttribute("time_now", journalService.getLocalTime());
+
         if (fullName != null) {
             model.addAttribute("full_name", fullName);
         }
@@ -81,6 +79,11 @@ public class JournalController {
 
         return journalExportExcel.exportToExcel(journals, journalService.getNormalDate(data1), journalService.getNormalDate(data2));
     }
+
+//    @GetMapping("/api/suggest-address")
+//    public void suggestAddress(@RequestParam(name = "place_residence", required = false) String place_residence, Model model) {
+//        model.addAttribute("address",addressService.getAddressSuggestions(place_residence));
+//    }
 
 
 

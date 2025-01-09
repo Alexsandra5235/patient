@@ -48,7 +48,7 @@ public class Journal {
 
     private int minute;
 
-    private Gender gender;
+    private String gender;
 
     private String password;
 
