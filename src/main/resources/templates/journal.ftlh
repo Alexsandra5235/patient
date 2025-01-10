@@ -6,17 +6,17 @@
     <title>JOURNAL</title>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <style>
-        #suggestions {
+        #suggestions, #suggestions_country, #suggestions-stay {
             border: 1px solid #ccc;
             max-height: 150px;
             overflow-y: auto;
             display: none; /* Скрываем изначально */
         }
-        .suggestion-item {
+        .suggestion-item, .suggestion-item-country, .suggestion-item-stay {
             padding: 8px;
             cursor: pointer;
         }
-        .suggestion-item:hover {
+        .suggestion-item, .suggestion-item-country, .suggestion-item-stay:hover {
             background-color: #f0f0f0;
         }
     </style>
@@ -59,24 +59,41 @@
         <h4>Добавление записи</h4>
         <hr>
         <label>Дата поступления: <input type="date" name="date_receipt" value="${date_now}"></label><br><br>
-        <label>время поступления: <input type="text" name="string_time_receipt" value="${time_now}"></label><br><br>
-        <label>ФИО: <input type="text" name="full_name"></label><br><br>
-        <label>Дата рождения: <input type="date" name="birth_day"></label><br><br>
-        <label>Пол: <select name="gender" size="1">
+        <label>Время поступления: <input type="text" name="string_time_receipt" value="${time_now}"></label><br><br>
+        <label>Фамилия, имя, отчестов (при наличии): <input type="text" name="full_name"></label><br><br>
+        <label>Дата рождения (число, месяц, год): <input type="date" name="birth_day"></label><br><br>
+        <label>Пол (мужской, женский): <select name="gender" size="1">
                         <option selected value="m">мужской</option>
                         <option value="j">женский</option>
                     </select>
         </label><br><br>
+        <label>Серия и номер паспорта или иного документа, удостоверяющего личность (при наличии): <input type="text" name="string_time_receipt" value="${time_now}"></label><br><br>
+        <form id="countryForm" autocomplete="off">
+            <label for="nationality">Гражданство:</label>
+            <input type="text" id="nationality" name="nationality">
+            <div id="suggestions_country"></div>
+        </form>
+        <br><br>
+        <form action="/api/suggest-address" id="dataForm" autocomplete="off">
+            <label for="address">Регистрация по месту жительсва:</label>
+            <input type="text" id="address" name="address" autocomplete="off" size="100">
+            <div id="suggestions"></div>
+            <br><br>
+            <label for="registration_place_stay">Регистрация по месту пребывания пациента:</label>
+            <input type="text" id="registration_place_stay" name="registration_place_stay" autocomplete="off" size="100" <#if query??>value=${query}</#if>>
+            <div id="suggestions-stay"></div>
+            <input type="checkbox" id="fit" onclick="copyText()">
+            <label for="fit">Совпадает с местом регистрации</label>
+
+        </form>
+
         <input type="submit" value="Добавить запись"><br>
         <hr>
     </form>
 
-    <form id="dataForm" autocomplete="off">
-        <label for="address">Введите адрес:</label>
-        <input type="text" id="address" name="address" autocomplete="off" size="100">
-        <div id="suggestions"></div>
-        <button type="submit">Отправить</button>
-    </form>
+
+
+
 
     <script>
         $(document).ready(function() {
@@ -118,8 +135,98 @@
 
 
             });
+        });
+
+        $(document).ready(function() {
+            $('#nationality').on('input', function () {
+                const query = $(this).val();
+                if (query.length > 2) { // минимальная длина запроса
+                    $.ajax({
+                        url: '/api/suggest-country',
+                        method: 'GET',
+                        data: {query: query},
+                        success: function (data) {
+                            $('#suggestions_country').empty().show();
+                            data.forEach(function (item) {
+                                $('#suggestions_country').append('<div class="suggestion-item-country">' + item + '</div>');
+                            });
+
+                        },
+                        error: function (jqXHR, textStatus, errorThrown) {
+                            console.error('Ошибка запроса:', textStatus, errorThrown);
+                        }
+                    });
+                } else {
+                    $('#suggestions_country').hide();
+                }
+            });
+
+            $(document).on('click', '.suggestion-item-country', function () {
+
+                // Управление положением курсора
+                const input = document.getElementById('nationality');
+
+                input.focus();
+                input.setSelectionRange(input.value.length, input.value.length);
+
+                $('#nationality').val($(this).text());
+                $('#suggestions_country').hide();
+
+
+            });
+
 
         });
+
+        $(document).ready(function() {
+            $('#registration_place_stay').on('input', function() {
+                const query = $(this).val();
+                if (query.length > 2) { // минимальная длина запроса
+                    $.ajax({
+                        url: '/api/suggest-address',
+                        method: 'GET',
+                        data: { query: query },
+                        success: function(data) {
+                            $('#suggestions-stay').empty().show();
+                            data.forEach(function(item) {
+                                $('#suggestions-stay').append('<div class="suggestion-item-stay">' + item + '</div>');
+                            });
+
+                        },
+                        error: function(jqXHR, textStatus, errorThrown) {
+                            console.error('Ошибка запроса:', textStatus, errorThrown);
+                        }
+                    });
+                } else {
+                    $('#suggestions-stay').hide();
+                }
+            });
+
+            $(document).on('click', '.suggestion-item-stay', function() {
+
+                // Управление положением курсора
+                const input = document.getElementById('registration_place_stay');
+
+                input.focus();
+                input.setSelectionRange(input.value.length, input.value.length);
+
+                $('#registration_place_stay').val($(this).text());
+                $('#suggestions-stay').hide();
+
+            });
+        });
+
+        function copyText() {
+            const checkbox = document.getElementById("fit");
+            const textField1 = document.getElementById("registration_place_stay");
+            const textField2 = document.getElementById("address");
+
+            if (checkbox.checked) {
+                textField1.value = textField2.value;
+            } else {
+                textField1.value = ""; // Очистка текстового поля 1, если чекбокс не отмечен
+            }
+        }
     </script>
 
     <br><br>

@@ -120,6 +120,7 @@ public interface Constants {
     List<Integer> colEndSheetPatientNums = List.of(2,5,8,11,15,18);
 
     String API_URL = "http://suggestions.dadata.ru/suggestions/api/4_1/rs/suggest/address";
+    String API_URL_COUNTRY = "http://suggestions.dadata.ru/suggestions/api/4_1/rs/suggest/country";
 
     String API_KEY = "Token 261bcf342fdec1c70353bfea95be90efb50e3096";
 

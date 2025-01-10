@@ -25,12 +25,6 @@ public class JournalController {
     private final JournalService journalService;
     private final JournalExportExcel journalExportExcel = new JournalExportExcel();
 
-    private AddressService addressService;
-
-    @Autowired
-    public void AddressController(AddressService addressService) {
-        this.addressService = addressService;
-    }
 
     @GetMapping("/")
     public String journal(@RequestParam(name = "full_name", required = false) String fullName, Model model) {
