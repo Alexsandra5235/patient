@@ -84,8 +84,34 @@
             <div id="suggestions-stay"></div>
             <input type="checkbox" id="fit" onclick="copyText()">
             <label for="fit">Совпадает с местом регистрации</label>
-
+            <br><br>
         </form>
+        <label for="phone">Номер телефона законного представителя, лица, которому может
+            быть передана информация о состоянии здоровья пациента:</label>
+        <input type="text" id="phone" maxlength="18" oninput="formatPhone(this)" autocomplete="off">
+        <br><br>
+        <label for="snils">СНИСЛ (при наличии):</label>
+        <input type="text" id="snils" maxlength="14" oninput="formatSnils(this)" autocomplete="off"/>
+        <br><br>
+        <label for="snils">Полис обязательного медицинского страхования (при наличии):</label>
+        <input type="text" id="snils" maxlength="16" autocomplete="off"/>
+        <br><br>
+        <label>Пациент доставлен (направлен): <select name="delivery" size="1">
+                <option selected value="police">полицией</option>
+                <option value="medical">выездной бригадой скорой медицинской помощи</option>
+                <option value="policlinica">другой медицинской организацией</option>
+                <option value="yourself">обратился самостоятельно</option>
+            </select>
+        </label><br><br>
+        <label>Номер медицинской карты: <input type="text" name="full_name"></label><br><br>
+
+        <form action="/api/suggest-medical" id="medicalForm" autocomplete="off">
+            <label for="medical">Код по МКД:</label>
+            <input type="text" id="medical" name="medicalFragment">
+            <div id="suggestions_medical"></div>
+            <input type="submit" value="test">
+        </form>
+
 
         <input type="submit" value="Добавить запись"><br>
         <hr>
@@ -227,6 +253,53 @@
                 textField1.value = ""; // Очистка текстового поля 1, если чекбокс не отмечен
             }
         }
+
+        function formatPhone(input) {
+            const value = input.value.replace(/\D/g, ''); // Убираем все нецифровые символы
+            let formattedValue = '';
+
+            // Форматируем номер
+            if (value.length > 0) {
+                formattedValue += '8 (';
+            }
+            if (value.length > 1) {
+                formattedValue += value.slice(1, 4); // Код страны
+            }
+            if (value.length >= 4) {
+                formattedValue += ') ' + value.slice(4, 7); // Код оператора
+            }
+            if (value.length >= 7) {
+                formattedValue += ' ' + value.slice(7, 9); // Первые 2 цифры
+            }
+            if (value.length >= 9) {
+                formattedValue += ' ' + value.slice(9, 11); // Следующие 2 цифры
+            }
+
+            input.value = formattedValue;
+        }
+
+        function formatSnils(input) {
+            // Убираем все нецифровые символы
+            const value = input.value.replace(/\D/g, '');
+            let formattedValue = '';
+
+            // Форматируем СНИЛС
+            if (value.length > 0) {
+                formattedValue += value.slice(0, 3); // Первые 3 цифры
+            }
+            if (value.length >= 3) {
+                formattedValue += '-' + value.slice(3, 6); // Следующие 3 цифры
+            }
+            if (value.length >= 6) {
+                formattedValue += '-' + value.slice(6, 9); // Следующие 3 цифры
+            }
+            if (value.length >= 9) {
+                formattedValue += ' ' + value.slice(9, 11); // Последние 2 цифры
+            }
+
+            input.value = formattedValue;
+        }
+
     </script>
 
     <br><br>

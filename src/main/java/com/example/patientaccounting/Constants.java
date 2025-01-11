@@ -124,6 +124,22 @@ public interface Constants {
 
     String API_KEY = "Token 261bcf342fdec1c70353bfea95be90efb50e3096";
 
+    String TOKEN_ENPOINT = "https://icdaccessmanagement.who.int/connect/token";
+    String CLIENT_ID = "026d1543-e74c-4d5d-96eb-41acd1f449fc_a8d7f2d6-f4da-4deb-b26c-22bc456da9a5";
+    String CLIENT_SECRET = "Jo6Ui65LovYE3DC2Pn232bU6uWZv5LZonFN49L/NeK8=";
+    String SCOPE = "icdapi_access";
+    String GRANT_TYPE = "client_credentials";
+
+//    String API_KEY_MEDICAL = "026d1543-e74c-4d5d-96eb-41acd1f449fc_a8d7f2d6-f4da-4deb-b26c-22bc456da9a5";
+//
+//    String API_SECRET = "Jo6Ui65LovYE3DC2Pn232bU6uWZv5LZonFN49L/NeK8=";
+//
+//    String TOKEN_ENDPOINT = "https://icdaccessmanagement.who.int/connect/token";
+//    String SCOPE = "icdapi_access";
+//    String GRANT_TYPE = "client_credentials";
+    String uri = "https://id.who.int/icd/release/10";
+
+
 
 
 
