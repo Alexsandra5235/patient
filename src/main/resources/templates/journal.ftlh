@@ -6,17 +6,17 @@
     <title>JOURNAL</title>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <style>
-        #suggestions, #suggestions_country, #suggestions-stay {
+        #suggestions, #suggestions_country, #suggestions-stay, #suggestions_medical {
             border: 1px solid #ccc;
             max-height: 150px;
             overflow-y: auto;
             display: none; /* Скрываем изначально */
         }
-        .suggestion-item, .suggestion-item-country, .suggestion-item-stay {
+        .suggestion-item, .suggestion-item-country, .suggestion-item-stay, .suggestion-item-medical {
             padding: 8px;
             cursor: pointer;
         }
-        .suggestion-item, .suggestion-item-country, .suggestion-item-stay:hover {
+        .suggestion-item, .suggestion-item-country, .suggestion-item-stay, .suggestion-item-medical:hover {
             background-color: #f0f0f0;
         }
     </style>
@@ -80,7 +80,7 @@
             <div id="suggestions"></div>
             <br><br>
             <label for="registration_place_stay">Регистрация по месту пребывания пациента:</label>
-            <input type="text" id="registration_place_stay" name="registration_place_stay" autocomplete="off" size="100" <#if query??>value=${query}</#if>>
+            <input type="text" id="registration_place_stay" name="registration_place_stay" autocomplete="off" size="100">
             <div id="suggestions-stay"></div>
             <input type="checkbox" id="fit" onclick="copyText()">
             <label for="fit">Совпадает с местом регистрации</label>
@@ -98,7 +98,7 @@
         <br><br>
         <label>Пациент доставлен (направлен): <select name="delivery" size="1">
                 <option selected value="police">полицией</option>
-                <option value="medical">выездной бригадой скорой медицинской помощи</option>
+                <option value="medicals">выездной бригадой скорой медицинской помощи</option>
                 <option value="policlinica">другой медицинской организацией</option>
                 <option value="yourself">обратился самостоятельно</option>
             </select>
@@ -107,10 +107,10 @@
 
         <form action="/api/suggest-medical" id="medicalForm" autocomplete="off">
             <label for="medical">Код по МКД:</label>
-            <input type="text" id="medical" name="medicalFragment">
+            <input type="text" id="medical" name="medical">
             <div id="suggestions_medical"></div>
-            <input type="submit" value="test">
         </form>
+        <br><br>
 
 
         <input type="submit" value="Добавить запись"><br>
@@ -299,6 +299,45 @@
 
             input.value = formattedValue;
         }
+
+        $(document).ready(function() {
+            $('#medical').on('input', function () {
+                const query = $(this).val();
+                if (query.length > 2) { // минимальная длина запроса
+                    $.ajax({
+                        url: '/api/suggest-medical',
+                        method: 'GET',
+                        data: {query: query},
+                        success: function (data) {
+                            $('#suggestions_medical').empty().show();
+                            $('#suggestions_medical').append('<div class="suggestion-item-medical">' + data + '</div>');
+
+
+                        },
+                        error: function (jqXHR, textStatus, errorThrown) {
+                            console.error('Ошибка запроса:', textStatus, errorThrown);
+                        }
+                    });
+                } else {
+                    $('#suggestions_medical').hide();
+                }
+            });
+
+            $(document).on('click', '.suggestion-item-medical', function () {
+
+                // Управление положением курсора
+                const input = document.getElementById('medical');
+
+                input.focus();
+                input.setSelectionRange(input.value.length, input.value.length);
+
+                $('#medical').val($(this).text());
+                $('#suggestions_medical').hide();
+
+            });
+
+
+        });
 
     </script>
 

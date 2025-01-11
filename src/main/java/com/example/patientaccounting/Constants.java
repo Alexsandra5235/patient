@@ -137,7 +137,11 @@ public interface Constants {
 //    String TOKEN_ENDPOINT = "https://icdaccessmanagement.who.int/connect/token";
 //    String SCOPE = "icdapi_access";
 //    String GRANT_TYPE = "client_credentials";
-    String uri = "https://id.who.int/icd/release/10";
+    String uri = "https://id.who.int/icd/entity/search";
+
+    String uriTest = "http://id.who.int/icd/entity/377675277";
+
+    String fullUri = "https://id.who.int/icd/release/10";
 
 
 

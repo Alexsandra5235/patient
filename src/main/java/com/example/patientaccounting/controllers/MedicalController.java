@@ -3,6 +3,8 @@ package com.example.patientaccounting.controllers;
 import com.example.patientaccounting.services.AddressService;
 import com.example.patientaccounting.services.MedicalService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -22,7 +24,7 @@ public class MedicalController {
     }
 
     @GetMapping("/api/suggest-medical")
-    public String suggestAddress(@RequestParam(name = "medicalFragment", required = false) String query) throws Exception {
+    public String suggestAddress(@RequestParam(name = "query", required = false) String query) throws Exception {
 
         return medicalService.test(query);
     }
