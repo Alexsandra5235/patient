@@ -1,36 +1,24 @@
 package com.example.patientaccounting.services;
 
-import com.google.cloud.translate.Translate;
-import com.google.cloud.translate.Translation;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.ParameterizedTypeReference;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import javax.net.ssl.HttpsURLConnection;
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.InputStreamReader;
-import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
-import java.util.ResourceBundle;
-import java.util.stream.Collectors;
 
 import org.json.*;
-import org.springframework.web.client.RestTemplate;
 
 import static com.example.patientaccounting.Constants.*;
-import static java.awt.SystemColor.text;
 
 @Service
 @Slf4j
@@ -78,6 +66,7 @@ public class MedicalService {
     // access ICD API
     public String getURI(String token, String uri, String query) throws Exception {
 
+        String value = null;
         log.info("Getting URI...");
 
         URL url = new URL(uri);
@@ -98,49 +87,110 @@ public class MedicalService {
         int responseCode = con.getResponseCode();
         log.info("URI Response Code : {}\n", responseCode);
 
-        BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
-        String inputLine;
+        if (responseCode == 200) {
+            BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
+            String inputLine;
 
-        StringBuffer response = new StringBuffer();
-        while ((inputLine = in.readLine()) != null) {
-            response.append(inputLine);
+            StringBuffer response = new StringBuffer();
+            while ((inputLine = in.readLine()) != null) {
+                response.append(inputLine);
+            }
+            in.close();
+
+            String stringResponse = response.toString();
+
+            // Парсинг строки JSON
+            JSONObject jsonObject = new JSONObject(stringResponse);
+
+            // Получение объекта title
+            JSONObject titleObject = jsonObject.getJSONObject("title");
+
+            log.info("title: {}", titleObject);
+
+
+            // Извлечение значения @value
+            String titleValue = titleObject.getString("@value");
+
+            // Вывод результата
+            log.info("value for text {}: {}",query, titleValue);
+
+
+            value = String.format(query + " - " + titleValue);
+
+
+            log.info(value);
+
+            log.info("Response: {}\n", response);
+
         }
-        in.close();
 
-        String stringResponse = response.toString();
-
-        // Парсинг строки JSON
-        JSONObject jsonObject = new JSONObject(stringResponse);
-
-        // Получение объекта title
-        JSONObject titleObject = jsonObject.getJSONObject("title");
-
-        log.info("title: {}", titleObject);
-
-
-        // Извлечение значения @value
-        String titleValue = titleObject.getString("@value");
-
-        // Вывод результата
-        log.info("value for text {}: {}",query, titleValue);
-
-
-        String value = String.format(query + " - " + titleValue);
-
-        log.info(value);
-
-        log.info("Response: {}\n", response);
 
         return value;
     }
 
-    public String test(String medicalFragment) throws Exception {
+//    public String test(String medicalFragment) throws Exception {
+//
+//        String responseUrl = fullUri + "/" + medicalFragment;
+//        log.info("Request Path: {}", responseUrl);
+//
+//        String token = getToken();
+//        return getURI(token, responseUrl, medicalFragment);
+//    }
+
+    public List<String> getResponse(String medicalFragment) throws Exception {
 
         String responseUrl = fullUri + "/" + medicalFragment;
-        log.info("Request Path: {}", responseUrl);
+        String currentUrl = null;
+        String currentValue = null;
 
         String token = getToken();
-        return getURI(token, responseUrl, medicalFragment);
+
+        List<String> responses = new ArrayList<>();
+
+        for (int i = 0; i < 10; i++) {
+            switch (medicalFragment.length()){
+
+                case 2,4:
+                    currentUrl = fullUri + "/" + medicalFragment + i;
+                    log.info("Current url: {}", currentUrl);
+                    currentValue = getURI(token, currentUrl, medicalFragment + i);
+                    if (currentValue != null){
+                        responses.add(currentValue);
+                    }
+                    break;
+                case 3:
+
+                    currentUrl = fullUri + "/" + medicalFragment + "." + i;
+                    log.info("Current url: {}", currentUrl);
+                    currentValue = getURI(token, currentUrl, medicalFragment + "." + i);
+                    if (currentValue != null){
+                        responses.add(currentValue);
+                    }
+                    break;
+                case 5:
+
+                    currentUrl = fullUri + "/" + medicalFragment;
+                    log.info("Current url: {}", currentUrl);
+                    currentValue = getURI(token, currentUrl, medicalFragment);
+                    if (currentValue != null){
+                        if(!responses.isEmpty()){
+                            if (!responses.get(responses.size() - 1).contains(medicalFragment)){
+                                responses.add(currentValue);
+                            }
+
+                        }
+                        else {
+                            responses.add(currentValue);
+                        }
+
+                    }
+                    break;
+            }
+
+        }
+
+
+        return responses;
     }
 
 

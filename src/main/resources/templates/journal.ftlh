@@ -303,15 +303,16 @@
         $(document).ready(function() {
             $('#medical').on('input', function () {
                 const query = $(this).val();
-                if (query.length > 2) { // минимальная длина запроса
+                if (query.length > 1) { // минимальная длина запроса
                     $.ajax({
                         url: '/api/suggest-medical',
                         method: 'GET',
                         data: {query: query},
                         success: function (data) {
                             $('#suggestions_medical').empty().show();
-                            $('#suggestions_medical').append('<div class="suggestion-item-medical">' + data + '</div>');
-
+                            data.forEach(function(item) {
+                                $('#suggestions_medical').append('<div class="suggestion-item-medical">' + item + '</div>');
+                            });
 
                         },
                         error: function (jqXHR, textStatus, errorThrown) {
@@ -326,13 +327,17 @@
             $(document).on('click', '.suggestion-item-medical', function () {
 
                 // Управление положением курсора
-                const input = document.getElementById('medical');
+                const input = document.getElementById('medical').value.length;
 
-                input.focus();
-                input.setSelectionRange(input.value.length, input.value.length);
+                // input.focus();
+                // input.setSelectionRange(input.value.length, input.value.length);
 
-                $('#medical').val($(this).text());
+                const originalString = $(this).text();
+                const trimmedString = originalString.slice(0, input + 1); // Или originalString.slice(0, 5)
+                $('#medical').val(trimmedString);
                 $('#suggestions_medical').hide();
+
+
 
             });
 

@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.Map;
 
 import static com.example.patientaccounting.Constants.uri;
 
@@ -24,8 +25,8 @@ public class MedicalController {
     }
 
     @GetMapping("/api/suggest-medical")
-    public String suggestAddress(@RequestParam(name = "query", required = false) String query) throws Exception {
+    public List<String> suggestAddress(@RequestParam(name = "query", required = false) String query) throws Exception {
 
-        return medicalService.test(query);
+        return medicalService.getResponse(query);
     }
 }
