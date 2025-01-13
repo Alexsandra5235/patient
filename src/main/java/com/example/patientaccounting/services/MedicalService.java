@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import javax.net.ssl.HttpsURLConnection;
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -28,7 +29,7 @@ public class MedicalService {
     private final MedicalRepository medicalRepository;
 
     // get the OAUTH2 token
-    public String getToken() throws Exception {
+    private static String getToken() throws Exception {
 
         log.info("Getting token...");
 
@@ -65,13 +66,9 @@ public class MedicalService {
         return jsonObj.getString("access_token");
     }
 
-    public boolean isExists(String mkd){
-        return medicalRepository.findById(mkd).isPresent();
-    }
+    private void saveMedical(String mkd,String value, String code) {
 
-    public void saveMedical(String mkd,String value, String code) {
-
-        if (!isExists(mkd)) {
+        if (medicalRepository.findById(mkd).isEmpty()) {
             Medical medical = new Medical(mkd,value,code);
 
             medicalRepository.save(medical);
@@ -81,9 +78,9 @@ public class MedicalService {
 
     }
 
-    public String getMedical(String mkd) {
+    private String getMedical(String mkd) {
 
-        if (isExists(mkd)) {
+        if (medicalRepository.findById(mkd).isPresent()) {
             Medical medical = medicalRepository.findById(mkd).get();
             if (medical.getResponse_code().equals("200")){
                 String value = String.format(medical.getId() + " - " + medical.getValue());
@@ -96,81 +93,32 @@ public class MedicalService {
         else return null;
     }
 
-//    public String getMedicalCodeResponse(String mkd){
-//        if (isExists(mkd)) {
-//            Medical medical = medicalRepository.findById(mkd).get();
-//            return medical.getResponse_code();
-//        }
-//    }
-
-
     // access ICD API
-    public String getURI(String token, String uri, String query) throws Exception {
+    private String getURI(String token, String uri, String query) throws Exception {
 
         if (getMedical(query) != null){
-            if (getMedical(query).equals("404")) return null;
+            if (Objects.equals(getMedical(query), "404")) return null;
             else return getMedical(query);
         }
         else {
             String value;
             log.info("Getting URI...");
 
-            URL url = new URL(uri);
-            HttpURLConnection con = (HttpURLConnection) url.openConnection();
-            con.setRequestMethod("GET");
-
-            // Разрешаем отправку тела запроса
-            //con.setDoOutput(true);
-
-            // HTTP header fields to set
-            con.setRequestProperty("Authorization", "Bearer "+token);
-            con.setRequestProperty("Accept", "application/json");
-            con.setRequestProperty("Accept-Language", "en");
-            con.setRequestProperty("API-Version", "v2");
-
-
+            HttpURLConnection con = getHttpURLConnection(token, uri);
+            
             // response
             int responseCode = con.getResponseCode();
             log.info("URI Response Code : {}\n", responseCode);
 
             if (responseCode == 200) {
-                BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
-                String inputLine;
-
-                StringBuffer response = new StringBuffer();
-                while ((inputLine = in.readLine()) != null) {
-                    response.append(inputLine);
-                }
-                in.close();
-
-                String stringResponse = response.toString();
-
-                // Парсинг строки JSON
-                JSONObject jsonObject = new JSONObject(stringResponse);
-
-                // Получение объекта title
-                JSONObject titleObject = jsonObject.getJSONObject("title");
-
-                log.info("title: {}", titleObject);
-
-
-                // Извлечение значения @value
-                String titleValue = titleObject.getString("@value");
-
-                // Вывод результата
-                log.info("value for text {}: {}",query, titleValue);
-
+                String titleValue = getString(con);
 
                 value = String.format(query + " - " + titleValue);
 
-
-                log.info(value);
-
-                log.info("Response: {}\n", response);
+                // Вывод результата
+                log.info("value for text: {}",value);
 
                 saveMedical(query,titleValue,String.valueOf(responseCode));
-
-
 
             }
             else {
@@ -186,20 +134,49 @@ public class MedicalService {
 
     }
 
-//    public String test(String medicalFragment) throws Exception {
-//
-//        String responseUrl = fullUri + "/" + medicalFragment;
-//        log.info("Request Path: {}", responseUrl);
-//
-//        String token = getToken();
-//        return getURI(token, responseUrl, medicalFragment);
-//    }
+    private String getString(HttpURLConnection con) throws IOException {
+        BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
+        String inputLine;
+
+        StringBuilder response = new StringBuilder();
+        while ((inputLine = in.readLine()) != null) {
+            response.append(inputLine);
+        }
+        in.close();
+
+        String stringResponse = response.toString();
+
+        // Парсинг строки JSON
+        JSONObject jsonObject = new JSONObject(stringResponse);
+
+        // Получение объекта title
+        JSONObject titleObject = jsonObject.getJSONObject("title");
+
+        // Извлечение значения @value
+        return titleObject.getString("@value");
+    }
+
+    private HttpURLConnection getHttpURLConnection(String token, String uri) throws IOException {
+        URL url = new URL(uri);
+        HttpURLConnection con = (HttpURLConnection) url.openConnection();
+        con.setRequestMethod("GET");
+
+        // Разрешаем отправку тела запроса
+        //con.setDoOutput(true);
+
+        // HTTP header fields to set
+        con.setRequestProperty("Authorization", "Bearer "+ token);
+        con.setRequestProperty("Accept", "application/json");
+        con.setRequestProperty("Accept-Language", "en");
+        con.setRequestProperty("API-Version", "v2");
+        return con;
+    }
+
 
     public List<String> getResponse(String medicalFragment) throws Exception {
 
-        String responseUrl = fullUri + "/" + medicalFragment;
-        String currentUrl = null;
-        String currentValue = null;
+        String currentUrl;
+        String currentValue;
 
         String token = getToken();
 
@@ -207,19 +184,10 @@ public class MedicalService {
 
         for (int i = 0; i < 10; i++) {
 
-//            if (medicalFragment.length() == 3){
-//                currentUrl = fullUri + "/" + medicalFragment + "." + i;
-//                log.info("Current url: {}", currentUrl);
-//                currentValue = getURI(token, currentUrl, medicalFragment + "." + i);
-//                if (currentValue != null){
-//                    responses.add(currentValue);
-//                }
-//            }
             switch (medicalFragment.length()){
 
                 case 2,4:
                     currentUrl = fullUri + "/" + medicalFragment + i;
-                    log.info("Current url: {}", currentUrl);
                     currentValue = getURI(token, currentUrl, medicalFragment + i);
                     if (currentValue != null){
                         responses.add(currentValue);
@@ -227,7 +195,6 @@ public class MedicalService {
                     break;
                 case 3:
                     currentUrl = fullUri + "/" + medicalFragment + "." + i;
-                    log.info("Current url: {}", currentUrl);
                     currentValue = getURI(token, currentUrl, medicalFragment + "." + i);
                     if (currentValue != null){
                         responses.add(currentValue);
@@ -239,7 +206,6 @@ public class MedicalService {
 
         if (medicalFragment.length() == 5){
             currentUrl = fullUri + "/" + medicalFragment;
-            log.info("Current url: {}", currentUrl);
             currentValue = getURI(token, currentUrl, medicalFragment);
             if (currentValue != null){
                 responses.add(currentValue);
