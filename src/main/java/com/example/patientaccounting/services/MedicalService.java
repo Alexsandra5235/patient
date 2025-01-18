@@ -27,6 +27,7 @@ import static com.example.patientaccounting.Constants.*;
 public class MedicalService {
 
     private final MedicalRepository medicalRepository;
+    private final TranslateService translateService;
 
     // get the OAUTH2 token
     private static String getToken() throws Exception {
@@ -87,7 +88,7 @@ public class MedicalService {
                 log.info("Getting medical data {}", mkd);
                 return value;
             }
-            else return medical.getResponse_code();
+            else return "invalid";
 
         }
         else return null;
@@ -96,13 +97,14 @@ public class MedicalService {
     // access ICD API
     private String getURI(String token, String uri, String query) throws Exception {
 
-        if (getMedical(query) != null){
-            if (Objects.equals(getMedical(query), "404")) return null;
-            else return getMedical(query);
+        String result = getMedical(query);
+        if (result != null){
+            if (Objects.equals(result, "invalid")) return null;
+            else return result;
         }
         else {
             String value;
-            log.info("Getting URI...");
+            log.info("Getting URI for {}...",query);
 
             HttpURLConnection con = getHttpURLConnection(token, uri);
             
@@ -152,8 +154,11 @@ public class MedicalService {
         // Получение объекта title
         JSONObject titleObject = jsonObject.getJSONObject("title");
 
+        String translateValue = translateService.translate(titleObject.getString("@value"));
+
+        log.info("translate value " + translateValue);
         // Извлечение значения @value
-        return titleObject.getString("@value");
+        return translateValue;
     }
 
     private HttpURLConnection getHttpURLConnection(String token, String uri) throws IOException {

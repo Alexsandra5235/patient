@@ -130,18 +130,19 @@ public interface Constants {
     String SCOPE = "icdapi_access";
     String GRANT_TYPE = "client_credentials";
 
-//    String API_KEY_MEDICAL = "026d1543-e74c-4d5d-96eb-41acd1f449fc_a8d7f2d6-f4da-4deb-b26c-22bc456da9a5";
-//
-//    String API_SECRET = "Jo6Ui65LovYE3DC2Pn232bU6uWZv5LZonFN49L/NeK8=";
-//
-//    String TOKEN_ENDPOINT = "https://icdaccessmanagement.who.int/connect/token";
-//    String SCOPE = "icdapi_access";
-//    String GRANT_TYPE = "client_credentials";
-    String uri = "https://id.who.int/icd/entity/search";
-
-    String uriTest = "http://id.who.int/icd/entity/377675277";
+    String uri = "https://id.who.int/icd/release/10";
 
     String fullUri = "https://id.who.int/icd/release/10";
+
+    String API_KEY_TRANSLATE = "f7fed76e91msh4439cba297aa424p10966ejsnd2ce6703742a";
+
+    String API_URL_TRANSLATE = "https://ftapi.pythonanywhere.com/translate?sl=en&dl=ru&text=";
+
+//    {
+//        "sourceLanguageCode": "en",
+//            "targetLanguageCode": "ru",
+//            "contents": ["Dr. Watson, come here!", "Bring me some coffee!"]
+//    }
 
 
 

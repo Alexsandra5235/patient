@@ -107,7 +107,7 @@
 
         <form action="/api/suggest-medical" id="medicalForm" autocomplete="off">
             <label for="medical">Код по МКД:</label>
-            <input type="text" id="medical" name="medical">
+            <input type="text" id="medical" name="medical" oninput="this.value = this.value.replace(/[^0-9a-zA-Z.]/g, '')">
             <div id="suggestions_medical"></div>
         </form>
         <br><br>
