@@ -333,7 +333,7 @@
                 // input.setSelectionRange(input.value.length, input.value.length);
 
                 const originalString = $(this).text();
-                const trimmedString = originalString.slice(0, input + 2);
+                const trimmedString = originalString.slice(0, input + 1);
                 $('#medical').val(trimmedString);
                 $('#suggestions_medical').hide();
 

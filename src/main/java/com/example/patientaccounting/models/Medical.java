@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 import java.time.LocalDate;
 
 @Entity
-@Table(name = "medical")
+@Table(name = "mkdcode")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -17,9 +17,6 @@ public class Medical {
     @Id
     private String id;
 
-    @Column(name = "value")
+    @Column(name = "title")
     private String value;
-
-    @Column(name = "response_code")
-    private String response_code;
 }
