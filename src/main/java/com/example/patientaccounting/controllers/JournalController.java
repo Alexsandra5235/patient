@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.List;
 
 
@@ -29,9 +31,11 @@ public class JournalController {
     @GetMapping("/")
     public String journal(@RequestParam(name = "full_name", required = false) String fullName, Model model) {
 
+        String full_time = String.format(LocalDate.now() + " " + LocalTime.now());
         model.addAttribute("journals", journalService.journalList(fullName));
         model.addAttribute("date_now", LocalDate.now());
         model.addAttribute("time_now", journalService.getLocalTime());
+        model.addAttribute("full_time", full_time);
 
         if (fullName != null) {
             model.addAttribute("full_name", fullName);

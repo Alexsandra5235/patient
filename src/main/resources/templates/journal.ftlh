@@ -6,17 +6,20 @@
     <title>JOURNAL</title>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <style>
-        #suggestions, #suggestions_country, #suggestions-stay, #suggestions_medical {
+        #suggestions, #suggestions_country, #suggestions-stay, #suggestions_medical,
+        #suggestions_cause{
             border: 1px solid #ccc;
             max-height: 150px;
             overflow-y: auto;
             display: none; /* Скрываем изначально */
         }
-        .suggestion-item, .suggestion-item-country, .suggestion-item-stay, .suggestion-item-medical {
+        .suggestion-item, .suggestion-item-country, .suggestion-item-stay, .suggestion-item-medical,
+        .suggestion-item-cause{
             padding: 8px;
             cursor: pointer;
         }
-        .suggestion-item, .suggestion-item-country, .suggestion-item-stay, .suggestion-item-medical:hover {
+        .suggestion-item, .suggestion-item-country, .suggestion-item-stay, .suggestion-item-medical,
+        .suggestion-item-cause:hover {
             background-color: #f0f0f0;
         }
     </style>
@@ -106,11 +109,47 @@
         <label>Номер медицинской карты: <input type="text" name="full_name"></label><br><br>
 
         <form action="/api/suggest-medical" id="medicalForm" autocomplete="off">
-            <label for="medical">Код по МКД:</label>
+            <label for="medical">Диагноз заболевания (состояния), поставленный направившей медицинской организацией,<br>
+                выездной бригадой скорой медицинской помощи (код по МКБ)
+            </label>
             <input type="text" id="medical" name="medical" oninput="this.value = this.value.replace(/[^0-9a-zA-Z.]/g, '')">
             <div id="suggestions_medical"></div>
+            <br><br>
+            <label for="cause_injury">Причина и обстоятельства трамвы (в том числе при дорожно-транспортных проишествиях)<br>
+                отравления (код по МКБ)
+            </label>
+            <input type="text" id="cause_injury" name="cause_injury" oninput="this.value = this.value.replace(/[^0-9a-zA-Z.]/g, '')">
+            <div id="suggestions_cause"></div>
         </form>
         <br><br>
+        <label for="snils">Факт употребления алкоголя и иных психоактивных веществ,<br>
+            установление наличия или отсутствия признаков состояния опьянения при поступленим пациента<br>
+            в медицинскую организацию, дата и время взятия пробы и результаты лабораторных исследований:</label>
+        <input type="text" id="snils" autocomplete="off"/>
+        <br><br>
+        <label for="snils">Отделение медицинской организации, в которое направлен пациент:</label>
+        <input type="text" id="snils" autocomplete="off"/>
+        <br><br>
+        <label>Исход госпитализации:
+            <select name="delivery" size="1">
+                <option selected value="police">выписан</option>
+                <option value="medicals">выездной бригадой скорой медицинской помощи</option>
+                <option value="policlinica">переведен в другую медицинскую организацию</option>
+                <option value="yourself">умер</option>
+            </select>
+        </label>
+        <br><br>
+        <label for="snils">Дата и время исхода:</label>
+        <input type="text" id="snils" autocomplete="off" value="${full_time}"/>
+        <br><br>
+        <label for="snils">Наименование медицинской организации, куда переведен пациент:</label>
+        <input type="text" id="snils" autocomplete="off"/>
+        <br><br>
+        <label for="snils">Дата и время сообщения законному представителю, иному лицу<br>
+            или медицинской организации, направившей пациента, о госпитализации<br>
+            (отказе в госпитализации) пациента, ее исходе:</label>
+        <input type="text" id="snils" autocomplete="off" value="${full_time}"/>
+
 
 
         <input type="submit" value="Добавить запись"><br>
@@ -333,9 +372,54 @@
                 // input.setSelectionRange(input.value.length, input.value.length);
 
                 const originalString = $(this).text();
-                const trimmedString = originalString.slice(0, input + 1);
+                const trimmedString = originalString.split(' - ')[0];
                 $('#medical').val(trimmedString);
                 $('#suggestions_medical').hide();
+
+
+
+            });
+
+
+        });
+
+
+        $(document).ready(function() {
+            $('#cause_injury').on('input', function () {
+                const query = $(this).val();
+                if (query.length > 1) { // минимальная длина запроса
+                    $.ajax({
+                        url: '/api/suggest-medical',
+                        method: 'GET',
+                        data: {query: query},
+                        success: function (data) {
+                            $('#suggestions_cause').empty().show();
+                            data.forEach(function(item) {
+                                $('#suggestions_cause').append('<div class="suggestion-item-cause">' + item + '</div>');
+                            });
+
+                        },
+                        error: function (jqXHR, textStatus, errorThrown) {
+                            console.error('Ошибка запроса:', textStatus, errorThrown);
+                        }
+                    });
+                } else {
+                    $('#suggestions_cause').hide();
+                }
+            });
+
+            $(document).on('click', '.suggestion-item-cause', function () {
+
+                // Управление положением курсора
+                const input = document.getElementById('medical').value.length;
+
+                // input.focus();
+                // input.setSelectionRange(input.value.length, input.value.length);
+
+                const originalString = $(this).text();
+                const trimmedString = originalString.split(' - ')[0];
+                $('#cause_injury').val(trimmedString);
+                $('#suggestions_cause').hide();
 
 
 
