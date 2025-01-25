@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 
@@ -70,7 +71,7 @@ public class Journal {
 
     private String fact_alcohol;
 
-    private String date_time_alcohol;
+    private LocalDateTime date_time_alcohol;
 
     private String result_research;
 
@@ -78,11 +79,11 @@ public class Journal {
 
     private String outcome_hospitalization;
 
-    private String date_time_discharge;
+    private LocalDateTime date_time_discharge;
 
     private String medical_organization_transferred;
 
-    private String date_time_inform;
+    private LocalDateTime date_time_inform;
 
     private String reason_refusal;
 

@@ -27,12 +27,12 @@
 <body>
     <h3 align="center">ЖУРНАЛ УЧЕТА ПРИЕМА ПАЦИЕНТОВ И ОТКАЗОВ В ОКАЗАНИИ МЕДИЦИНСКОЙ ПОМОЩИ<br>
         В СТАЦИОНАРНЫХ УСЛОВИЯХ, В УСЛОВИЯХ ДНЕВНОГО СТАЦИОНАРА</h3>
-    <form action="/journal/add" method="post">
+    <form action="/journal/add" method="post" autocomplete="off">
         <h4>Добавление записи</h4>
         <hr>
         <label>Дата поступления: <input type="date" name="date_receipt" value="${date_now}"></label><br><br>
         <label>Время поступления: <input type="text" name="string_time_receipt" value="${time_now}"></label><br><br>
-        <label>Фамилия, имя, отчестов (при наличии): <input type="text" name="full_name" placeholder="Иванов Иван Иванович"></label><br><br>
+        <label>Фамилия, имя, отчестов (при наличии): <input type="text" name="full_name" placeholder="Иванов Иван Иванович" autocomplete="off"></label><br><br>
         <label>Дата рождения (число, месяц, год): <input type="date" name="birth_day"></label><br><br>
         <label>Пол (мужской, женский): <select name="gender" size="1">
                 <option selected value="мужской">мужской</option>
@@ -62,10 +62,10 @@
         <input type="text" id="number_phone_representative" name="number_phone_representative" maxlength="18" oninput="formatPhone(this)" autocomplete="off">
         <br><br>
         <label for="snils">СНИСЛ (при наличии):</label>
-        <input type="text" id="snils" name="snils" maxlength="14" oninput="formatSnils(this)" autocomplete="off"/>
+        <input type="text" id="snils" name="snils" maxlength="14" oninput="formatSnils(this)" autocomplete="off">
         <br><br>
         <label for="polis">Полис обязательного медицинского страхования (при наличии):</label>
-        <input type="text" id="polis" name="polis" maxlength="16" autocomplete="off"/>
+        <input type="text" id="polis" name="polis" maxlength="16" autocomplete="off">
         <br><br>
         <label>Пациент доставлен (направлен): <select name="delivered" size="1">
                 <option selected value="полицией">полицией</option>
@@ -82,7 +82,7 @@
         <input type="text" id="medical" name="medical" oninput="this.value = this.value.replace(/[^0-9a-zA-Z.]/g, '')">
         <div id="suggestions_medical"></div>
         <br><br>
-        <label for="cause_injury">Причина и обстоятельства трамвы (в том числе при дорожно-транспортных проишествиях)<br>
+        <label for="cause_injury">Причина и обстоятельства трамвы (в том числе при дорожно-транспортных проишествиях)
             отравления (код по МКБ)
         </label>
         <input type="text" id="cause_injury" name="cause_injury" oninput="this.value = this.value.replace(/[^0-9a-zA-Z.]/g, '')">
@@ -91,17 +91,16 @@
         <label for="fact_alcohol">Факт употребления алкоголя и иных психоактивных веществ,<br>
             установление наличия или отсутствия признаков состояния опьянения при поступленим пациента<br>
             в медицинскую организацию:</label>
-        <input type="text" id="fact_alcohol" name="fact_alcohol" autocomplete="off"/>
+        <input type="text" id="fact_alcohol" name="fact_alcohol" autocomplete="off">
         <br><br>
         <label for="date_time_alcohol">Дата и время взятия пробы:</label>
-        <input type="text" id="date_time_alcohol" name="date_time_alcohol" value="${full_time}"
-               maxlength="16" required>
+        <input type="datetime-local" id="date_time_alcohol" name="date_time_alcohol">
         <br><br>
         <label for="result_research">Результаты лабораторных исследований:</label>
         <input type="text" id="result_research" name="result_research">
         <br><br>
         <label for="department_medical_organization">Отделение медицинской организации, в которое направлен пациент:</label>
-        <input type="text" id="department_medical_organization" name="department_medical_organization" autocomplete="off"/>
+        <input type="text" id="department_medical_organization" name="department_medical_organization" autocomplete="off">
         <br><br>
         <label>Исход госпитализации:
             <select name="outcome_hospitalization" size="1">
@@ -112,36 +111,48 @@
         </label>
         <br><br>
         <label for="date_time_discharge">Дата и время исхода:</label>
-        <input type="text" id="date_time_discharge" name="date_time_discharge" autocomplete="off" value="${full_time}"
-               maxlength="16" required/>
+        <input type="datetime-local" id="date_time_discharge" name="date_time_discharge" autocomplete="off">
+
+
         <br><br>
+
         <label for="medical_organization_transferred">Наименование медицинской организации, куда переведен пациент:</label>
-        <input type="text" id="medical_organization_transferred" name="medical_organization_transferred" autocomplete="off"/>
+
+        <input type="text" id="medical_organization_transferred" name="medical_organization_transferred" autocomplete="off">
+
         <br><br>
-        <label for="date_time_inform">Дата и время сообщения законному представителю, иному лицу
-            или медицинской организации, направившей пациента, о госпитализации
-            (отказе в госпитализации) пациента, ее исходе:</label>
-        <input type="text" id="date_time_inform" name="date_time_inform" autocomplete="off" value="${full_time}"
-               maxlength="16" required/>
+        <label for="date_time_inform"> Дата и время сообщения законному представителю, иному лицу
+            или медицинской организации, направившей пациента, о госпитализации (отказе в госпитализации) пациента, ее исходе: </label>
+        <input type="datetime-local" id="date_time_inform" name="date_time_inform" autocomplete="off">
+
         <br><br>
-        <label>В случае отказа в госпитализации в стационар, дневной стационар:</label>
+
+        <label> В случае отказа в госпитализации в стационар, дневной стационар: </label>
+
         <br><br>
+
         <label for="reason_refusals">Причина отказа в гослитализации:
             <select name="reason_refusal" size="1">
+
                 <option selected value="отказался пациент">отказался пациент</option>
+
                 <option value="отсутствие показаний">отсутствие показаний</option>
+
                 <option value="помощь оказана в приемном отделении медицинской организации">помощь оказана в приемном отделении медицинской организации</option>
+
                 <option value="направлен в другую медицинскую организацию">направлен в другую медицинскую организацию</option>
+
                 <option value="иная причина">иная причина</option>
+
             </select>
         </label>
         <br><br>
         <label for="full_name_medical_worker">Фамилия, имя, отчество (при наличии) медицинского работника,
             зафиксировавшего причину отказа в госпитализации:</label>
-        <input type="text" id="full_name_medical_worker" name="full_name_medical_worker" autocomplete="off"/>
+        <input type="text" id="full_name_medical_worker" name="full_name_medical_worker" autocomplete="off">
         <br><br>
         <label for="additional_information">Дополнительные сведения:</label>
-        <input type="text" id="additional_information" name="additional_information" autocomplete="off"/>
+        <input type="text" id="additional_information" name="additional_information" autocomplete="off">
         <br><br>
 
         <input type="submit" value="Добавить запись">
@@ -149,6 +160,7 @@
 
 
         <hr>
+
     </form>
 
 
@@ -156,6 +168,7 @@
 
 
     <script>
+
         $(document).ready(function() {
             $('#address').on('input', function() {
                 const query = $(this).val();
@@ -434,6 +447,25 @@
                 value = value.slice(0, 2) + ' ' + value.slice(2, 4) + ' ' + value.slice(4);
             } else if (value.length > 2) {
                 value = value.slice(0, 2) + ' ' + value.slice(2);
+            }
+
+            // Обновляем значение input
+            input.value = value;
+        }
+
+        function formatDateTimeInput(input) {
+            // Убираем все нецифровые символы
+            let value = input.value.replace(/\D/g, '');
+
+            // Форматируем строку с добавлением пробелов и точек
+            if (value.length >= 8) {
+                value = value.slice(0, 2) + '.' + value.slice(2, 4) + '.' + value.slice(4, 9) + ' ' + value.slice(8, 10) + ':' + (value.length > 10 ? value.slice(10, 12) : '');
+            } else if (value.length >= 6) {
+                value = value.slice(0, 2) + '.' + value.slice(2, 4) + '.' + value.slice(4, 9) + ' ' + value.slice(8, 10);
+            } else if (value.length >= 4) {
+                value = value.slice(0, 2) + '.' + value.slice(2, 4) + '.' + value.slice(4);
+            } else if (value.length >= 2) {
+                value = value.slice(0, 2) + '.' + value.slice(2);
             }
 
             // Обновляем значение input
