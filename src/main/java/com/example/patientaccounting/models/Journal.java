@@ -50,7 +50,7 @@ public class Journal {
 
     private String nationality;
 
-    private String place_residence;
+    private String address;
 
     private String registration_place_stay;
 
@@ -64,17 +64,25 @@ public class Journal {
 
     private String medical_card;
 
-    private String diagnosis_disease;
+    private String medical;
 
     private String cause_injury;
 
     private String fact_alcohol;
+
+    private String date_time_alcohol;
+
+    private String result_research;
 
     private String department_medical_organization;
 
     private String outcome_hospitalization;
 
     private String date_time_discharge;
+
+    private String medical_organization_transferred;
+
+    private String date_time_inform;
 
     private String reason_refusal;
 

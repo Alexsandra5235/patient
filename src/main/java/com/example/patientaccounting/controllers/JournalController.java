@@ -31,11 +31,7 @@ public class JournalController {
     @GetMapping("/")
     public String journal(@RequestParam(name = "full_name", required = false) String fullName, Model model) {
 
-        String full_time = String.format(LocalDate.now() + " " + LocalTime.now());
         model.addAttribute("journals", journalService.journalList(fullName));
-        model.addAttribute("date_now", LocalDate.now());
-        model.addAttribute("time_now", journalService.getLocalTime());
-        model.addAttribute("full_time", full_time);
 
         if (fullName != null) {
             model.addAttribute("full_name", fullName);
@@ -43,8 +39,18 @@ public class JournalController {
         return "journal";
     }
 
-    @PostMapping("/journal/save")
-    public String saveJournal(Journal journal) {
+    @GetMapping("/journal/save")
+    public String saveJournal(Journal journal, Model model) {
+        String full_time = String.format(LocalDate.now() + " " + journalService.getLocalTime());
+
+        model.addAttribute("date_now", LocalDate.now());
+        model.addAttribute("time_now", journalService.getLocalTime());
+        model.addAttribute("full_time", full_time);
+        return "addJournal";
+    }
+
+    @PostMapping("/journal/add")
+    public String addJournal(Journal journal) {
         journalService.saveRecord(journal);
         return "redirect:/";
     }
