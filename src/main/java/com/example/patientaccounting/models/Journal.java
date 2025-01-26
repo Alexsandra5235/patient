@@ -101,9 +101,16 @@ public class Journal {
         int month = date_receipt.getMonthValue();
         int day = date_receipt.getDayOfMonth();
 
-        int yearBD = birth_day.getYear();
-        int monthBD = birth_day.getMonthValue();
-        int dayBD = birth_day.getDayOfMonth();
+        int yearBD = 0;
+        int monthBD = 0;
+        int dayBD = 0;
+
+        if (birth_day != null){
+            yearBD = birth_day.getYear();
+            monthBD = birth_day.getMonthValue();
+            dayBD = birth_day.getDayOfMonth();
+        }
+
 
         DateTimeFormatter fmt = DateTimeFormatter.ofPattern("HH:mm");
 

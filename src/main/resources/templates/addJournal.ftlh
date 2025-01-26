@@ -26,19 +26,23 @@
         #medicalOrgField {
             display: none; /* Скрываем поле по умолчанию */
         }
+
+        #h3{
+            text-align: center;
+        }
     </style>
 </head>
 <body>
-    <h3 align="center">ЖУРНАЛ УЧЕТА ПРИЕМА ПАЦИЕНТОВ И ОТКАЗОВ В ОКАЗАНИИ МЕДИЦИНСКОЙ ПОМОЩИ<br>
+    <h3 id="h3">ЖУРНАЛ УЧЕТА ПРИЕМА ПАЦИЕНТОВ И ОТКАЗОВ В ОКАЗАНИИ МЕДИЦИНСКОЙ ПОМОЩИ<br>
         В СТАЦИОНАРНЫХ УСЛОВИЯХ, В УСЛОВИЯХ ДНЕВНОГО СТАЦИОНАРА</h3>
     <form action="/journal/add" method="post" autocomplete="off">
         <h4>Добавление записи</h4>
         <hr>
-        <label>Дата поступления: <input type="date" name="date_receipt" value="${date_now}"></label><br><br>
-        <label>Время поступления: <input type="text" name="string_time_receipt" maxlength="5" value="${time_now}" oninput="formatTimeInput(this)"></label><br><br>
-        <label>Фамилия, имя, отчестов (при наличии): <input type="text" name="full_name" placeholder="Иванов Иван Иванович" autocomplete="off"></label><br><br>
-        <label>Дата рождения (число, месяц, год): <input type="date" name="birth_day"></label><br><br>
-        <label>Пол (мужской, женский): <select name="gender" size="1">
+        <label>Дата поступления: <input type="date" name="date_receipt" value="${date_now}" required></label><br><br>
+        <label>Время поступления: <input type="text" name="string_time_receipt" maxlength="5" value="${time_now}" oninput="formatTimeInput(this)" required></label><br><br>
+        <label>Фамилия, имя, отчестов (при наличии): <input type="text" name="full_name" placeholder="Иванов Иван Иванович" autocomplete="off" required></label><br><br>
+        <label>Дата рождения (число, месяц, год): <input type="date" name="birth_day" required></label><br><br>
+        <label>Пол (мужской, женский): <select name="gender" size="1" required>
                 <option selected value="мужской">мужской</option>
                 <option value="женский">женский</option>
             </select>
@@ -134,7 +138,7 @@
 
         <br><br>
 
-        <label> В случае отказа в госпитализации в стационар, дневной стационар: </label>
+        <h4> В случае отказа в госпитализации в стационар, дневной стационар: </h4>
 
         <br><br>
 
