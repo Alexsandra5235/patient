@@ -22,6 +22,10 @@
         .suggestion-item-cause:hover {
             background-color: #f0f0f0;
         }
+
+        #medicalOrgField {
+            display: none; /* Скрываем поле по умолчанию */
+        }
     </style>
 </head>
 <body>
@@ -31,7 +35,7 @@
         <h4>Добавление записи</h4>
         <hr>
         <label>Дата поступления: <input type="date" name="date_receipt" value="${date_now}"></label><br><br>
-        <label>Время поступления: <input type="text" name="string_time_receipt" value="${time_now}"></label><br><br>
+        <label>Время поступления: <input type="text" name="string_time_receipt" maxlength="5" value="${time_now}" oninput="formatTimeInput(this)"></label><br><br>
         <label>Фамилия, имя, отчестов (при наличии): <input type="text" name="full_name" placeholder="Иванов Иван Иванович" autocomplete="off"></label><br><br>
         <label>Дата рождения (число, месяц, год): <input type="date" name="birth_day"></label><br><br>
         <label>Пол (мужской, женский): <select name="gender" size="1">
@@ -65,7 +69,7 @@
         <input type="text" id="snils" name="snils" maxlength="14" oninput="formatSnils(this)" autocomplete="off">
         <br><br>
         <label for="polis">Полис обязательного медицинского страхования (при наличии):</label>
-        <input type="text" id="polis" name="polis" maxlength="16" autocomplete="off">
+        <input type="text" id="polis" name="polis" maxlength="16" autocomplete="off" oninput="this.value = this.value.replace(/[^0-9]/g, '')">
         <br><br>
         <label>Пациент доставлен (направлен): <select name="delivered" size="1">
                 <option selected value="полицией">полицией</option>
@@ -79,13 +83,15 @@
         <label for="medical">Диагноз заболевания (состояния), поставленный направившей медицинской организацией,<br>
             выездной бригадой скорой медицинской помощи (код по МКБ)
         </label>
-        <input type="text" id="medical" name="medical" oninput="this.value = this.value.replace(/[^0-9a-zA-Z.]/g, '')">
+        <input type="text" id="medical" name="medical" oninput="toUpperCaseInput(this)">
+        <small>Только буквы английского алфавита</small>
         <div id="suggestions_medical"></div>
         <br><br>
         <label for="cause_injury">Причина и обстоятельства трамвы (в том числе при дорожно-транспортных проишествиях)
             отравления (код по МКБ)
         </label>
-        <input type="text" id="cause_injury" name="cause_injury" oninput="this.value = this.value.replace(/[^0-9a-zA-Z.]/g, '')">
+        <input type="text" id="cause_injury" name="cause_injury" oninput="toUpperCaseInput(this)">
+        <small>Только буквы английского алфавита</small>
         <div id="suggestions_cause"></div>
         <br><br>
         <label for="fact_alcohol">Факт употребления алкоголя и иных психоактивных веществ,<br>
@@ -103,7 +109,7 @@
         <input type="text" id="department_medical_organization" name="department_medical_organization" autocomplete="off">
         <br><br>
         <label>Исход госпитализации:
-            <select name="outcome_hospitalization" size="1">
+            <select name="outcome_hospitalization" size="1" onchange="toggleMedicalOrgField(this)">
                 <option selected value="выписан">выписан</option>
                 <option value="переведен в другую медицинскую организацию">переведен в другую медицинскую организацию</option>
                 <option value="умер">умер</option>
@@ -116,12 +122,13 @@
 
         <br><br>
 
-        <label for="medical_organization_transferred">Наименование медицинской организации, куда переведен пациент:</label>
-
-        <input type="text" id="medical_organization_transferred" name="medical_organization_transferred" autocomplete="off">
+        <div id="medicalOrgField">
+            <label for="medical_organization_transferred">Наименование медицинской организации, куда переведен пациент:</label>
+            <input type="text" id="medical_organization_transferred" name="medical_organization_transferred" autocomplete="off">
+        </div>
 
         <br><br>
-        <label for="date_time_inform"> Дата и время сообщения законному представителю, иному лицу
+        <label for="date_time_inform"> Дата и время сообщения законному представителю, иному лицу<br>
             или медицинской организации, направившей пациента, о госпитализации (отказе в госпитализации) пациента, ее исходе: </label>
         <input type="datetime-local" id="date_time_inform" name="date_time_inform" autocomplete="off">
 
@@ -149,7 +156,7 @@
         <br><br>
         <label for="full_name_medical_worker">Фамилия, имя, отчество (при наличии) медицинского работника,
             зафиксировавшего причину отказа в госпитализации:</label>
-        <input type="text" id="full_name_medical_worker" name="full_name_medical_worker" autocomplete="off">
+        <input type="text" id="full_name_medical_worker" name="full_name_medical_worker" autocomplete="off" placeholder="Иванов Иван Иванович">
         <br><br>
         <label for="additional_information">Дополнительные сведения:</label>
         <input type="text" id="additional_information" name="additional_information" autocomplete="off">
@@ -376,8 +383,8 @@
                 // Управление положением курсора
                 const input = document.getElementById('medical').value.length;
 
-                // input.focus();
-                // input.setSelectionRange(input.value.length, input.value.length);
+                input.focus();
+                input.setSelectionRange(input.value.length, input.value.length);
 
                 const originalString = $(this).text();
                 const trimmedString = originalString.split(' - ')[0];
@@ -421,8 +428,8 @@
                 // Управление положением курсора
                 const input = document.getElementById('medical').value.length;
 
-                // input.focus();
-                // input.setSelectionRange(input.value.length, input.value.length);
+                input.focus();
+                input.setSelectionRange(input.value.length, input.value.length);
 
                 const originalString = $(this).text();
                 const trimmedString = originalString.split(' - ')[0];
@@ -453,23 +460,35 @@
             input.value = value;
         }
 
-        function formatDateTimeInput(input) {
+        function formatTimeInput(input) {
             // Убираем все нецифровые символы
             let value = input.value.replace(/\D/g, '');
 
             // Форматируем строку с добавлением пробелов и точек
-            if (value.length >= 8) {
-                value = value.slice(0, 2) + '.' + value.slice(2, 4) + '.' + value.slice(4, 9) + ' ' + value.slice(8, 10) + ':' + (value.length > 10 ? value.slice(10, 12) : '');
-            } else if (value.length >= 6) {
-                value = value.slice(0, 2) + '.' + value.slice(2, 4) + '.' + value.slice(4, 9) + ' ' + value.slice(8, 10);
-            } else if (value.length >= 4) {
-                value = value.slice(0, 2) + '.' + value.slice(2, 4) + '.' + value.slice(4);
+            if (value.length >= 4) {
+                value = value.slice(0, 2) + ':' + value.slice(2, 5);
             } else if (value.length >= 2) {
-                value = value.slice(0, 2) + '.' + value.slice(2);
+                value = value.slice(0, 2) + ':' + value.slice(2);
             }
 
             // Обновляем значение input
             input.value = value;
+        }
+
+        function toUpperCaseInput(input) {
+
+            // Обновляем значение input
+            input.value = input.value.replace(/[^0-9a-zA-Z.]/g, '').toUpperCase();
+        }
+
+        function toggleMedicalOrgField(selectElement) {
+            const medicalOrgField = document.getElementById('medicalOrgField');
+            // Проверяем выбрано ли значение "переведен"
+            if (selectElement.value === 'переведен в другую медицинскую организацию') {
+                medicalOrgField.style.display = 'block'; // Показываем поле
+            } else {
+                medicalOrgField.style.display = 'none'; // Скрываем поле
+            }
         }
 
     </script>
