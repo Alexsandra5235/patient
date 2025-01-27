@@ -19,6 +19,7 @@ public class JournalService {
     private final JournalRepository journalRepository;
 
     public List<Journal> journalList(String fullName){
+        log.info(fullName);
         if (fullName != null) return journalRepository.findByFullName(fullName);
         return journalRepository.findAll();
     }

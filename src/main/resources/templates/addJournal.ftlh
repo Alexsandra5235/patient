@@ -183,7 +183,7 @@
             </select>
 
             <label class="form-label" for="medical_card">Номер медицинской карты</label>
-            <input class="form-control" type="text" name="medical_card" id="medical_card">
+            <input class="form-control" type="text" name="medical_card" id="medical_card" required>
 
             <label class="form-label" for="medical">Диагноз заболевания (состояния), поставленный направившей медицинской организацией,<br>
                 выездной бригадой скорой медицинской помощи (код по МКБ)
