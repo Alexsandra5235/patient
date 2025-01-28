@@ -18,6 +18,8 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.List;
 
+import static com.example.patientaccounting.Constants.*;
+
 
 @Controller
 @RequiredArgsConstructor
@@ -46,6 +48,7 @@ public class JournalController {
         model.addAttribute("date_now", LocalDate.now());
         model.addAttribute("time_now", journalService.getLocalTime());
         model.addAttribute("full_time", full_time);
+        model.addAttribute("full_name", journal.getFull_name());
         return "addJournal";
     }
 
@@ -59,7 +62,13 @@ public class JournalController {
 
     @GetMapping("/journal/edit/{id}")
     public String editJournal(@PathVariable Long id, Model model) {
+
         model.addAttribute("journal", journalService.getRecordById(id));
+        model.addAttribute("options", options);
+        model.addAttribute("optionsGender", optionsGender);
+        model.addAttribute("optionsDelivered", optionsDelivered);
+        model.addAttribute("optionsReason", optionsReason);
+
         return "edit";
     }
 
@@ -84,10 +93,12 @@ public class JournalController {
         return journalExportExcel.exportToExcel(journals, journalService.getNormalDate(data1), journalService.getNormalDate(data2));
     }
 
-//    @GetMapping("/api/suggest-address")
-//    public void suggestAddress(@RequestParam(name = "place_residence", required = false) String place_residence, Model model) {
-//        model.addAttribute("address",addressService.getAddressSuggestions(place_residence));
-//    }
+    @GetMapping("/journal/info/{id}")
+    public String infoJournal(@PathVariable Long id, Model model) {
+        model.addAttribute("journal", journalService.getRecordById(id));
+        model.addAttribute("option", options.get(1));
+        return "infoJournal";
+    }
 
 
 

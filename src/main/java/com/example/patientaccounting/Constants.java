@@ -124,25 +124,14 @@ public interface Constants {
 
     String API_KEY = "Token 261bcf342fdec1c70353bfea95be90efb50e3096";
 
-    String TOKEN_ENPOINT = "https://icdaccessmanagement.who.int/connect/token";
-    String CLIENT_ID = "026d1543-e74c-4d5d-96eb-41acd1f449fc_a8d7f2d6-f4da-4deb-b26c-22bc456da9a5";
-    String CLIENT_SECRET = "Jo6Ui65LovYE3DC2Pn232bU6uWZv5LZonFN49L/NeK8=";
-    String SCOPE = "icdapi_access";
-    String GRANT_TYPE = "client_credentials";
+    List<String> options = List.of("выписан", "переведен в другую медицинскую организацию", "умер");
 
-    String uri = "https://id.who.int/icd/release/10";
+    List<String> optionsGender = List.of("мужской","женский");
 
-    String fullUri = "https://id.who.int/icd/release/10";
+    List<String> optionsDelivered = List.of("полицией","выездной бригадой скорой медицинской помощи","другой медицинской организацией","обратился самостоятельно");
 
-    String API_KEY_TRANSLATE = "f7fed76e91msh4439cba297aa424p10966ejsnd2ce6703742a";
+    List<String> optionsReason = List.of("отказался пациент","отсутствие показаний","помощь оказана в приемном отделении медицинской организации","направлен в другую медицинскую организацию","иная причина");
 
-    String API_URL_TRANSLATE = "https://ftapi.pythonanywhere.com/translate?sl=en&dl=ru&text=";
-
-//    {
-//        "sourceLanguageCode": "en",
-//            "targetLanguageCode": "ru",
-//            "contents": ["Dr. Watson, come here!", "Bring me some coffee!"]
-//    }
 
 
 

@@ -182,7 +182,16 @@
                 <option value="обратился самостоятельно">обратился самостоятельно</option>
             </select>
 
-            <label class="form-label" for="medical_card">Номер медицинской карты</label>
+            <label class="form-label" for="medical_card">Номер медицинской карты
+                <a href="#" style="text-decoration: none"
+                   data-bs-toggle="tooltip" data-bs-placement="top"
+                   data-bs-custom-class="custom-tooltip"
+                   data-bs-title="Это поле обязательно для заполнения">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="currentColor" style="color: dodgerblue" class="bi bi-asterisk" viewBox="0 0 16 16">
+                        <path d="M8 0a1 1 0 0 1 1 1v5.268l4.562-2.634a1 1 0 1 1 1 1.732L10 8l4.562 2.634a1 1 0 1 1-1 1.732L9 9.732V15a1 1 0 1 1-2 0V9.732l-4.562 2.634a1 1 0 1 1-1-1.732L6 8 1.438 5.366a1 1 0 0 1 1-1.732L7 6.268V1a1 1 0 0 1 1-1"/>
+                    </svg>
+                </a>
+            </label><br>
             <input class="form-control" type="text" name="medical_card" id="medical_card" required>
 
             <label class="form-label" for="medical">Диагноз заболевания (состояния), поставленный направившей медицинской организацией,<br>
@@ -266,12 +275,26 @@
             <label class="form-label" for="additional_information">Дополнительные сведения</label>
             <input class="form-control" type="text" id="additional_information" name="additional_information" autocomplete="off">
 
-            <input type="submit" value="Добавить запись" class="btn btn-primary">
+            <input type="submit" value="Добавить запись" class="btn btn-primary" id="liveToastBtn">
 
             <hr>
 
         </form>
     </div>
+
+<#--    <div class="toast-container position-fixed bottom-0 end-0 p-3">-->
+<#--        <div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">-->
+<#--            <div class="toast-header">-->
+<#--                <img src="..." class="rounded me-2" alt="...">-->
+<#--                <strong class="me-auto">JOURNAL</strong>-->
+<#--                <small>сейчас</small>-->
+<#--                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Закрыть"></button>-->
+<#--            </div>-->
+<#--            <div class="toast-body">-->
+<#--                Запись о пациенте ${full_name} успешно добавлена.-->
+<#--            </div>-->
+<#--        </div>-->
+<#--    </div>-->
 
     <script>
 
@@ -614,6 +637,16 @@
             } else {
                 medicalOrgField.style.display = 'none'; // Скрываем поле
             }
+        }
+
+        const toastTrigger = document.getElementById('liveToastBtn')
+        const toastLiveExample = document.getElementById('liveToast')
+
+        if (toastTrigger) {
+            const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toastLiveExample)
+            toastTrigger.addEventListener('click', () => {
+                toastBootstrap.show()
+            })
         }
 
 

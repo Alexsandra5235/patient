@@ -79,6 +79,10 @@ public class Journal {
 
     private String outcome_hospitalization;
 
+    private LocalTime time_outcome;
+
+    private String normal_date_outcome;
+
     private LocalDateTime date_time_discharge;
 
     private String medical_organization_transferred;
@@ -90,6 +94,10 @@ public class Journal {
     private String full_name_medical_worker;
 
     private String additional_information;
+
+    private String full_outcome_hospitalization;
+
+    private LocalDate date_discharge;
 
 //    public @Pattern(regexp = "^([01]\\d|2[0-3]):[0-5]\\d$", message = "Время должно быть в формате HH:mm") LocalTime getTime_receipt() {
 //        return time_receipt;
@@ -121,6 +129,37 @@ public class Journal {
 
         hour = time_receipt.getHour();
         minute = time_receipt.getMinute();
+
+//        date_discharge = date_time_discharge.toLocalDate();
+//
+//        int day_outcome = date_discharge.getDayOfMonth();
+//        int month_outcome = date_discharge.getMonthValue();
+//        int year_outcome = date_discharge.getYear();
+//        normal_date_outcome = String.format("%02d.%02d.%04d", day_outcome, month_outcome, year_outcome);
+
+
+
+//        full_outcome_hospitalization = String.format(outcome_hospitalization + " " + date_outcome + " " + time_outcome + " " + medical_organization_transferred);
+
+
+//        if ( (!outcome_hospitalization.isEmpty()) && (date_time_discharge != null) && (!medical_organization_transferred.isEmpty())){
+//
+//            full_outcome_hospitalization = String.format(outcome_hospitalization + ", " + date_outcome + " " + time_outcome + ", " + medical_organization_transferred);
+//
+//        } else if ((!outcome_hospitalization.isEmpty()) && (date_time_discharge != null)){
+//
+//            full_outcome_hospitalization = String.format(outcome_hospitalization + ", " + date_outcome + " " + time_outcome);
+//
+//        } else if (!medical_organization_transferred.isEmpty()){
+//
+//            full_outcome_hospitalization += String.format(medical_organization_transferred + " ");
+//
+//        } else {
+//
+//            full_outcome_hospitalization += "";
+//
+//        }
+
     }
 
 
