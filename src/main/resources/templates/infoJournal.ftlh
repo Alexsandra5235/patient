@@ -112,7 +112,7 @@
             <input class="form-select" type="text" id="outcome_hospitalization" <#if journal.outcome_hospitalization??>value="${journal.outcome_hospitalization}"</#if>>
 
             <label class="form-label" for="date_time_discharge">Дата и время исхода</label>
-            <input class="form-control" type="datetime-local" id="date_time_discharge" <#if journal.date_time_discharge??>value="${journal.date_time_discharge}"</#if>>
+            <input class="form-control" type="datetime-local" id="date_time_discharge" <#if journal.local_date_time_discharge??>value="${journal.local_date_time_discharge}"</#if>>
 
             <#if journal.outcome_hospitalization == option>
                 <label class="form-label" for="medical_organization_transferred">Наименование медицинской организации, куда переведен пациент</label>

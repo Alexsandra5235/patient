@@ -62,7 +62,7 @@
 
             <#list journals as journal>
                 <tr>
-                    <td><#if journal.date_receipt??> ${journal.normal_date} </#if></td>
+                    <td><#if journal.normal_date??> ${journal.normal_date} </#if></td>
                     <td><#if journal.string_time_receipt??> ${journal.string_time_receipt} </#if></td>
                     <td><#if journal.full_name??> ${journal.full_name} </#if></td>
                     <td><#if journal.birth_day??> ${journal.normal_birth_day} </#if></td>

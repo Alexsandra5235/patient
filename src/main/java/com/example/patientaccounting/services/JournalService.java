@@ -68,10 +68,16 @@ public class JournalService {
     }
 
     public String getNormalDate(LocalDate date){
-        int day = date.getDayOfMonth();
-        int mouth = date.getMonthValue();
-        int year = date.getYear();
-        return String.format("%02d.%02d.%04d", day, mouth, year);
+        if (date != null){
+            int day = date.getDayOfMonth();
+            int mouth = date.getMonthValue();
+            int year = date.getYear();
+            return String.format("%02d.%02d.%04d", day, mouth, year);
+        }
+        else {
+            return null;
+        }
+
     }
 
     public LocalDateTime getAdmissionDateTime(LocalDate date, LocalTime time) {
@@ -90,9 +96,9 @@ public class JournalService {
 
         return journalList(null).stream()
                 .filter(journal ->
-                        (!getAdmissionDateTime(journal.getDate_receipt(),journal.getTime_receipt())
+                        (!getAdmissionDateTime(journal.getDate_receipt(),LocalTime.parse(journal.getString_time_receipt()))
                                 .isBefore(startDateTime))
-                        && (!getAdmissionDateTime(journal.getDate_receipt(),journal.getTime_receipt())
+                        && (!getAdmissionDateTime(journal.getDate_receipt(),LocalTime.parse(journal.getString_time_receipt()))
                                 .isAfter(endDateTime))).toList();
 
 

@@ -4,6 +4,9 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -23,12 +26,11 @@ public class Journal {
     @Column(name = "date_receipt")
     private LocalDate date_receipt;
 
+    // Для отображения в таблице в формате dd.mm.yyyy
     @Column(name = "normal_date")
     private String normal_date;
 
-    @Column(name = "time_receipt")
-    private LocalTime time_receipt;
-
+    // Для отображения в таблице в формате hh:mm
     @Column(name = "string_time_receipt")
     private String string_time_receipt;
 
@@ -38,12 +40,9 @@ public class Journal {
     @Column(name = "birth_day")
     private LocalDate birth_day;
 
+    // Для отображения в таблице в формате dd.mm.yyyy
     @Column(name = "normal_birth_day")
     private String normal_birth_day;
-
-    private int hour;
-
-    private int minute;
 
     private String gender;
 
@@ -79,11 +78,11 @@ public class Journal {
 
     private String outcome_hospitalization;
 
-    private LocalTime time_outcome;
+    // Дата и время выписки
+    private String date_time_discharge;
 
-    private String normal_date_outcome;
-
-    private LocalDateTime date_time_discharge;
+    // Дата и время выписки для заполнения input
+    private LocalDateTime local_date_time_discharge;
 
     private String medical_organization_transferred;
 
@@ -95,75 +94,38 @@ public class Journal {
 
     private String additional_information;
 
-    private String full_outcome_hospitalization;
-
-    private LocalDate date_discharge;
-
-//    public @Pattern(regexp = "^([01]\\d|2[0-3]):[0-5]\\d$", message = "Время должно быть в формате HH:mm") LocalTime getTime_receipt() {
-//        return time_receipt;
-//    }
-
+    @PreUpdate
     @PrePersist
     protected void onCreate() {
-        int year = date_receipt.getYear();
-        int month = date_receipt.getMonthValue();
-        int day = date_receipt.getDayOfMonth();
 
-        int yearBD = 0;
-        int monthBD = 0;
-        int dayBD = 0;
-
-        if (birth_day != null){
-            yearBD = birth_day.getYear();
-            monthBD = birth_day.getMonthValue();
-            dayBD = birth_day.getDayOfMonth();
+        // Изменение даты поступления по формату
+        if (date_receipt != null) {
+            normal_date = getNormalData(date_receipt);
         }
 
+        // Изменение даты рождения по формату
+        if (birth_day != null){
+            normal_birth_day = getNormalData(birth_day);
+        }
 
-        DateTimeFormatter fmt = DateTimeFormatter.ofPattern("HH:mm");
+        // Изменение даты выписки по формату
+        if (!date_time_discharge.isEmpty()){
+            local_date_time_discharge = LocalDateTime.parse(date_time_discharge);
 
-        time_receipt = LocalTime.parse(string_time_receipt, fmt);
+            String normal_date_discharge = getNormalData(local_date_time_discharge.toLocalDate());
 
-        normal_date = String.format("%02d.%02d.%04d", day, month, year);
-        normal_birth_day = String.format("%02d.%02d.%04d", dayBD, monthBD, yearBD);
-
-        hour = time_receipt.getHour();
-        minute = time_receipt.getMinute();
-
-//        date_discharge = date_time_discharge.toLocalDate();
-//
-//        int day_outcome = date_discharge.getDayOfMonth();
-//        int month_outcome = date_discharge.getMonthValue();
-//        int year_outcome = date_discharge.getYear();
-//        normal_date_outcome = String.format("%02d.%02d.%04d", day_outcome, month_outcome, year_outcome);
-
-
-
-//        full_outcome_hospitalization = String.format(outcome_hospitalization + " " + date_outcome + " " + time_outcome + " " + medical_organization_transferred);
-
-
-//        if ( (!outcome_hospitalization.isEmpty()) && (date_time_discharge != null) && (!medical_organization_transferred.isEmpty())){
-//
-//            full_outcome_hospitalization = String.format(outcome_hospitalization + ", " + date_outcome + " " + time_outcome + ", " + medical_organization_transferred);
-//
-//        } else if ((!outcome_hospitalization.isEmpty()) && (date_time_discharge != null)){
-//
-//            full_outcome_hospitalization = String.format(outcome_hospitalization + ", " + date_outcome + " " + time_outcome);
-//
-//        } else if (!medical_organization_transferred.isEmpty()){
-//
-//            full_outcome_hospitalization += String.format(medical_organization_transferred + " ");
-//
-//        } else {
-//
-//            full_outcome_hospitalization += "";
-//
-//        }
+            String timeDischarge = local_date_time_discharge.toLocalTime().toString();
+            date_time_discharge = String.format(normal_date_discharge + " " + timeDischarge);
+        }
 
     }
 
+    protected String getNormalData(LocalDate data){
+        int yearDischarge = data.getYear();
+        int monthDischarge = data.getMonthValue();
+        int dayDischarge = data.getDayOfMonth();
 
-
-
+        return String.format("%02d.%02d.%04d", dayDischarge, monthDischarge, yearDischarge);
+    }
 
 }
