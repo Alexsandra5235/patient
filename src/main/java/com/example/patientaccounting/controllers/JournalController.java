@@ -48,7 +48,11 @@ public class JournalController {
         model.addAttribute("date_now", LocalDate.now());
         model.addAttribute("time_now", journalService.getLocalTime());
         model.addAttribute("full_time", full_time);
-        model.addAttribute("full_name", journal.getFull_name());
+
+        model.addAttribute("options", options);
+        model.addAttribute("optionsGender", optionsGender);
+        model.addAttribute("optionsDelivered", optionsDelivered);
+        model.addAttribute("optionsReason", optionsReason);
         return "addJournal";
     }
 

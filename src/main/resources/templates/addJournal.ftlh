@@ -59,15 +59,8 @@
         .form-control, .form-select {
             margin-bottom: 25px;
         }
+
     </style>
-
-<#--    <!-- Bootstrap CSS &ndash;&gt;-->
-<#--    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css"-->
-<#--          integrity="sha384-zCbKRCUGaJDkqS1kPbPd7TveP5iyJE0EjAuZQTgFLD2ylzuqKfdKlfG/eSrtxUkn"-->
-<#--          crossorigin="anonymous">-->
-
-<#--    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">-->
-<#--    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">-->
 
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
@@ -140,8 +133,10 @@
                 </a>
             </label><br>
             <select class="form-select" name="gender" id="gender" size="1" required>
-                <option selected value="мужской">мужской</option>
-                <option value="женский">женский</option>
+                <option value="" style="font-weight: bold">Пожалуйста, сделайте выбор</option>
+                <#list optionsGender as option>
+                    <option value="${option}">${option}</option>
+                </#list>
             </select>
 
             <label class="form-label" for="password">Серия и номер паспорта или иного документа, удостоверяющего личность (при наличии)</label><br>
@@ -176,10 +171,10 @@
 
             <label class="form-label" for="delivered">Пациент доставлен (направлен)</label>
             <select class="form-select" name="delivered" id="delivered" size="1">
-                <option selected value="полицией">полицией</option>
-                <option value="выездной бригадой скорой медицинской помощи">выездной бригадой скорой медицинской помощи</option>
-                <option value="другой медицинской организацией">другой медицинской организацией</option>
-                <option value="обратился самостоятельно">обратился самостоятельно</option>
+                <option value="" style="font-weight: bold">Пожалуйста, сделайте выбор</option>
+                <#list optionsDelivered as option>
+                    <option value="${option}">${option}</option>
+                </#list>
             </select>
 
             <label class="form-label" for="medical_card">Номер медицинской карты
@@ -240,9 +235,10 @@
 
             <label class="form-label" for="outcome_hospitalization">Исход госпитализации</label>
             <select class="form-select" name="outcome_hospitalization" id="outcome_hospitalization" size="1" onchange="toggleMedicalOrgField(this)">
-                <option selected value="выписан">выписан</option>
-                <option value="переведен в другую медицинскую организацию">переведен в другую медицинскую организацию</option>
-                <option value="умер">умер</option>
+                <option value="" style="font-weight: bold">Пожалуйста, сделайте выбор</option>
+                <#list options as option>
+                    <option value="${option}">${option}</option>
+                </#list>
             </select>
 
             <label class="form-label" for="date_time_discharge">Дата и время исхода</label>
@@ -261,11 +257,10 @@
 
             <label class="form-label" for="reason_refusal">Причина отказа в гослитализации</label>
             <select class="form-select" name="reason_refusal" id="reason_refusal" size="1">
-                <option selected value="отказался пациент">отказался пациент</option>
-                <option value="отсутствие показаний">отсутствие показаний</option>
-                <option value="помощь оказана в приемном отделении медицинской организации">помощь оказана в приемном отделении медицинской организации</option>
-                <option value="направлен в другую медицинскую организацию">направлен в другую медицинскую организацию</option>
-                <option value="иная причина">иная причина</option>
+                <option value="" selected style="font-weight: bold"> Пожалуйста, сделайте выбор...</option>
+                <#list optionsReason as option>
+                    <option value="${option}">${option}</option>
+                </#list>
             </select>
 
             <label class="form-label" for="full_name_medical_worker">Фамилия, имя, отчество (при наличии) медицинского работника,
@@ -282,19 +277,6 @@
         </form>
     </div>
 
-<#--    <div class="toast-container position-fixed bottom-0 end-0 p-3">-->
-<#--        <div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">-->
-<#--            <div class="toast-header">-->
-<#--                <img src="..." class="rounded me-2" alt="...">-->
-<#--                <strong class="me-auto">JOURNAL</strong>-->
-<#--                <small>сейчас</small>-->
-<#--                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Закрыть"></button>-->
-<#--            </div>-->
-<#--            <div class="toast-body">-->
-<#--                Запись о пациенте ${full_name} успешно добавлена.-->
-<#--            </div>-->
-<#--        </div>-->
-<#--    </div>-->
 
     <script>
 
