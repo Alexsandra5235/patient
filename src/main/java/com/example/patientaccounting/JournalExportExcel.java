@@ -1,21 +1,34 @@
 package com.example.patientaccounting;
 
 import com.example.patientaccounting.models.Journal;
+import com.example.patientaccounting.models.Report;
+import com.example.patientaccounting.services.ReportService;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.ss.util.CellRangeAddress;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Service;
 
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.List;
 
 import static com.example.patientaccounting.Constants.*;
 
+@Service
+@Slf4j
+@RequiredArgsConstructor
 public class JournalExportExcel {
+
+    private final ReportService reportService;
 
     Row rowCurrent;
     Cell cellCurrent;
@@ -410,6 +423,14 @@ public class JournalExportExcel {
         workbook.close();
 
         byte[] bytes = outputStream.toByteArray();
+
+        // Сохранение в базе данных
+        Report report = new Report();
+        report.setFileName("report.xlsx");
+        report.setFileContent(bytes);
+        report.setCreatedAt(LocalDateTime.now());
+
+        reportService.saveReportByBD(report);
 
         HttpHeaders headers = new HttpHeaders();
         headers.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=data.xlsx");

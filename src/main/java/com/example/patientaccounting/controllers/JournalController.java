@@ -4,6 +4,7 @@ import com.example.patientaccounting.JournalExportExcel;
 import com.example.patientaccounting.models.Journal;
 import com.example.patientaccounting.services.AddressService;
 import com.example.patientaccounting.services.JournalService;
+import com.example.patientaccounting.services.ReportService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,8 +28,7 @@ import static com.example.patientaccounting.Constants.*;
 public class JournalController {
 
     private final JournalService journalService;
-    private final JournalExportExcel journalExportExcel = new JournalExportExcel();
-
+    private final JournalExportExcel journalExportExcel;
 
     @GetMapping("/")
     public String journal(@RequestParam(name = "full_name", required = false) String fullName, Model model) {
