@@ -14,6 +14,17 @@
         .form-control, .form-select {
             margin-bottom: 25px;
         }
+
+        #scrollToTop {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+        }
+
     </style>
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
@@ -39,6 +50,14 @@
                 </div>
             </div>
         </div>
+    </div>
+
+    <div class="alert-primary" id="scrollToTop">
+        <a href="#" style="text-decoration: none">
+            <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="currentColor" class="bi bi-arrow-up-circle" viewBox="0 0 16 16">
+                <path fill-rule="evenodd" d="M1 8a7 7 0 1 0 14 0A7 7 0 0 0 1 8zm15 0A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-7.5 3.5a.5.5 0 0 1-1 0V5.707L5.354 7.854a.5.5 0 1 1-.708-.708l3-3a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1-.708.708L8.5 5.707V11.5z"/>
+            </svg>
+        </a>
     </div>
 
     <fieldset disabled>
@@ -144,6 +163,17 @@
         $(function(){
             // инициализации подсказок для всех элементов на странице, имеющих атрибут data-toggle="tooltip"
             $('[data-bs-toggle="tooltip"]').tooltip();
+
+            const scrollToTopButton = document.getElementById('scrollToTop');
+
+            // Слушаем событие прокрутки
+            window.addEventListener("scroll", function () {
+                if (document.documentElement.scrollTop > 300) {
+                    scrollToTopButton.style.display = "block"; // Показываем div
+                } else {
+                    scrollToTopButton.style.display = "none"; // Скрываем div
+                }
+            });
         });
 
     </script>
