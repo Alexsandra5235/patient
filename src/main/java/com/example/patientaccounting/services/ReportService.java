@@ -44,25 +44,31 @@ public class ReportService {
         return new ResponseEntity<>(reportContent, headers, HttpStatus.OK);
     }
 
-    public List<Report> getReportList()
+    public List<Report> getReportList(LocalDate search_date)
     {
+        if (search_date != null) return reportRepository.findByDate(search_date);
         return reportRepository.findAll();
     }
 
-    public List<LocalDate> getIdentityDate() {
-        List<Report> reports = getReportList();
+    public List<String> getIdentityDate(LocalDate search_date) {
+        List<Report> reports;
+        if (search_date != null) reports = getReportList(search_date);
+        else reports = reportRepository.findAll();
+
 
         return reports.stream()
-                .map(report -> report.getCreatedAt().toLocalDate()) // Конвертируем LocalDateTime в LocalDate
+                .map(Report::getCreatedDate) // Конвертируем LocalDateTime в LocalDate
                 .distinct() // Получаем уникальные даты
                 .collect(Collectors.toList()); // Собираем в список
     }
 
-    public List<LocalTime> getIdentityTime() {
-        List<Report> reports = getReportList();
+    public List<String> getIdentityTime(LocalDate search_date) {
+        List<Report> reports;
+        if (search_date != null) reports = getReportList(search_date);
+        else reports = reportRepository.findAll();
 
         return reports.stream()
-                .map(report -> report.getCreatedAt().toLocalTime()) // Конвертируем LocalDateTime в LocalDate
+                .map(Report::getCreatedTime) // Конвертируем LocalDateTime в LocalDate
                 .distinct() // Получаем уникальные даты
                 .collect(Collectors.toList()); // Собираем в список
     }
