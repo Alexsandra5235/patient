@@ -136,6 +136,7 @@
             </a>
         </label><br>
         <select class="form-select" name="gender" id="gender" size="1" required>
+            <option value="" style="font-weight: bold">Пожалуйста, сделайте выбор</option>
             <#list optionsGender as option>
                 <option value="${option}" <#if journal.gender == option>selected</#if>>${option}</option>
             </#list>
@@ -173,6 +174,7 @@
 
         <label class="form-label" for="delivered">Пациент доставлен (направлен)</label>
         <select class="form-select" name="delivered" id="delivered" size="1">
+            <option value="" style="font-weight: bold">Пожалуйста, сделайте выбор</option>
             <#list optionsDelivered as option>
                 <option value="${option}" <#if journal.delivered == option>selected</#if>>${option}</option>
             </#list>
@@ -236,13 +238,10 @@
 
         <label class="form-label" for="outcome_hospitalization">Исход госпитализации</label>
         <select class="form-select" name="outcome_hospitalization" id="outcome_hospitalization" size="1" onchange="toggleMedicalOrgField()">
-        <#list options as option>
-            <option
-                    value="${option}"
-                <#if journal.outcome_hospitalization == option> selected </#if>>
-                ${option}
-            </option>
-        </#list>
+            <option value="" style="font-weight: bold">Пожалуйста, сделайте выбор</option>
+            <#list options as option>
+                <option value="${option}"<#if journal.outcome_hospitalization == option> selected </#if>>${option}</option>
+            </#list>
         </select>
 
         <label class="form-label" for="date_time_discharge">Дата и время исхода</label>
@@ -261,6 +260,7 @@
 
         <label class="form-label" for="reason_refusal">Причина отказа в гослитализации</label>
         <select class="form-select" name="reason_refusal" id="reason_refusal" size="1" <#if journal.reason_refusal??>value="${journal.reason_refusal}"</#if>>
+            <option value="" style="font-weight: bold">Пожалуйста, сделайте выбор</option>
             <#list optionsReason as option>
                 <option value="${option}" <#if journal.reason_refusal == option>selected</#if>>${option}</option>
             </#list>
