@@ -68,10 +68,9 @@
                     <td><#if journal.birth_day??> ${journal.normal_birth_day} </#if></td>
                     <td><#if journal.medical_card??> ${journal.medical_card} </#if></td>
                     <td>
-<#--                        <#if journal.outcome_hospitalization??> ${journal.outcome_hospitalization} </#if>-->
-<#--                        <#if journal.normal_date_outcome??> ${journal.normal_date_outcome} </#if>-->
-<#--                        <#if journal.date_time_discharge.toLocalTime()??> ${journal.date_time_discharge.toLocalTime()} </#if>-->
-<#--                        <#if journal.medical_organization_transferred??> ${journal.medical_organization_transferred} </#if>-->
+                        <#if journal.outcome_hospitalization??>Пациент ${journal.outcome_hospitalization} </#if><br>
+                        <#if journal.date_time_discharge??>Дата и время исхода: ${journal.date_time_discharge} </#if><br>
+                        <#if journal.medical_organization_transferred??>Переведен: ${journal.medical_organization_transferred} </#if><br>
                     </td>
                     <td>
                         <a href="/journal/info/${journal.id}" class="btn btn-primary" id="btn-show" role="button">Просмотр</a>
