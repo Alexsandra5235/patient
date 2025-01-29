@@ -54,6 +54,17 @@
         .form-control, .form-select {
             margin-bottom: 25px;
         }
+
+        #scrollToTop {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+        }
+
     </style>
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
@@ -73,7 +84,16 @@
     </div>
 </div>
 
+<div class="alert-primary" id="scrollToTop">
+    <a href="#" style="text-decoration: none">
+        <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="currentColor" class="bi bi-arrow-up-circle" viewBox="0 0 16 16">
+            <path fill-rule="evenodd" d="M1 8a7 7 0 1 0 14 0A7 7 0 0 0 1 8zm15 0A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-7.5 3.5a.5.5 0 0 1-1 0V5.707L5.354 7.854a.5.5 0 1 1-.708-.708l3-3a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1-.708.708L8.5 5.707V11.5z"/>
+        </svg>
+    </a>
+</div>
+
 <div class="container text-left">
+
     <form action="/journal/save/edit/${journal.id}" method="post" autocomplete="off">
         <h4>Редактирование записи</h4>
         <hr>
@@ -286,6 +306,17 @@
         $('[data-bs-toggle="tooltip"]').tooltip();
         // Проверяем значение select при загрузке страницы
         toggleMedicalOrgField();
+
+        const scrollToTopButton = document.getElementById('scrollToTop');
+
+        // Слушаем событие прокрутки
+        window.addEventListener("scroll", function () {
+            if (document.documentElement.scrollTop > 300) {
+                scrollToTopButton.style.display = "block"; // Показываем div
+            } else {
+                scrollToTopButton.style.display = "none"; // Скрываем div
+            }
+        });
     });
 
     $(document).ready(function() {
@@ -636,9 +667,33 @@
         })
     }
 
+    // // Показать/скрыть кнопку при прокрутке страницы
+    // window.addEventListener("scroll", function () {
+    //     if (window.scrollY &gt; 300) {
+    //         scrollToTopButton.style.display = "block";
+    //     } else {
+    //         scrollToTopButton.style.display = "none";
+    //     }
+    // });
+
+    // // Показать/скрыть кнопку при прокрутке
+    // window.onscroll = () => {
+    //     if (document.body.scrollTop > 10 || document.documentElement.scrollTop > 10) {
+    //         scrollToTopButton.style.display = "flex";
+    //     } else {
+    //         scrollToTopButton.style.display = "none";
+    //     }
+    // };
+
+    // // Прокрутка к началу страницы
+    // scrollToTopButton.onclick = () => {
+    //     window.scrollTo({ top: 0, behavior: 'smooth' });
+    // };
+
 
 </script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
+
 
 </body>
 </html>
