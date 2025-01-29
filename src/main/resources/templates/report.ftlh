@@ -6,6 +6,13 @@
     <title>JOURNAL</title>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
+    <style>
+        .container-fluid {
+            padding-bottom: 10px;
+            margin-bottom: 10px;
+        }
+    </style>
+
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
 </head>
     <body>
@@ -13,17 +20,8 @@
     <h3 align="center">ЖУРНАЛ УЧЕТА ПРИЕМА ПАЦИЕНТОВ И ОТКАЗОВ В ОКАЗАНИИ МЕДИЦИНСКОЙ ПОМОЩИ<br>
         В СТАЦИОНАРНЫХ УСЛОВИЯХ, В УСЛОВИЯХ ДНЕВНОГО СТАЦИОНАРА</h3>
 
-    <div class="container-fluid">
-        <div class="card">
-            <div class="card-body">
-                <h5 class="card-title">Просмотр истории отчетов</h5>
-                <p class="card-text">На этой странице отображаются ранее сформированные отчеты, при необходимости их можно скачать, нажав на соответствующую кнопку</p>
-            </div>
-        </div>
-    </div>
-
     <form action="/journal/report/get" method="get">
-        <div class="container-fluid py-4">
+        <div class="container-fluid">
             <div class="card">
                 <div class="card-body">
                     <label class="card-title h5" for="search_date">Поиск отчета по дате создания</label>
@@ -45,15 +43,24 @@
     </form>
 
     <div class="container-fluid">
-        <#list dates as data>
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Просмотр истории отчетов</h5>
+                <p class="card-text">На этой странице отображаются ранее сформированные отчеты, при необходимости их можно скачать, нажав на соответствующую кнопку</p>
+            </div>
+        </div>
+    </div>
+
+    <#list dates as data>
+        <div class="container-fluid">
             <div class="card">
                 <div class="card-body">
                     <h5 class="card-title">Дата создания: ${data}</h5>
                     <hr>
                     <#list times as time>
-                        <h6 class="card-subtitle mb-2 text-body-secondary">Время создания: ${time}</h6>
                         <#list reports as report>
                             <#if report.createdDate == data && report.createdTime == time>
+                                <h6 class="card-subtitle mb-2 text-body-secondary">Время создания: ${time}</h6>
                                 <p class="card-text"> Имя файла: ${report.fileName}</p>
                                 <a class="btn btn-outline-primary" href="/journal/report/get/${report.id}">Скачать ${report.fileName}</a>
                                 <#if endReport.id?? && endReport.id != report.id> <hr> </#if>
@@ -62,10 +69,11 @@
                     </#list>
                 </div>
             </div>
-            <#else>
-            <p>Данные не найдены</p>
-        </#list>
-    </div>
+        </div>
+    <#else>
+        <p>Данные не найдены</p>
+    </#list>
+
 
 <#--    <#list dates as data>-->
 <#--        <p>${data}</p>-->
