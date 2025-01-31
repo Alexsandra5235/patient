@@ -1,27 +1,8 @@
-<!DOCTYPE html>
-<html lang="ru">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>JOURNAL</title>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<#import "blocks/template.ftlh" as t>
 
-    <style>
-        .container-fluid {
-            padding-bottom: 10px;
-            margin-bottom: 10px;
-        }
-    </style>
-
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
-</head>
-    <body>
-
-    <h3 align="center">ЖУРНАЛ УЧЕТА ПРИЕМА ПАЦИЕНТОВ И ОТКАЗОВ В ОКАЗАНИИ МЕДИЦИНСКОЙ ПОМОЩИ<br>
-        В СТАЦИОНАРНЫХ УСЛОВИЯХ, В УСЛОВИЯХ ДНЕВНОГО СТАЦИОНАРА</h3>
-
+<@t.page>
     <form action="/journal/report/get" method="get">
-        <div class="container-fluid">
+        <div class="container-fluid mb-4">
             <div class="card">
                 <div class="card-body">
                     <label class="card-title h5" for="search_date">Поиск отчета по дате создания</label>
@@ -42,7 +23,7 @@
         </div>
     </form>
 
-    <div class="container-fluid">
+    <div class="container-fluid mb-4">
         <div class="card">
             <div class="card-body">
                 <h5 class="card-title">Просмотр истории отчетов</h5>
@@ -52,7 +33,7 @@
     </div>
 
     <#list dates as data>
-        <div class="container-fluid">
+        <div class="container-fluid mb-4">
             <div class="card">
                 <div class="card-body">
                     <h5 class="card-title">Дата создания: ${data}</h5>
@@ -73,25 +54,4 @@
     <#else>
         <p>Данные не найдены</p>
     </#list>
-
-
-<#--    <#list dates as data>-->
-<#--        <p>${data}</p>-->
-<#--        <#list times as time>-->
-<#--            <p>${time}</p>-->
-<#--            <#list reports as report>-->
-<#--                <#if report.createdAt.toLocalDate() == data && report.createdAt.toLocalTime() == time>-->
-<#--                    <a href="/journal/report/get/${report.id}">${report.fileName}</a>-->
-<#--                </#if>-->
-
-<#--            </#list>-->
-<#--        </#list>-->
-<#--    </#list>-->
-<#--    <br>-->
-
-<#--    <#list reports as report>-->
-<#--        <p>${report.createdAt}</p>-->
-<#--        <a href="/journal/report/get/${report.id}">${report.fileName}</a>-->
-<#--    </#list>-->
-    </body>
-</html>
+</@t.page>
