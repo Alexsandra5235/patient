@@ -36,22 +36,5 @@
         </table>
     </div>
 
-    <a href="/journal/save">Добавить запись</a>
-    <br><br>
-
-
-
-    <form method="get" action="/export/excel">
-        <label>С <input type="date" name="data1" id="data1" oninput="onCopyInput()" max="2999-12-31"></label>
-        <label>До <input type="date" name="data2" id="data2"></label>
-
-        <label>С <input type="date" name="data11" id="data11" oninput="onCopyInput1()" max="2999-12-31"></label>
-        <label>До <input type="date" name="data22" id="data22"></label>
-
-        <button type="submit">Экспортировать в Excel</button>
-    </form>
-    <br><br>
-
-    <a href="/journal/report/get">Посмотреть историю отчетов</a>
 </@t.page>
 

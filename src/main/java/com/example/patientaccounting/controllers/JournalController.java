@@ -99,6 +99,16 @@ public class JournalController {
         return "infoJournal";
     }
 
+    @GetMapping("/journal/excel/day")
+    public String dayReport(){
+        return "dayReport";
+    }
+
+    @GetMapping("/journal/excel/month")
+    public String monthReport(){
+        return "monthReport";
+    }
+
 
 
 

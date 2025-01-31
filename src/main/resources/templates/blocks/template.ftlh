@@ -55,6 +55,13 @@
                 cursor: pointer;
             }
 
+            #card-day {
+                width: 50vw;
+                height: 50vh;
+                display: flex;
+                justify-content: center;
+            }
+
         </style>
 
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
@@ -88,8 +95,8 @@
                                 Формирование отчетов
                             </a>
                             <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" href="#">Ежедневный отчет</a></li>
-                                <li><a class="dropdown-item" href="#">Ежемесячный отчет</a></li>
+                                <li><a class="dropdown-item" href="/journal/excel/day">Ежедневный отчет</a></li>
+                                <li><a class="dropdown-item" href="/journal/excel/month">Ежемесячный отчет</a></li>
                                 <li><hr class="dropdown-divider"></li>
                                 <li><a class="dropdown-item" href="/journal/report/get">История формирования отчетов</a></li>
                             </ul>
