@@ -43,7 +43,7 @@
 
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark py-3">
     <div class="container-fluid" style="padding-bottom: 0">
-        <a class="navbar-brand px-xxl-5" href="#">
+        <a class="navbar-brand px-xxl-5" href="/">
             <div class="input-group align-content-center">
                 <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-journals" viewBox="0 0 16 16">
                     <path d="M5 0h8a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2 2 2 0 0 1-2 2H3a2 2 0 0 1-2-2h1a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V4a1 1 0 0 0-1-1H3a1 1 0 0 0-1 1H1a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v9a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H5a1 1 0 0 0-1 1H3a2 2 0 0 1 2-2"/>
@@ -58,10 +58,10 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <li class="nav-item me-3">
-                    <a class="nav-link active" aria-current="page" href="#">Главная</a>
+                    <a class="nav-link active" aria-current="page" href="/">Главная</a>
                 </li>
                 <li class="nav-item me-3">
-                    <a class="nav-link" href="#">Добавить запись</a>
+                    <a class="nav-link" href="/journal/save">Добавить запись</a>
                 </li>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -71,7 +71,7 @@
                         <li><a class="dropdown-item" href="#">Ежедневный отчет</a></li>
                         <li><a class="dropdown-item" href="#">Ежемесячный отчет</a></li>
                         <li><hr class="dropdown-divider"></li>
-                        <li><a class="dropdown-item" href="#">История формирования отчетов</a></li>
+                        <li><a class="dropdown-item" href="/journal/report/get">История формирования отчетов</a></li>
                     </ul>
                 </li>
             </ul>
@@ -165,7 +165,7 @@
     </form>
     <br><br>
 
-    <a href="journal/report/get">Посмотреть историю отчетов</a>
+    <a href="/journal/report/get">Посмотреть историю отчетов</a>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
 
