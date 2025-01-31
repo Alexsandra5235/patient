@@ -88,16 +88,52 @@
 
 
     <form method="get" action="/export/excel">
-        <label>С <input type="date" name="data1"></label>
-        <label>До <input type="date" name="data2"></label>
+        <label>С <input type="date" name="data1" id="data1" oninput="onCopyInput()" max="2999-12-31"></label>
+        <label>До <input type="date" name="data2" id="data2"></label>
+
+        <label>С <input type="date" name="data11" id="data11" oninput="onCopyInput1()" max="2999-12-31"></label>
+        <label>До <input type="date" name="data22" id="data22"></label>
 
         <button type="submit">Экспортировать в Excel</button>
     </form>
+    <br><br>
 
     <a href="journal/report/get">Посмотреть историю отчетов</a>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
 
+    <script>
+
+        function onCopyInput() {
+
+            const data2 = document.getElementById('data2');
+            const data1 = document.getElementById('data1');
+
+            let dateUpdate = new Date(data1.value);
+
+            dateUpdate.setDate(dateUpdate.getDate() + 1);  // Добавляем один день
+            // dateUpdate.value = dateUpdate.toISOString().split('T')[0];  // Форматируем дату в 'YYYY-MM-DD'
+
+
+            // Обновляем значение input
+            data2.value = dateUpdate.toISOString().split('T')[0];
+        }
+
+        function onCopyInput1() {
+
+            const data2 = document.getElementById('data22');
+            const data1 = document.getElementById('data11');
+
+            let dateUpdate = new Date(data1.value);
+
+            // Добавляем один месяц
+            dateUpdate.setMonth(dateUpdate.getMonth() + 1);
+
+            // Обновляем значение input
+            data2.value = dateUpdate.toISOString().split('T')[0];
+        }
+
+    </script>
 
 </body>
 </html>

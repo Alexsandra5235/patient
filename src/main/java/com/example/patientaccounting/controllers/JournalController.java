@@ -1,13 +1,10 @@
 package com.example.patientaccounting.controllers;
 
-import com.example.patientaccounting.JournalExportExcel;
+import com.example.patientaccounting.services.JournalExportExcel;
 import com.example.patientaccounting.models.Journal;
-import com.example.patientaccounting.services.AddressService;
 import com.example.patientaccounting.services.JournalService;
-import com.example.patientaccounting.services.ReportService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,8 +12,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
 import java.util.List;
 
 import static com.example.patientaccounting.Constants.*;

@@ -1,10 +1,7 @@
-package com.example.patientaccounting;
+package com.example.patientaccounting.services;
 
 import com.example.patientaccounting.models.Journal;
 import com.example.patientaccounting.models.Report;
-import com.example.patientaccounting.services.ReportService;
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.poi.ss.usermodel.*;

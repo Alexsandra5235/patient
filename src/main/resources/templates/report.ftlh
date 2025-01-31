@@ -63,7 +63,7 @@
                                 <h6 class="card-subtitle mb-2 text-body-secondary">Время создания: ${time}</h6>
                                 <p class="card-text"> Имя файла: ${report.fileName}</p>
                                 <a class="btn btn-outline-primary" href="/journal/report/get/${report.id}">Скачать ${report.fileName}</a>
-                                <#if endReport.id?? && endReport.id != report.id> <hr> </#if>
+                                <hr>
                             </#if>
                         </#list>
                     </#list>
