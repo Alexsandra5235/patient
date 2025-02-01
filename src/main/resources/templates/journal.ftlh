@@ -1,6 +1,6 @@
 <#import "blocks/template.ftlh" as t>
 
-<@t.page>
+<@t.page "journal">
     <div class="container-fluid" id="table-div">
         <label class="form-label" for="table-div">Краткая информация о поступивших пациентах</label>
         <table class="table table-bordered">

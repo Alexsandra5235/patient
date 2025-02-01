@@ -18,7 +18,7 @@
                         <input class="form-control" type="date" name="data2" id="data2" max="2999-12-31">
                     </div>
 
-                    <button class="btn btn-primary mb-4" type="submit">Экспортировать в Excel</button>
+                    <button class="btn btn-primary mb-4" type="submit">Сформировать отчет</button>
                 </form>
             </div>
         </div>

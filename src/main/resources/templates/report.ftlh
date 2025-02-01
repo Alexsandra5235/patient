@@ -1,6 +1,6 @@
 <#import "blocks/template.ftlh" as t>
 
-<@t.page>
+<@t.page "report">
     <form action="/journal/report/get" method="get">
         <div class="container-fluid mb-4">
             <div class="card">

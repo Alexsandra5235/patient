@@ -1,4 +1,4 @@
-<#macro page>
+<#macro page namePage="">
     <!DOCTYPE html>
     <html lang="ru">
     <head>
@@ -62,13 +62,19 @@
                 justify-content: center;
             }
 
+            #sticky {
+                position: sticky;
+                z-index: 9999;
+                top: 0;
+            }
+
         </style>
 
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
     </head>
     <body>
 
-        <nav class="navbar navbar-expand-lg navbar-dark bg-dark py-3">
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark py-3" id="sticky">
             <div class="container-fluid">
                 <a class="navbar-brand px-xxl-5" href="/">
                     <div class="input-group align-content-center">
@@ -102,17 +108,25 @@
                             </ul>
                         </li>
                     </ul>
-                    <form action="/" method="get" autocomplete="off" class="d-flex">
-                        <div class="input-group me-2">
-                            <input class="form-control pe-xxl-5 text-left" type="text" name="full_name" id="full_name" <#if full_name??>value="${full_name}" </#if> placeholder="Поиск пациента по ФИО">
-                            <a href="/" class="btn btn-danger">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-x-lg" viewBox="0 0 16 16">
-                                    <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8z"/>
-                                </svg>
-                            </a>
-                        </div>
-                        <button class="btn btn-outline-primary" type="submit">Поиск</button>
-                    </form>
+                    <#if namePage != "">
+                        <form <#if namePage == "journal">action="/" <#elseif namePage == "report">action="/journal/report/get"</#if> method="get" autocomplete="off" class="d-flex">
+                            <div class="input-group me-2">
+                                <#if namePage == "journal">
+                                    <input class="form-control pe-xxl-5 text-left" name="full_name" id="full_name" <#if full_name??>value="${full_name}"</#if> type="text" placeholder="Поиск пациента по ФИО">
+                                <#elseif namePage == "report">
+                                    <input class="form-control text-left" name="search_date" id="search_date" <#if search_date??>value="${search_date}"</#if> type="date">
+                                </#if>
+                                <a href="/" class="btn btn-danger">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-x-lg" viewBox="0 0 16 16">
+                                        <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8z"/>
+                                    </svg>
+                                </a>
+                            </div>
+                            <button class="btn btn-outline-primary" type="submit">Поиск</button>
+                        </form>
+                        <#else>
+                    </#if>
+
                 </div>
             </div>
         </nav>
