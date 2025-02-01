@@ -68,11 +68,88 @@
                 top: 0;
             }
 
+            body {
+                animation: theme 21s linear infinite;
+
+                &:after,
+                &:before {
+                    content: '';
+                    display: block;
+                    position: fixed;
+                    z-index: -1;
+                    top: 0;
+                    width: 100vw;  // IE/Edge
+                height: 100vh; // fallback
+                width: 100vmax;
+                    height: 100vmax;
+                    background: rgba(0,0,0,0.05);
+                    animation: background 90s linear infinite;
+                }
+
+                &:after {
+                    left: 15vw;
+                }
+
+                &:before {
+                    right: 15vw;
+                    animation-delay: -30s;
+                    animation-direction: reverse;
+                }
+            }
+
+            @keyframes theme {
+                0% {
+                    background: #74C390;
+                }
+
+                16% {
+                    background: #5DBDB6;
+                }
+
+                33% {
+                    background: #59D4E1;
+                }
+
+                50% {
+                    background: #51BCE8;
+                }
+
+                66% {
+                    background: #5DBDB6;
+                }
+
+                83% {
+                    background: #59D4E1;
+                }
+
+                100% {
+                    background: #74C390;
+                }
+            }
+
+            @keyframes background {
+                0% {
+                    transform: rotate(0deg);
+                }
+
+                100% {
+                    transform: rotate(360deg);
+                }
+            }
+
         </style>
 
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
     </head>
     <body>
+
+        <div class="alert-primary" id="scrollToTop">
+            <a href="#" style="text-decoration: none">
+                <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="currentColor" class="bi bi-arrow-up-circle" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd" d="M1 8a7 7 0 1 0 14 0A7 7 0 0 0 1 8zm15 0A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-7.5 3.5a.5.5 0 0 1-1 0V5.707L5.354 7.854a.5.5 0 1 1-.708-.708l3-3a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1-.708.708L8.5 5.707V11.5z"/>
+                </svg>
+            </a>
+        </div>
 
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark py-3" id="sticky">
             <div class="container-fluid">
@@ -108,14 +185,10 @@
                             </ul>
                         </li>
                     </ul>
-                    <#if namePage != "">
-                        <form <#if namePage == "journal">action="/" <#elseif namePage == "report">action="/journal/report/get"</#if> method="get" autocomplete="off" class="d-flex">
+                    <#if namePage == "journal">
+                        <form action="/" method="get" autocomplete="off" class="d-flex">
                             <div class="input-group me-2">
-                                <#if namePage == "journal">
-                                    <input class="form-control pe-xxl-5 text-left" name="full_name" id="full_name" <#if full_name??>value="${full_name}"</#if> type="text" placeholder="Поиск пациента по ФИО">
-                                <#elseif namePage == "report">
-                                    <input class="form-control text-left" name="search_date" id="search_date" <#if search_date??>value="${search_date}"</#if> type="date">
-                                </#if>
+                                <input class="form-control pe-xxl-5 text-left" name="full_name" id="full_name" <#if full_name??>value="${full_name}"</#if> type="text" placeholder="Поиск пациента по ФИО">
                                 <a href="/" class="btn btn-danger">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-x-lg" viewBox="0 0 16 16">
                                         <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8z"/>
