@@ -18,12 +18,12 @@
     </div>
 
 
-    <div class="container-fluid my-4" id="table-div">
+    <div class="container-fluid my-4">
         <div class="card">
             <div class="card-body">
-                <label class="card-title h6" for="table-div">Краткая информация о поступивших пациентах</label>
+                <h5 class="card-title mb-2">Краткая информация о поступивших пациентах</h5>
                 <div class="card-text">
-                    <table class="table table-bordered" id="table-info">
+                    <table class="table table-bordered" id="table-div">
                         <tr>
                             <th>Дата послупления</th>
                             <th>Время послупления</th>

@@ -11,7 +11,8 @@
     </div>
 
     <form action="/journal/report/get" method="get">
-        <div class="container-fluid mb-4">
+
+        <div class="container-fluid my-4">
             <div class="card">
                 <div class="card-body">
                     <label class="card-title h5" for="search_date">Поиск отчета по дате создания</label>
@@ -32,35 +33,74 @@
         </div>
     </form>
 
-    <div class="container-fluid mb-4">
+<#--    <div class="container-fluid mb-4">-->
+<#--        <div class="card">-->
+<#--            <div class="card-body">-->
+<#--                <h5 class="card-title">Просмотр истории отчетов</h5>-->
+<#--                <p class="card-text">На этой странице отображаются ранее сформированные отчеты, при необходимости их можно скачать, нажав на соответствующую кнопку</p>-->
+<#--            </div>-->
+<#--        </div>-->
+<#--    </div>-->
+
+    <div class="container-fluid">
         <div class="card">
             <div class="card-body">
-                <h5 class="card-title">Просмотр истории отчетов</h5>
-                <p class="card-text">На этой странице отображаются ранее сформированные отчеты, при необходимости их можно скачать, нажав на соответствующую кнопку</p>
+                <h5 class="card-title mb-2">Просмотр истории отчетов</h5>
+                <p class="card-text">В этой таблице отображаются ранее сформированные отчеты, при необходимости их можно скачать, нажав на соответствующую кнопку</p>
+                <div class="card-text" style="table-layout: fixed; width: 100%;">
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th>Дата создания</th>
+                                <th>Время создания</th>
+                                <th>Название файла</th>
+                                <th>Скачать</th>
+                            </tr>
+                        </thead>
+                    </table>
+
+                    <div style="height:200px; overflow-y: auto;">
+                        <table class="table table-bordered">
+                            <tbody>
+                                <#list reports as report>
+                                    <tr>
+                                        <td>${report.createdDate}</td>
+                                        <td>${report.createdTime}</td>
+                                        <td>${report.fileName}</td>
+                                        <td><a class="btn btn-primary" href="/journal/report/get/${report.id}">Скачать</a> </td>
+                                    </tr>
+                                </#list>
+                            </tbody>
+                        </table>
+                    </div>
+
+
+                </div>
             </div>
         </div>
     </div>
 
-    <#list dates as data>
-        <div class="container-fluid mb-4">
-            <div class="card">
-                <div class="card-body">
-                    <h5 class="card-title">Дата создания: ${data}</h5>
-                    <hr>
-                    <#list times as time>
-                        <#list reports as report>
-                            <#if report.createdDate == data && report.createdTime == time>
-                                <h6 class="card-subtitle mb-2 text-body-secondary">Время создания: ${time}</h6>
-                                <p class="card-text"> Имя файла: ${report.fileName}</p>
-                                <a class="btn btn-outline-primary" href="/journal/report/get/${report.id}">Скачать ${report.fileName}</a>
-                                <hr>
-                            </#if>
-                        </#list>
-                    </#list>
-                </div>
-            </div>
-        </div>
-    <#else>
-        <p>Данные не найдены</p>
-    </#list>
+
+<#--    <#list dates as data>-->
+<#--        <div class="card mb-4 mx-xxl-5">-->
+<#--            <div class="card-body">-->
+<#--                <h5 class="card-title">Дата создания: ${data}</h5>-->
+<#--                <hr>-->
+<#--                <div class="card-height">-->
+<#--                    <#list times as time>-->
+<#--                        <#list reports as report>-->
+<#--                            <#if report.createdDate == data && report.createdTime == time>-->
+<#--                                <h6 class="card-subtitle mb-2 text-body-secondary">Время создания: ${time}</h6>-->
+<#--                                <p class="card-text"> Имя файла: ${report.fileName}</p>-->
+<#--                                <a class="btn btn-outline-primary" href="/journal/report/get/${report.id}">Скачать ${report.fileName}</a>-->
+<#--                                <hr>-->
+<#--                            </#if>-->
+<#--                        </#list>-->
+<#--                    </#list>-->
+<#--                </div>-->
+<#--            </div>-->
+<#--        </div>-->
+<#--    <#else>-->
+<#--        <p>Данные не найдены</p>-->
+<#--    </#list>-->
 </@t.page>
