@@ -21,6 +21,9 @@
 
     <fieldset disabled>
         <div class="container text-left">
+            <h4>Полная информация</h4>
+            <hr>
+
             <label class="form-label" for="date_receipt">Дата поступления</label><br>
             <input class="form-control mb-4" id="date_receipt" type="date" <#if journal.date_receipt??>value="${journal.date_receipt}"</#if>>
 
