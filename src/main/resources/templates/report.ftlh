@@ -42,13 +42,13 @@
 <#--        </div>-->
 <#--    </div>-->
 
-    <div class="container-fluid">
+    <div class="container-fluid my-4">
         <div class="card">
             <div class="card-body">
                 <h5 class="card-title mb-2">Просмотр истории отчетов</h5>
                 <p class="card-text">В этой таблице отображаются ранее сформированные отчеты, при необходимости их можно скачать, нажав на соответствующую кнопку</p>
-                <div class="card-text" style="table-layout: fixed; width: 100%;">
-                    <table class="table table-bordered">
+                <div class="card-text table-container" style="table-layout: fixed; width: 100%;">
+                    <table class="table">
                         <thead>
                             <tr>
                                 <th>Дата создания</th>
@@ -57,22 +57,19 @@
                                 <th>Скачать</th>
                             </tr>
                         </thead>
+                        <tbody>
+                        <#list reports as report>
+                            <tr>
+                                <td>${report.createdDate}</td>
+                                <td>${report.createdTime}</td>
+                                <td>${report.fileName}</td>
+                                <td><a class="btn btn-primary" href="/journal/report/get/${report.id}">Скачать</a> </td>
+                            </tr>
+                        </#list>
+                        </tbody>
                     </table>
 
-                    <div style="height:200px; overflow-y: auto;">
-                        <table class="table table-bordered">
-                            <tbody>
-                                <#list reports as report>
-                                    <tr>
-                                        <td>${report.createdDate}</td>
-                                        <td>${report.createdTime}</td>
-                                        <td>${report.fileName}</td>
-                                        <td><a class="btn btn-primary" href="/journal/report/get/${report.id}">Скачать</a> </td>
-                                    </tr>
-                                </#list>
-                            </tbody>
-                        </table>
-                    </div>
+
 
 
                 </div>

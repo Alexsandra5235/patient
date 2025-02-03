@@ -12,48 +12,28 @@
                 overflow-y: auto;
             }
 
-            .scroll-table-body {
-                height: 300px;
-                overflow-x: auto;
-                margin-top: 0;
-                margin-bottom: 20px;
-                border-bottom: 1px solid #eee;
+            .table-container {
+                height: 300px; /* Задайте желаемую высоту */
+                overflow-y: auto; /* Включите вертикальную прокрутку */
+                /*border: 1px solid #ccc; !* Добавьте границу для контейнера *!*/
             }
-
-            .scroll-table thead th {
-                font-weight: bold;
+            .table-container table {
+                width: 100%;
+                border-collapse: collapse;
+                padding: 5px;
+            }
+            .table-container th, td {
+                /*padding: 10px;*/
+                /*border: 1px solid #ddd;*/
                 text-align: left;
                 border: none;
-                padding: 10px 15px;
-                background: #d8d8d8;
-                font-size: 14px;
-                border-left: 1px solid #ddd;
-                border-right: 1px solid #ddd;
             }
-            .scroll-table tbody td {
-                text-align: left;
-                border-left: 1px solid #ddd;
-                border-right: 1px solid #ddd;
-                padding: 10px 15px;
-                font-size: 14px;
-                vertical-align: top;
-            }
-
-            .scroll-table table {
-                width:100%;
-                table-layout: fixed;
-                border: none;
-            }
-
-            .table-report {
-                max-height: 200px;
-                overflow: scroll;
-                /*overflow-x: auto;*/
-            }
-
-            .card-height {
-                max-height: 250px;
-                overflow-y: auto;
+            .table-container thead th {
+                position: sticky; /* Установите фиксированное положение для заголовков */
+                top: 0; /* Прикрепите к верхней части контейнера */
+                background-color: lightgray; /* Цвет фона заголовков */
+                padding: 15px;
+                /*z-index: 10; !* Убедитесь, что заголовки над остальными строками *!*/
             }
 
             #btn-show {
