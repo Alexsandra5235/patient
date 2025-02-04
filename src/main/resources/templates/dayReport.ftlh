@@ -1,6 +1,6 @@
 <#import "blocks/template.ftlh" as t>
 
-<@t.page>
+<@t.page titlePage="СОЗДАНИЕ ЕЖЕДНЕВНОГО ОТЧЕТА">
     <div class="container-fluid my-4" id="card-day" >
         <div class="card" style="width: 35rem;">
             <div class="card-header">

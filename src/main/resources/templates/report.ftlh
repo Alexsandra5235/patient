@@ -1,6 +1,6 @@
 <#import "blocks/template.ftlh" as t>
 
-<@t.page "report">
+<@t.page namePage="report" titlePage="ИСТОРИЯ ОТЧЕТОВ">
 
     <div class="alert-primary" id="scrollToTop">
         <a href="#" style="text-decoration: none">

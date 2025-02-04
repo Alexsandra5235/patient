@@ -1,6 +1,6 @@
 <#import "blocks/template.ftlh" as t>
 
-<@t.page>
+<@t.page titlePage="ИНФОРМАЦИЯ О ПАЦИЕНТЕ">
 
     <div class="alert-primary" id="scrollToTop">
         <a href="#" style="text-decoration: none">

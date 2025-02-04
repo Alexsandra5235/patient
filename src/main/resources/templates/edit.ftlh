@@ -1,6 +1,6 @@
 <#import "blocks/template.ftlh" as t>
 
-<@t.page>
+<@t.page titlePage="ИЗМЕНЕНИЕ ЗАПИСИ">
     <div class="alert-primary" id="scrollToTop">
         <a href="#" style="text-decoration: none">
             <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="currentColor" class="bi bi-arrow-up-circle" viewBox="0 0 16 16">
