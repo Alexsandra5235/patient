@@ -7,13 +7,8 @@
         <title>ЖУРНАЛ УЧЕТА ПРИЕМА ПАЦИЕНТОВ</title>
 
         <style>
-            #table-div {
-                max-height: 600px;
-                overflow-y: auto;
-            }
-
             .table-container {
-                height: 300px; /* Задайте желаемую высоту */
+                height: 550px; /* Задайте желаемую высоту */
                 overflow-y: auto; /* Включите вертикальную прокрутку */
                 /*border: 1px solid #ccc; !* Добавьте границу для контейнера *!*/
             }
