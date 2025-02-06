@@ -14,7 +14,14 @@
         <div class="card">
             <div class="card-body">
                 <h5 class="card-title">Полная информация по пациенту<span class="h5" style="color: dodgerblue"> ${journal.full_name}</span></h5>
-                <p class="card-text">На этой странице отображаются все данные по пациенту. Выбирите действие, если необходимо удалить или редактировать информацию по пациенту.</p>
+                <#if journal.dateAddRecord?? && journal.timeAddRecord??>
+                    <p class="card-text" style="margin-bottom: 8px">Дата и время создания записи: ${journal.dateAddRecord} ${journal.timeAddRecord}</p>
+                </#if>
+                <p class="card-text">На этой странице отображаются все данные по пациенту.
+                    Выбирите действие, если необходимо
+                    <span class="card-text" style="color: red">удалить</span>
+                    или <span class="card-text" style="color: dodgerblue">редактировать</span>
+                    информацию по пациенту.</p>
                 <div class="btn-group" role="group">
                     <form action="/journal/edit/${journal.id}" method="get">
                         <button class="btn btn-outline-primary mx-4">Редактировать запись</button>

@@ -23,6 +23,10 @@ public class Journal {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
+    private String dateAddRecord;
+
+    private String timeAddRecord;
+
     @Column(name = "date_receipt")
     private LocalDate date_receipt;
 
@@ -94,9 +98,14 @@ public class Journal {
 
     private String additional_information;
 
+
     @PreUpdate
-    @PrePersist
-    protected void onCreate() {
+    protected void onUpdate() {
+
+        // Изменение даты добавления записи по формату
+        if (date_receipt != null) {
+            normal_date = getNormalData(date_receipt);
+        }
 
         // Изменение даты поступления по формату
         if (date_receipt != null) {
@@ -118,6 +127,21 @@ public class Journal {
             date_time_discharge = String.format(normal_date_discharge + " " + timeDischarge);
         }
 
+
+
+    }
+
+    @PrePersist
+    protected void onCreate() {
+        onUpdate();
+
+        LocalDate dateAdd = LocalDate.now();
+        LocalTime timeAdd = LocalTime.now();
+
+        dateAddRecord = getNormalData(dateAdd);
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
+
+        timeAddRecord = timeAdd.format(formatter);
     }
 
     protected String getNormalData(LocalDate data){

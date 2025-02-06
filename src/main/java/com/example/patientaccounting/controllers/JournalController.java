@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
 import java.time.LocalDate;
+import java.util.Comparator;
 import java.util.List;
 
 import static com.example.patientaccounting.Constants.*;
@@ -26,9 +27,31 @@ public class JournalController {
     private final JournalExportExcel journalExportExcel;
 
     @GetMapping("/")
-    public String journal(@RequestParam(name = "full_name", required = false) String fullName, Model model) {
+    public String journal(@RequestParam(name = "full_name", required = false) String fullName,
+                          @RequestParam(name = "sortData", required = false, defaultValue = "desc") String sort,
+                          Model model) {
 
-        model.addAttribute("journals", journalService.journalList(fullName));
+        List<Journal> journals = journalService.journalList(fullName);
+
+        model.addAttribute("lastJournal", journals.get(journals.size() - 1));
+
+        model.addAttribute("sort", sort);
+
+        log.info(sort);
+
+        if (sort != null){
+            if (sort.equals("asc")) {
+                journals.sort(Comparator.comparing(Journal::getDate_receipt)
+                        .thenComparing(Journal::getString_time_receipt));
+            } else if (sort.equals("desc")) {
+                journals.sort(Comparator.comparing(Journal::getDate_receipt)
+                        .thenComparing(Journal::getString_time_receipt).reversed());
+            }
+        }
+
+
+
+        model.addAttribute("journals", journals);
 
         if (fullName != null) {
             model.addAttribute("full_name", fullName);

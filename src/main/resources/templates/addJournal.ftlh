@@ -16,7 +16,7 @@
             <div class="card">
                 <div class="card-body">
                     <h5 class="card-title">Добавление новой записи</h5>
-                    <p class="card-text">Выбирите действие, если необходимо добавить запись.</p>
+                    <p class="card-text">Выбирите действие, если необходимо <span class="card-text" style="color: darkgreen">добавить</span> новую запись в журнал учета.</p>
                     <input type="submit" value="Добавить запись" class="btn btn-outline-success">
                 </div>
             </div>

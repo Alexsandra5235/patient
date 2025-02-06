@@ -14,7 +14,7 @@
             <div class="card">
                 <div class="card-body">
                     <h5 class="card-title">Редактирование информации по пациенту <span class="h5" style="color: dodgerblue"> ${journal.full_name}</span></h5>
-                    <p class="card-text">Выбирите действие, если необходимо отчистить внесенные изменения или сохранить их.</p>
+                    <p class="card-text">Выбирите действие, если необходимо <span class="card-text" style="color: dodgerblue">отчистить</span> внесенные изменения или <span class="card-text" style="color: darkgreen">сохранить</span> их.</p>
                     <a onclick="location.reload()" class="btn btn-outline-primary me-3">Отчистить изменения</a>
                     <input type="submit" value="Применить изменения" class="btn btn-outline-success">
                 </div>

@@ -20,14 +20,16 @@
             .table-container th, td {
                 /*padding: 10px;*/
                 /*border: 1px solid #ddd;*/
-                text-align: left;
+                /*text-align: left;*/
                 border: none;
+                text-align: center; /* Центрирование по горизонтали */
+                vertical-align: middle; /* Центрирование по вертикали */
             }
-            .table-container thead th {
+            .table-container thead td {
                 position: sticky; /* Установите фиксированное положение для заголовков */
                 top: 0; /* Прикрепите к верхней части контейнера */
                 background-color: lightgray; /* Цвет фона заголовков */
-                padding: 15px;
+                padding: 10px;
                 /*z-index: 10; !* Убедитесь, что заголовки над остальными строками *!*/
             }
 
@@ -225,6 +227,40 @@
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
         <script>
+
+            // Сохраняем позицию прокрутки перед перезагрузкой
+            window.onbeforeunload = function() {
+                localStorage.setItem('scrollPos', window.scrollY); // Сохраняем текущую позицию
+            };
+
+            // Восстанавливаем позицию прокрутки при загрузке
+            window.onload = function() {
+                const scrollPos = localStorage.getItem('scrollPos'); // Получаем сохранённое значение
+                if (scrollPos) {
+                    window.scrollTo(0, scrollPos); // Прокручиваем на сохранённое значение
+                }
+            };
+
+            // сортировка данных в таблице по дате поступления
+            function filterData(){
+
+                const inputSort = document.getElementById('sort');
+
+                if (inputSort.value === 'desc'){
+                    inputSort.value = 'asc'
+                }
+                else if (inputSort.value === 'asc'){
+                    inputSort.value = 'desc'
+                }
+                else {
+                    inputSort.value = 'desc'
+                }
+                // inputSort.value = inputSort.value === 'asc' ? 'desc' : 'asc';
+                const formSort = document.getElementById('formSort');
+
+                formSort.submit();
+
+            }
 
             // Подстановка даты для ежедневного отчета
             function onCopyInput() {
@@ -609,6 +645,8 @@
             }
 
         </script>
+
+
     </body>
     </html>
 </#macro>
