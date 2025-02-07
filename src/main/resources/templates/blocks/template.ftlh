@@ -228,6 +228,11 @@
 
         <script>
 
+            // открытие файла без скачивания
+            function viewReport(id) {
+                window.open('/viewReport/' + id, '_blank'); // Открываем отчет в новом окне
+            }
+
             // Сохраняем позицию прокрутки перед перезагрузкой
             window.onbeforeunload = function() {
                 localStorage.setItem('scrollPos', window.scrollY); // Сохраняем текущую позицию

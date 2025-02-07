@@ -6,11 +6,13 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PathVariable;
 
 import java.io.ByteArrayOutputStream;
+import java.sql.Blob;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -24,7 +26,7 @@ public class ReportService {
 
     private final ReportRepository reportRepository;
 
-    public void saveReportByBD(Report report){
+    public void saveReportByBD(Report report) {
         reportRepository.save(report);
     }
 
@@ -44,16 +46,15 @@ public class ReportService {
         return new ResponseEntity<>(reportContent, headers, HttpStatus.OK);
     }
 
-    public List<Report> getReportList(LocalDate search_date)
-    {
+    public List<Report> getReportList(LocalDate search_date) {
         if (search_date != null) return reportRepository.findByDate(search_date);
-        return reportRepository.findAll();
+        return reportRepository.findAllReversed();
     }
 
     public List<String> getIdentityDate(LocalDate search_date) {
         List<Report> reports;
         if (search_date != null) reports = getReportList(search_date);
-        else reports = reportRepository.findAll();
+        else reports = reportRepository.findAllReversed();
 
 
         return reports.stream()
@@ -65,7 +66,7 @@ public class ReportService {
     public List<String> getIdentityTime(LocalDate search_date) {
         List<Report> reports;
         if (search_date != null) reports = getReportList(search_date);
-        else reports = reportRepository.findAll();
+        else reports = reportRepository.findAllReversed();
 
         return reports.stream()
                 .map(Report::getCreatedTime) // Конвертируем LocalDateTime в LocalDate
@@ -73,5 +74,17 @@ public class ReportService {
                 .collect(Collectors.toList()); // Собираем в список
     }
 
+    public ResponseEntity<byte[]> getViewReport(Long id) {
+//        Blob blob = getReportBlobById(id); // Получаем BLOB из базы данных
+
+        byte[] bytes = getReportContent(id); // Преобразуем BLOB в массив байтов
+
+        return ResponseEntity.ok()
+                .header(HttpHeaders.CONTENT_DISPOSITION, "inline; filename=report.xlsx")
+                .contentType(MediaType.APPLICATION_OCTET_STREAM) // Меняем на корректный тип, если нужно
+                .body(bytes);
+
+
+    }
 
 }

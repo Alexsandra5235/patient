@@ -423,16 +423,16 @@ public class JournalExportExcel {
 
         // Сохранение в базе данных
         Report report = new Report();
-        report.setFileName("report.xlsx");
+        report.setFileName("data.xlsx");
         report.setFileContent(bytes);
         report.setCreatedAt(LocalDateTime.now());
 
         reportService.saveReportByBD(report);
 
         HttpHeaders headers = new HttpHeaders();
+
         headers.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=data.xlsx");
-
-
+        headers.add(HttpHeaders.CONTENT_TYPE, "application/vnd.ms-excel");
 
         return ResponseEntity.ok()
                 .headers(headers)

@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 
 @Entity
 @Table(name = "report")
@@ -43,9 +44,14 @@ public class Report {
             createdDate = String.format("%02d.%02d.%04d", day, mouth, year);
 
             LocalTime time = createdAt.toLocalTime();
-            int hour = time.getHour();
-            int minute = time.getMinute();
-            createdTime = String.format(hour + ":" + minute);
+
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
+
+            createdTime = time.format(formatter);
+
+//            int hour = time.getHour();
+//            int minute = time.getMinute();
+//            createdTime = String.format(hour + ":" + minute);
         }
 
     }

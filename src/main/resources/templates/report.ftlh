@@ -42,40 +42,88 @@
 <#--        </div>-->
 <#--    </div>-->
 
-    <div class="container-fluid my-4">
+<#--    <div class="container-fluid my-4">-->
+<#--        <div class="card">-->
+<#--            <div class="card-body">-->
+<#--                <h5 class="card-title mb-2">Просмотр истории отчетов</h5>-->
+<#--                <p class="card-text">В этой таблице отображаются ранее сформированные отчеты, при необходимости их можно скачать, нажав на соответствующую кнопку</p>-->
+<#--                <div class="card-text table-container" style="table-layout: fixed; width: 100%;">-->
+<#--                    <table class="table">-->
+<#--                        <thead>-->
+<#--                            <tr>-->
+<#--                                <td>Дата создания</td>-->
+<#--                                <td>Время создания</td>-->
+<#--                                <td>Название файла</td>-->
+<#--                                <td>Скачать</td>-->
+<#--                            </tr>-->
+<#--                        </thead>-->
+<#--                        <tbody>-->
+<#--                        <#list reports as report>-->
+<#--                            <tr>-->
+<#--                                <td>${report.createdDate}</td>-->
+<#--                                <td>${report.createdTime}</td>-->
+<#--                                <td>${report.fileName}</td>-->
+<#--                                <td><a class="btn btn-primary" href="/journal/report/get/${report.id}">Скачать</a> </td>-->
+<#--                            </tr>-->
+<#--                        </#list>-->
+<#--                        </tbody>-->
+<#--                    </table>-->
+<#--                </div>-->
+<#--            </div>-->
+<#--        </div>-->
+<#--    </div>-->
+
+    <div class="container-fluid">
         <div class="card">
             <div class="card-body">
-                <h5 class="card-title mb-2">Просмотр истории отчетов</h5>
-                <p class="card-text">В этой таблице отображаются ранее сформированные отчеты, при необходимости их можно скачать, нажав на соответствующую кнопку</p>
-                <div class="card-text table-container" style="table-layout: fixed; width: 100%;">
-                    <table class="table">
-                        <thead>
-                            <tr>
-                                <td>Дата создания</td>
-                                <td>Время создания</td>
-                                <td>Название файла</td>
-                                <td>Скачать</td>
-                            </tr>
-                        </thead>
-                        <tbody>
-                        <#list reports as report>
-                            <tr>
-                                <td>${report.createdDate}</td>
-                                <td>${report.createdTime}</td>
-                                <td>${report.fileName}</td>
-                                <td><a class="btn btn-primary" href="/journal/report/get/${report.id}">Скачать</a> </td>
-                            </tr>
+                <label class="card-title h5 my-3" for="search_date">Просмотр истории создания отчетов</label>
+                <div class="card-text">
+                    <div class="accordion" id="accordionExample">
+                        <#list dates as data>
+                            <div class="accordion-item">
+                                <h5 class="accordion-header">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#${data}" aria-expanded="false" aria-controls="collapseOne">
+                                        Дата создания отчета: ${data}
+                                    </button>
+                                </h5>
+                                <div id="${data}" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+                                    <#assign stopLoop = "">
+                                    <#list times as time>
+                                        <#list reports as report>
+
+                                            <#if report.createdDate == data && report.createdTime == time>
+                                                <#if stopLoop != time>
+                                                    <div class="accordion-body py-2">
+                                                        <strong>Время создания отчета: ${time}</strong>
+                                                    </div>
+                                                    <div class="accordion-body mx-5 py-2">
+                                                        Название файла: <code>${report.fileName}</code><br>
+                                                        <a class="btn btn-primary" href="/journal/report/get/${report.id}">Скачать ${report.fileName}</a>
+                                                        <button class="btn btn-primary" onclick="viewReport(${report.id})">Посмотреть ${report.fileName}</button>
+                                                    </div>
+                                                <#else>
+                                                    <div class="accordion-body mx-5 py-1">
+                                                        Название файла: <code>${report.fileName}</code><br>
+                                                        <a class="btn btn-primary" href="/journal/report/get/${report.id}">Скачать ${report.fileName}</a>
+                                                        <button class="btn btn-primary" onclick="viewReport(${report.id})">Посмотреть ${report.fileName}</button>
+                                                    </div>
+                                                </#if>
+                                                <#assign stopLoop = time>
+                                            </#if>
+                                        </#list>
+                                    </#list>
+
+                                </div>
+                            </div>
                         </#list>
-                        </tbody>
-                    </table>
-
-
-
-
+                    </div>
                 </div>
             </div>
         </div>
     </div>
+
+
+
 
 
 <#--    <#list dates as data>-->
