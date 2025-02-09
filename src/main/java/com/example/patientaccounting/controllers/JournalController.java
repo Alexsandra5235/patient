@@ -111,11 +111,12 @@ public class JournalController {
 
     @GetMapping("/export/excel")
     public ResponseEntity<byte[]> exportToExcel(@RequestParam(name = "data1", required = false) LocalDate data1,
-                                                @RequestParam(name = "data2", required = false) LocalDate data2) throws IOException {
+                                                @RequestParam(name = "data2", required = false) LocalDate data2,
+                                                @RequestParam(name = "typeReport", required = false) String typeReport) throws IOException {
 
         List<Journal> journals = journalService.getFilterByDate(data1, data2);
 
-        return journalExportExcel.exportToExcel(journals, journalService.getNormalDate(data1), journalService.getNormalDate(data2));
+        return journalExportExcel.exportToExcel(journals, journalService.getNormalDate(data1), journalService.getNormalDate(data2), typeReport);
     }
 
     @GetMapping("/journal/info/{id}")

@@ -17,6 +17,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Objects;
 
 import static com.example.patientaccounting.Constants.*;
 
@@ -388,7 +389,7 @@ public class JournalExportExcel {
 
     }
 
-    public ResponseEntity<byte[]> exportToExcel(List<Journal> journals, String date1, String date2) throws IOException {
+    public ResponseEntity<byte[]> exportToExcel(List<Journal> journals, String date1, String date2, String typeReport) throws IOException {
         Workbook workbook = new XSSFWorkbook();
         Sheet sheet = workbook.createSheet("Результат");
         Sheet sheetPatient = workbook.createSheet("стр.2");
@@ -434,6 +435,12 @@ public class JournalExportExcel {
         report.setFileName(headerTitle);
         report.setFileContent(bytes);
         report.setCreatedAt(LocalDateTime.now());
+        if (Objects.equals(typeReport, "day")){
+            report.setTypeReport("Ежедневный отчет");
+        }
+        else if (Objects.equals(typeReport, "month")){
+            report.setTypeReport("Ежемесячный отчет");
+        }
 
         reportService.saveReportByBD(report);
 

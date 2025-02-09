@@ -233,18 +233,18 @@
                 window.open('/viewReport/' + id, '_blank'); // Открываем отчет в новом окне
             }
 
-            // Сохраняем позицию прокрутки перед перезагрузкой
-            window.onbeforeunload = function() {
-                localStorage.setItem('scrollPos', window.scrollY); // Сохраняем текущую позицию
-            };
-
-            // Восстанавливаем позицию прокрутки при загрузке
-            window.onload = function() {
-                const scrollPos = localStorage.getItem('scrollPos'); // Получаем сохранённое значение
-                if (scrollPos) {
-                    window.scrollTo(0, scrollPos); // Прокручиваем на сохранённое значение
-                }
-            };
+            // // Сохраняем позицию прокрутки перед перезагрузкой
+            // window.onbeforeunload = function() {
+            //     localStorage.setItem('scrollPos', window.scrollY); // Сохраняем текущую позицию
+            // };
+            //
+            // // Восстанавливаем позицию прокрутки при загрузке
+            // window.onload = function() {
+            //     const scrollPos = localStorage.getItem('scrollPos'); // Получаем сохранённое значение
+            //     if (scrollPos) {
+            //         window.scrollTo(0, scrollPos); // Прокручиваем на сохранённое значение
+            //     }
+            // };
 
             // сортировка данных в таблице по дате поступления
             function filterData(){
@@ -264,21 +264,28 @@
                 const formSort = document.getElementById('formSort');
 
                 formSort.submit();
-
             }
 
             // Подстановка даты для ежедневного отчета
             function onCopyInput() {
 
+                const typeReport = document.getElementById('typeReport');
                 const data2 = document.getElementById('data2');
                 const data1 = document.getElementById('data1');
 
                 let dateUpdate = new Date(data1.value);
 
-                dateUpdate.setDate(dateUpdate.getDate() + 1);  // Добавляем один день
+                if (typeReport.value === 'day'){
+                    dateUpdate.setDate(dateUpdate.getDate() + 1);  // Добавляем один день
+                } else if (typeReport.value === 'month'){
+                    // Добавляем один месяц
+                    dateUpdate.setMonth(dateUpdate.getMonth() + 1);
+                }
 
                 // Обновляем значение input
                 data2.value = dateUpdate.toISOString().split('T')[0];
+
+
             }
 
             // Подстановка даты для ежемесячного отчета
