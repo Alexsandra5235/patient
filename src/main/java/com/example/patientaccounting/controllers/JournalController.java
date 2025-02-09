@@ -1,8 +1,10 @@
 package com.example.patientaccounting.controllers;
 
+import com.example.patientaccounting.models.Report;
 import com.example.patientaccounting.services.JournalExportExcel;
 import com.example.patientaccounting.models.Journal;
 import com.example.patientaccounting.services.JournalService;
+import com.example.patientaccounting.services.ReportService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
@@ -25,6 +27,7 @@ public class JournalController {
 
     private final JournalService journalService;
     private final JournalExportExcel journalExportExcel;
+    private final ReportService reportService;
 
     @GetMapping("/")
     public String journal(@RequestParam(name = "full_name", required = false) String fullName,

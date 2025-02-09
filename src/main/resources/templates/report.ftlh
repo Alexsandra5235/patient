@@ -98,14 +98,14 @@
                                                     </div>
                                                     <div class="accordion-body mx-5 py-2">
                                                         Название файла: <code>${report.fileName}</code><br>
-                                                        <a class="btn btn-primary" href="/journal/report/get/${report.id}">Скачать ${report.fileName}</a>
-                                                        <button class="btn btn-primary" onclick="viewReport(${report.id})">Посмотреть ${report.fileName}</button>
+                                                        <a class="btn btn-primary" href="/journal/report/get/${report.id}">Скачать отчет</a>
+                                                        <button class="btn btn-primary" onclick="viewReport(${report.id})">Посмотреть отчет</button>
                                                     </div>
                                                 <#else>
                                                     <div class="accordion-body mx-5 py-1">
                                                         Название файла: <code>${report.fileName}</code><br>
-                                                        <a class="btn btn-primary" href="/journal/report/get/${report.id}">Скачать ${report.fileName}</a>
-                                                        <button class="btn btn-primary" onclick="viewReport(${report.id})">Посмотреть ${report.fileName}</button>
+                                                        <a class="btn btn-primary" href="/journal/report/get/${report.id}">Скачать отчет</a>
+                                                        <button class="btn btn-primary" onclick="viewReport(${report.id})">Посмотреть отчет</button>
                                                     </div>
                                                 </#if>
                                                 <#assign stopLoop = time>

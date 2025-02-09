@@ -389,7 +389,6 @@ public class JournalExportExcel {
     }
 
     public ResponseEntity<byte[]> exportToExcel(List<Journal> journals, String date1, String date2) throws IOException {
-
         Workbook workbook = new XSSFWorkbook();
         Sheet sheet = workbook.createSheet("Результат");
         Sheet sheetPatient = workbook.createSheet("стр.2");
@@ -421,22 +420,27 @@ public class JournalExportExcel {
 
         byte[] bytes = outputStream.toByteArray();
 
+        HttpHeaders headers = new HttpHeaders();
+
+        String headerTitle = "report " + date1 + " " + date2 + ".xlsx";
+
+        String headerValue = "attachment; filename=" + headerTitle;
+
+        headers.add(HttpHeaders.CONTENT_DISPOSITION, headerValue);
+        headers.add(HttpHeaders.CONTENT_TYPE, "application/vnd.ms-excel");
+
         // Сохранение в базе данных
         Report report = new Report();
-        report.setFileName("data.xlsx");
+        report.setFileName(headerTitle);
         report.setFileContent(bytes);
         report.setCreatedAt(LocalDateTime.now());
 
         reportService.saveReportByBD(report);
-
-        HttpHeaders headers = new HttpHeaders();
-
-        headers.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=data.xlsx");
-        headers.add(HttpHeaders.CONTENT_TYPE, "application/vnd.ms-excel");
 
         return ResponseEntity.ok()
                 .headers(headers)
                 .contentType(MediaType.APPLICATION_OCTET_STREAM)
                 .body(bytes);
     }
+
 }

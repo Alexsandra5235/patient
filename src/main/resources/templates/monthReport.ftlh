@@ -14,8 +14,8 @@
 
                     <div class="input-group mb-4">
                         <span class="input-group-text">От / До</span>
-                        <input class="form-control" type="date" name="data11" id="data11" oninput="onCopyInput1()" max="2999-12-31">
-                        <input class="form-control" type="date" name="data22" id="data22" max="2999-12-31">
+                        <input class="form-control" type="date" name="data1" id="data1" oninput="onCopyInput()" max="2999-12-31">
+                        <input class="form-control" type="date" name="data2" id="data2" max="2999-12-31">
                     </div>
 
                     <button class="btn btn-primary mb-4" type="submit">Сформировать отчет</button>
