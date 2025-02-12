@@ -214,7 +214,6 @@
                             </div>
                             <button class="btn btn-outline-primary" type="submit">Поиск</button>
                         </form>
-                        <#else>
                     </#if>
 
                 </div>

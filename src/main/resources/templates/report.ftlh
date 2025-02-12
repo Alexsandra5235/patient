@@ -53,37 +53,60 @@
 <#--    </div>-->
 
     <p style="justify-content: center; display: flex">
-        <a href="#" style="text-decoration: none; color: black" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+        <a data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
             <svg xmlns="http://www.w3.org/2000/svg" width="35" height="35" fill="currentColor" class="bi bi-arrow-bar-down" viewBox="0 0 16 16">
                 <path fill-rule="evenodd" d="M1 3.5a.5.5 0 0 1 .5-.5h13a.5.5 0 0 1 0 1h-13a.5.5 0 0 1-.5-.5zM8 6a.5.5 0 0 1 .5.5v5.793l2.146-2.147a.5.5 0 0 1 .708.708l-3 3a.5.5 0 0 1-.708 0l-3-3a.5.5 0 0 1 .708-.708L7.5 12.293V6.5A.5.5 0 0 1 8 6z"/>
             </svg>
         </a>
     </p>
     <div class="collapse" id="collapseExample">
-        <form action="/journal/report/get" method="get">
-
-            <div class="container-fluid my-4">
-                <div class="card">
-                    <div class="card-body">
-                        <label class="card-title h5" for="search_date">Поиск отчета по дате создания</label>
-                        <hr>
-                        <p class="card-text">Введите пожалуйста дату, начиная с которой будет выполнен поиск</p>
-                        <div class="input-group my-4">
-                            <input class="form-control" name="search_date" id="search_date" type="date" <#if search_date??>value="${search_date}"</#if>>
-                            <div class="input-group-append">
-                                <a href="/journal/report/get" class="btn btn-outline-primary">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-x-lg" viewBox="0 0 16 16">
-                                        <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8z"/>
-                                    </svg>
-                                </a>
-                            </div>
-                        </div>
-                        <input class="btn btn-outline-primary" type="submit" value="Поиск">
-                    </div>
+        <div class="card card-body">
+            <label class="card-title h5" for="search_date">Поиск отчета по дате создания</label>
+            <hr>
+            <p class="card-text">Введите пожалуйста дату, начиная с которой будет выполнен поиск</p>
+            <div class="input-group my-4">
+                <input class="form-control" name="search_date" id="search_date" type="date" <#if search_date??>value="${search_date}"</#if>>
+                <div class="input-group-append">
+                    <a href="/journal/report/get" class="btn btn-outline-primary">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-x-lg" viewBox="0 0 16 16">
+                            <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8z"/>
+                        </svg>
+                    </a>
                 </div>
             </div>
-        </form>
+            <input class="btn btn-outline-primary" type="submit" value="Поиск">
+        </div>
     </div>
+
+<#--    <p style="justify-content: center; display: flex">-->
+<#--        <a href="#" style="text-decoration: none; color: black" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">-->
+<#--            <svg xmlns="http://www.w3.org/2000/svg" width="35" height="35" fill="currentColor" class="bi bi-arrow-bar-down" viewBox="0 0 16 16">-->
+<#--                <path fill-rule="evenodd" d="M1 3.5a.5.5 0 0 1 .5-.5h13a.5.5 0 0 1 0 1h-13a.5.5 0 0 1-.5-.5zM8 6a.5.5 0 0 1 .5.5v5.793l2.146-2.147a.5.5 0 0 1 .708.708l-3 3a.5.5 0 0 1-.708 0l-3-3a.5.5 0 0 1 .708-.708L7.5 12.293V6.5A.5.5 0 0 1 8 6z"/>-->
+<#--            </svg>-->
+<#--        </a>-->
+<#--    </p>-->
+<#--    <div class="collapse" id="collapseExample">-->
+<#--        <form action="/journal/report/get" method="get">-->
+<#--            <div class="card">-->
+<#--                <div class="card-body">-->
+<#--                    <label class="card-title h5" for="search_date">Поиск отчета по дате создания</label>-->
+<#--                    <hr>-->
+<#--                    <p class="card-text">Введите пожалуйста дату, начиная с которой будет выполнен поиск</p>-->
+<#--                    <div class="input-group my-4">-->
+<#--                        <input class="form-control" name="search_date" id="search_date" type="date" <#if search_date??>value="${search_date}"</#if>>-->
+<#--                        <div class="input-group-append">-->
+<#--                            <a href="/journal/report/get" class="btn btn-outline-primary">-->
+<#--                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-x-lg" viewBox="0 0 16 16">-->
+<#--                                    <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8z"/>-->
+<#--                                </svg>-->
+<#--                            </a>-->
+<#--                        </div>-->
+<#--                    </div>-->
+<#--                    <input class="btn btn-outline-primary" type="submit" value="Поиск">-->
+<#--                </div>-->
+<#--            </div>-->
+<#--        </form>-->
+<#--    </div>-->
 
     <div class="container-fluid" style="justify-content: center; display: flex">
         <div class="card" style="width: 50%">
@@ -110,17 +133,31 @@
                                                         <strong>Время создания отчета: ${time}</strong>
                                                     </div>
                                                     <div class="accordion-body mx-5 py-2">
-                                                        Название файла: <span style="color: dodgerblue; font-weight: bold">${report.fileName}</span><br>
                                                         <#if report.typeReport??>Тип отчета: ${report.typeReport}<br></#if>
-                                                        <a class="btn btn-primary" href="/journal/report/get/${report.id}">Скачать отчет</a>
-                                                        <button class="btn btn-primary" onclick="viewReport(${report.id})">Посмотреть отчет</button>
+                                                        <div class="dropdown">
+                                                            Название файла:
+                                                            <a class="btn btn-primary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
+                                                                ${report.fileName}
+                                                            </a>
+                                                            <ul class="dropdown-menu">
+                                                                <li> <a class="dropdown-item" href="/journal/report/get/${report.id}">Скачать отчет</a></li>
+                                                                <li><button class="dropdown-item" onclick="viewReport(${report.id})">Посмотреть отчет</button></li>
+                                                            </ul>
+                                                        </div>
                                                     </div>
                                                 <#else>
-                                                    <div class="accordion-body mx-5 py-1">
-                                                        Название файла: <span style="color: dodgerblue; font-weight: bold">${report.fileName}</span><br>
+                                                    <div class="accordion-body mx-5 py-2">
                                                         <#if report.typeReport??>Тип отчета: ${report.typeReport}<br></#if>
-                                                        <a class="btn btn-primary" href="/journal/report/get/${report.id}">Скачать отчет</a>
-                                                        <button class="btn btn-primary" onclick="viewReport(${report.id})">Посмотреть отчет</button>
+                                                        <div class="dropdown">
+                                                            Название файла:
+                                                            <a class="btn btn-primary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
+                                                                ${report.fileName}
+                                                            </a>
+                                                            <ul class="dropdown-menu">
+                                                                <li> <a class="dropdown-item" href="/journal/report/get/${report.id}">Скачать отчет</a></li>
+                                                                <li><button class="dropdown-item" onclick="viewReport(${report.id})">Посмотреть отчет</button></li>
+                                                            </ul>
+                                                        </div>
                                                     </div>
                                                 </#if>
                                                 <#assign stopLoop = time>
