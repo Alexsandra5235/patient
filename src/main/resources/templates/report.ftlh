@@ -134,8 +134,8 @@
                                                     </div>
                                                     <div class="accordion-body mx-5 py-2">
                                                         <#if report.typeReport??>Тип отчета: ${report.typeReport}<br></#if>
+                                                        Конечная и начальная даты отчетного периода:
                                                         <div class="dropdown">
-                                                            Название файла:
                                                             <a class="btn btn-primary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
                                                                 ${report.fileName}
                                                             </a>
@@ -148,8 +148,8 @@
                                                 <#else>
                                                     <div class="accordion-body mx-5 py-2">
                                                         <#if report.typeReport??>Тип отчета: ${report.typeReport}<br></#if>
+                                                        Конечная и начальная даты отчетного периода:
                                                         <div class="dropdown">
-                                                            Название файла:
                                                             <a class="btn btn-primary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
                                                                 ${report.fileName}
                                                             </a>
