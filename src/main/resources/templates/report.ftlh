@@ -109,7 +109,7 @@
 <#--    </div>-->
 
     <div class="container-fluid" style="justify-content: center; display: flex">
-        <div class="card" style="width: 50%">
+        <div class="card" style="width: 50%; min-width: 500px">
             <div class="card-body">
                 <label class="card-title h5 my-3" for="search_date">Просмотр истории создания отчетов</label>
                 <hr>
