@@ -232,19 +232,30 @@
 
             function checkSelectSearchReport(){
                 const selectSearch = document.getElementById('selectSearch');
+
                 const titleSearch = document.getElementById('titleSearch');
+                const titleSearch3 = document.getElementById('titleSearch3');
+
                 const containerSearch = document.getElementById('containerSearch');
+                const containerSearch3 = document.getElementById('containerSearch3');
+
 
                 const valueSelect = document.getElementById('valueSelect');
 
                 valueSelect.value = selectSearch.value.toString();
 
                 if (selectSearch.value === '0'){
-                    titleSearch.style.display = 'none';
+                    // titleSearch.style.display = 'none';
                     containerSearch.style.display = 'none';
+                    containerSearch3.style.display = 'none';
                 } else if (selectSearch.value === '1'){
-                    titleSearch.style.display = 'block';
+                    // titleSearch.style.display = 'block';
                     containerSearch.style.display = 'block';
+                    containerSearch3.style.display = 'none'
+                } else if (selectSearch.value === '3'){
+                    // titleSearch.style.display = 'block';
+                    containerSearch3.style.display = 'block';
+                    containerSearch.style.display = 'none';
                 }
             }
 

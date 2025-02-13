@@ -16,6 +16,7 @@ import java.sql.Blob;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -51,11 +52,7 @@ public class ReportService {
         return reportRepository.findAllReversed();
     }
 
-    public List<String> getIdentityDate(LocalDate search_date) {
-        List<Report> reports;
-        if (search_date != null) reports = getReportList(search_date);
-        else reports = reportRepository.findAllReversed();
-
+    public List<String> getIdentityDate(List<Report> reports) {
 
         return reports.stream()
                 .map(Report::getCreatedDate) // Конвертируем LocalDateTime в LocalDate
@@ -63,11 +60,7 @@ public class ReportService {
                 .collect(Collectors.toList()); // Собираем в список
     }
 
-    public List<String> getIdentityTime(LocalDate search_date) {
-        List<Report> reports;
-        if (search_date != null) reports = getReportList(search_date);
-        else reports = reportRepository.findAllReversed();
-
+    public List<String> getIdentityTime(List<Report> reports) {
         return reports.stream()
                 .map(Report::getCreatedTime) // Конвертируем LocalDateTime в LocalDate
                 .distinct() // Получаем уникальные даты
@@ -84,6 +77,36 @@ public class ReportService {
                 .contentType(MediaType.APPLICATION_OCTET_STREAM) // Меняем на корректный тип, если нужно
                 .body(bytes);
 
+
+    }
+
+    private LocalDate[] getSplitDateReport(){
+        List<Report> reports = getReportList(null);
+
+        // Массив для хранения локальных дат
+        LocalDate[] dates = new LocalDate[reports.size() * 2]; // каждый отчет дает 2 даты
+
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
+
+        int index = 0;
+        for (Report report : reports) {
+            String[] dateParts = report.getFileName().split(" - ");
+            // Конвертируем строки в LocalDate и добавляем в массив
+            dates[index++] = LocalDate.parse(dateParts[0], formatter);
+            dates[index++] = LocalDate.parse(dateParts[1], formatter);
+        }
+        return dates;
+    }
+
+    public List<Report> getFilterReportByRangeData(LocalDate start_date, LocalDate end_date) {
+
+        String inputDataStart = start_date.format(DateTimeFormatter.ofPattern("dd.MM.yyyy"));
+        String inputDataEnd = end_date.format(DateTimeFormatter.ofPattern("dd.MM.yyyy"));
+
+        String fullInputData = inputDataStart + " - " + inputDataEnd;
+
+        return getReportList(null).stream().filter(report ->
+                report.getFileName().equals(fullInputData)).toList();
 
     }
 

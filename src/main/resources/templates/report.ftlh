@@ -25,14 +25,33 @@
                     <option <#if valueSelect?? && valueSelect == "0">selected</#if> value="0">Выбирите параметр...</option>
                     <option <#if valueSelect?? && valueSelect == "1">selected</#if> value="1">Посик по дате создания отчета</option>
                     <option value="2">Поиск по типу отчета</option>
-                    <option value="3">Поиск по начальной и конченой дате создания отчета</option>
+                    <option <#if valueSelect?? && valueSelect == "3">selected</#if> value="3">Поиск по начальной и конченой дате создания отчета</option>
                 </select>
                 <hr>
-                <p class="card-text" id="titleSearch" <#if valueSelect == 'null'>style="display: none"</#if>>Введите пожалуйста дату создания отчета</p>
-                <form action="/journal/report/get" method="get" id="containerSearch" <#if valueSelect == 'null'>style="display: none"</#if>>
+
+                <form action="/journal/report/get" method="get" id="containerSearch" <#if valueSelect == 'null' || valueSelect != "1">style="display: none"</#if>>
+                    <p class="card-text" id="titleSearch">Введите пожалуйста дату создания отчета</p>
                     <input name="valueSelect" id="valueSelect" style="display: none" <#if valueSelect??>value="${valueSelect}"</#if>>
                     <div class="input-group mb-2">
                         <input class="form-control" name="search_date" id="search_date" type="date" <#if search_date??>value="${search_date}"</#if>>
+                        <div class="input-group-append">
+                            <a href="/journal/report/get" class="btn btn-danger">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-x-lg" viewBox="0 0 16 16">
+                                    <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8z"/>
+                                </svg>
+                            </a>
+                        </div>
+                    </div>
+                    <input class="btn btn-primary" type="submit" value="Поиск">
+                </form>
+
+                <form action="/journal/report/get" method="get" id="containerSearch3" <#if valueSelect == 'null' || valueSelect != "3">style="display: none"</#if>>
+                    <p class="card-text" id="titleSearch3">Введите пожалуйста начальную и конечную дату формирования отчета</p>
+                    <input name="valueSelect" id="valueSelect" style="display: none" <#if valueSelect??>value="${valueSelect}"</#if>>
+                    <div class="input-group mb-2">
+                        <span class="input-group-text">От / До</span>
+                        <input class="form-control" type="date" name="start_data" id="data1" max="2999-12-31" <#if start_data??> value="${start_data}" </#if>>
+                        <input class="form-control" type="date" name="end_data" id="data2" max="2999-12-31" <#if end_data??> value="${end_data}" </#if>>
                         <div class="input-group-append">
                             <a href="/journal/report/get" class="btn btn-danger">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-x-lg" viewBox="0 0 16 16">

@@ -29,22 +29,30 @@ public class ReportController {
 
     @GetMapping("journal/report/get")
     public String report(@RequestParam(name = "search_date", required = false) LocalDate search_date,
-                         @RequestParam(name = "valueSelect", required = false) String valueSelect,  Model model){
+                         @RequestParam(name = "valueSelect", required = false) String valueSelect,
+                         @RequestParam(name = "start_data", required = false) LocalDate start_data,
+                         @RequestParam(name = "end_data", required = false) LocalDate end_data, Model model){
 
-        model.addAttribute("reports", reportService.getReportList(search_date));
+        List<Report> reports = reportService.getReportList(search_date);
 
         if (search_date != null) {
             model.addAttribute("search_date", search_date);
         }
+        if (start_data != null){
+            model.addAttribute("start_data", start_data);
+            model.addAttribute("end_data", end_data);
+            reports = reportService.getFilterReportByRangeData(start_data, end_data);
+        }
+
         if (valueSelect != null){
-            log.info(valueSelect);
             model.addAttribute("valueSelect", valueSelect);
         } else {
             model.addAttribute("valueSelect", "null");
         }
 
-        model.addAttribute("dates", reportService.getIdentityDate(search_date));
-        model.addAttribute("times", reportService.getIdentityTime(search_date));
+        model.addAttribute("reports", reports);
+        model.addAttribute("dates", reportService.getIdentityDate(reports));
+        model.addAttribute("times", reportService.getIdentityTime(reports));
 
         return "report";
     }
