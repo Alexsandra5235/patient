@@ -233,28 +233,37 @@
             function checkSelectSearchReport(){
                 const selectSearch = document.getElementById('selectSearch');
 
-                const titleSearch = document.getElementById('titleSearch');
-                const titleSearch3 = document.getElementById('titleSearch3');
-
                 const containerSearch = document.getElementById('containerSearch');
+                const containerSearch2 = document.getElementById('containerSearch2');
                 const containerSearch3 = document.getElementById('containerSearch3');
 
 
                 const valueSelect = document.getElementById('valueSelect');
+                const valueSelect2 = document.getElementById('valueSelect2');
+                const valueSelect3 = document.getElementById('valueSelect3');
+
+                const flexRadioDefaultDay = document.getElementById('flexRadioDefault1');
+                const flexRadioDefaultMonth = document.getElementById('flexRadioDefault2');
 
                 valueSelect.value = selectSearch.value.toString();
+                valueSelect2.value = selectSearch.value.toString();
+                valueSelect3.value = selectSearch.value.toString();
 
                 if (selectSearch.value === '0'){
-                    // titleSearch.style.display = 'none';
                     containerSearch.style.display = 'none';
                     containerSearch3.style.display = 'none';
+                    containerSearch2.style.display = 'none';
                 } else if (selectSearch.value === '1'){
-                    // titleSearch.style.display = 'block';
                     containerSearch.style.display = 'block';
                     containerSearch3.style.display = 'none'
+                    containerSearch2.style.display = 'none'
                 } else if (selectSearch.value === '3'){
-                    // titleSearch.style.display = 'block';
                     containerSearch3.style.display = 'block';
+                    containerSearch2.style.display = 'none';
+                    containerSearch.style.display = 'none';
+                } else if (selectSearch.value === '2'){
+                    containerSearch3.style.display = 'none';
+                    containerSearch2.style.display = 'block';
                     containerSearch.style.display = 'none';
                 }
             }

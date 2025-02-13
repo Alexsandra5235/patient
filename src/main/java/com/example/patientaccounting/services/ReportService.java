@@ -68,7 +68,6 @@ public class ReportService {
     }
 
     public ResponseEntity<byte[]> getViewReport(Long id) {
-//        Blob blob = getReportBlobById(id); // Получаем BLOB из базы данных
 
         byte[] bytes = getReportContent(id); // Преобразуем BLOB в массив байтов
 
@@ -78,24 +77,6 @@ public class ReportService {
                 .body(bytes);
 
 
-    }
-
-    private LocalDate[] getSplitDateReport(){
-        List<Report> reports = getReportList(null);
-
-        // Массив для хранения локальных дат
-        LocalDate[] dates = new LocalDate[reports.size() * 2]; // каждый отчет дает 2 даты
-
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
-
-        int index = 0;
-        for (Report report : reports) {
-            String[] dateParts = report.getFileName().split(" - ");
-            // Конвертируем строки в LocalDate и добавляем в массив
-            dates[index++] = LocalDate.parse(dateParts[0], formatter);
-            dates[index++] = LocalDate.parse(dateParts[1], formatter);
-        }
-        return dates;
     }
 
     public List<Report> getFilterReportByRangeData(LocalDate start_date, LocalDate end_date) {
@@ -108,6 +89,11 @@ public class ReportService {
         return getReportList(null).stream().filter(report ->
                 report.getFileName().equals(fullInputData)).toList();
 
+    }
+
+    public List<Report> getFilterByTypeReport(List<Report> reports, String type){
+        return getReportList(null).stream().filter(report ->
+                report.getTypeReport() != null && report.getTypeReport().equals(type)).toList();
     }
 
 }

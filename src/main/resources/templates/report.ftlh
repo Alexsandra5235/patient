@@ -22,7 +22,7 @@
             <div class="card card-body">
                 <label class="card-title h5" for="search_date">Поиск отчета по выбранному параметру</label>
                 <select class="form-select" name="selectSearch" id="selectSearch" aria-label="Выбирите параметр" onchange="checkSelectSearchReport()">
-                    <option <#if valueSelect?? && valueSelect == "0">selected</#if> value="0">Выбирите параметр...</option>
+                    <option <#if valueSelect?? && valueSelect == "0">selected</#if> style="font-weight: bold" value="0">Выбирите параметр...</option>
                     <option <#if valueSelect?? && valueSelect == "1">selected</#if> value="1">Посик по дате создания отчета</option>
                     <option value="2">Поиск по типу отчета</option>
                     <option <#if valueSelect?? && valueSelect == "3">selected</#if> value="3">Поиск по начальной и конченой дате создания отчета</option>
@@ -47,7 +47,7 @@
 
                 <form action="/journal/report/get" method="get" id="containerSearch3" <#if valueSelect == 'null' || valueSelect != "3">style="display: none"</#if>>
                     <p class="card-text" id="titleSearch3">Введите пожалуйста начальную и конечную дату формирования отчета</p>
-                    <input name="valueSelect" id="valueSelect" style="display: none" <#if valueSelect??>value="${valueSelect}"</#if>>
+                    <input name="valueSelect" id="valueSelect3" style="display: none" <#if valueSelect??>value="${valueSelect}"</#if>>
                     <div class="input-group mb-2">
                         <span class="input-group-text">От / До</span>
                         <input class="form-control" type="date" name="start_data" id="data1" max="2999-12-31" <#if start_data??> value="${start_data}" </#if>>
@@ -61,6 +61,27 @@
                         </div>
                     </div>
                     <input class="btn btn-primary" type="submit" value="Поиск">
+                </form>
+
+                <form action="/journal/report/get" method="get" id="containerSearch2" <#if valueSelect == 'null' || valueSelect != "2">style="display: none"</#if>>
+                    <p class="card-text" id="titleSearch2">Выбирите подходящие тип отчета для поиска</p>
+                    <input name="valueSelect" id="valueSelect2" style="display: none" <#if valueSelect??>value="${valueSelect}"</#if>>
+                    <div class="form-check">
+                        <label class="form-check-label">
+                            <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1" value="day" checked>
+                            Ежедневный отчет
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <label class="form-check-label">
+                            <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" value="mounth">
+                            Ежемесячный отчет
+                        </label>
+                    </div>
+                    <input class="btn btn-primary" type="submit" value="Поиск">
+                    <a href="/journal/report/get" class="btn btn-danger">
+                        Отчистить поиск
+                    </a>
                 </form>
             </div>
         </div>

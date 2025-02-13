@@ -19,6 +19,7 @@ import java.sql.Blob;
 import java.time.LocalDate;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Objects;
 
 @Controller
 @RequiredArgsConstructor
@@ -31,7 +32,9 @@ public class ReportController {
     public String report(@RequestParam(name = "search_date", required = false) LocalDate search_date,
                          @RequestParam(name = "valueSelect", required = false) String valueSelect,
                          @RequestParam(name = "start_data", required = false) LocalDate start_data,
-                         @RequestParam(name = "end_data", required = false) LocalDate end_data, Model model){
+                         @RequestParam(name = "end_data", required = false) LocalDate end_data,
+                         @RequestParam(value = "flexRadioDefault", required = false) String radioButton, Model model){
+
 
         List<Report> reports = reportService.getReportList(search_date);
 
@@ -43,12 +46,16 @@ public class ReportController {
             model.addAttribute("end_data", end_data);
             reports = reportService.getFilterReportByRangeData(start_data, end_data);
         }
-
-        if (valueSelect != null){
-            model.addAttribute("valueSelect", valueSelect);
-        } else {
-            model.addAttribute("valueSelect", "null");
+        if(radioButton != null){
+            model.addAttribute("radioButton", radioButton);
+            if(radioButton.equals("day")){
+                reports = reportService.getFilterByTypeReport(reports,"Ежедневный отчет");
+            } else {
+                reports = reportService.getFilterByTypeReport(reports,"Ежемесячный отчет");
+            }
         }
+
+        model.addAttribute("valueSelect", Objects.requireNonNullElse(valueSelect, "null"));
 
         model.addAttribute("reports", reports);
         model.addAttribute("dates", reportService.getIdentityDate(reports));
