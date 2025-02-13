@@ -13,7 +13,7 @@ public interface ReportRepository extends JpaRepository<Report, Long> {
 
     default List<Report> findByDate(LocalDate date) {
         List<Report> reports = new java.util.ArrayList<>(this.findAll().stream().filter(item ->
-                item.getCreatedAt().toLocalDate().isAfter(date) || item.getCreatedAt().toLocalDate().isEqual(date)).toList());
+                item.getCreatedAt().toLocalDate().isEqual(date)).toList());
 
         reports.sort(Comparator.comparing(Report::getCreatedAt).reversed());
 

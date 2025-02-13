@@ -28,12 +28,19 @@ public class ReportController {
     private final ReportService reportService;
 
     @GetMapping("journal/report/get")
-    public String report(@RequestParam(name = "search_date", required = false) LocalDate search_date, Model model){
+    public String report(@RequestParam(name = "search_date", required = false) LocalDate search_date,
+                         @RequestParam(name = "valueSelect", required = false) String valueSelect,  Model model){
 
         model.addAttribute("reports", reportService.getReportList(search_date));
 
         if (search_date != null) {
             model.addAttribute("search_date", search_date);
+        }
+        if (valueSelect != null){
+            log.info(valueSelect);
+            model.addAttribute("valueSelect", valueSelect);
+        } else {
+            model.addAttribute("valueSelect", "null");
         }
 
         model.addAttribute("dates", reportService.getIdentityDate(search_date));

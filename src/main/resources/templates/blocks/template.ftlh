@@ -230,6 +230,23 @@
 
         <script>
 
+            function checkSelectSearchReport(){
+                const selectSearch = document.getElementById('selectSearch');
+                const titleSearch = document.getElementById('titleSearch');
+                const containerSearch = document.getElementById('containerSearch');
+
+                const valueSelect = document.getElementById('valueSelect');
+
+                valueSelect.value = selectSearch.value.toString();
+
+                if (selectSearch.value === '0'){
+                    titleSearch.style.display = 'none';
+                    containerSearch.style.display = 'none';
+                } else if (selectSearch.value === '1'){
+                    titleSearch.style.display = 'block';
+                    containerSearch.style.display = 'block';
+                }
+            }
 
             // открытие файла без скачивания
             function viewReport(id) {
@@ -324,6 +341,7 @@
                         scrollToTopButton.style.display = "none"; // Скрываем div
                     }
                 });
+
             });
 
 

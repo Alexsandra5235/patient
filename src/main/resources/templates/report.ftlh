@@ -20,10 +20,17 @@
     <div class="container-fluid mb-3">
         <div class="collapse" id="collapseExample">
             <div class="card card-body">
-                <label class="card-title h5" for="search_date">Поиск отчета по дате создания</label>
+                <label class="card-title h5" for="search_date">Поиск отчета по выбранному параметру</label>
+                <select class="form-select" name="selectSearch" id="selectSearch" aria-label="Выбирите параметр" onchange="checkSelectSearchReport()">
+                    <option <#if valueSelect?? && valueSelect == "0">selected</#if> value="0">Выбирите параметр...</option>
+                    <option <#if valueSelect?? && valueSelect == "1">selected</#if> value="1">Посик по дате создания отчета</option>
+                    <option value="2">Поиск по типу отчета</option>
+                    <option value="3">Поиск по начальной и конченой дате создания отчета</option>
+                </select>
                 <hr>
-                <p class="card-text">Введите пожалуйста дату, начиная с которой будет выполнен поиск</p>
-                <form action="/journal/report/get">
+                <p class="card-text" id="titleSearch" <#if valueSelect == 'null'>style="display: none"</#if>>Введите пожалуйста дату создания отчета</p>
+                <form action="/journal/report/get" method="get" id="containerSearch" <#if valueSelect == 'null'>style="display: none"</#if>>
+                    <input name="valueSelect" id="valueSelect" style="display: none" <#if valueSelect??>value="${valueSelect}"</#if>>
                     <div class="input-group mb-2">
                         <input class="form-control" name="search_date" id="search_date" type="date" <#if search_date??>value="${search_date}"</#if>>
                         <div class="input-group-append">
@@ -134,4 +141,6 @@
 <#--    <#else>-->
 <#--        <p>Данные не найдены</p>-->
 <#--    </#list>-->
+
+    <input name="changeSelect" id="changeSelect" hidden="hidden">
 </@t.page>
