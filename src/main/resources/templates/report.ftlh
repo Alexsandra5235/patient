@@ -10,103 +10,37 @@
         </a>
     </div>
 
-
-
-<#--    <div class="container-fluid mb-4">-->
-<#--        <div class="card">-->
-<#--            <div class="card-body">-->
-<#--                <h5 class="card-title">Просмотр истории отчетов</h5>-->
-<#--                <p class="card-text">На этой странице отображаются ранее сформированные отчеты, при необходимости их можно скачать, нажав на соответствующую кнопку</p>-->
-<#--            </div>-->
-<#--        </div>-->
-<#--    </div>-->
-
-<#--    <div class="container-fluid my-4">-->
-<#--        <div class="card">-->
-<#--            <div class="card-body">-->
-<#--                <h5 class="card-title mb-2">Просмотр истории отчетов</h5>-->
-<#--                <p class="card-text">В этой таблице отображаются ранее сформированные отчеты, при необходимости их можно скачать, нажав на соответствующую кнопку</p>-->
-<#--                <div class="card-text table-container" style="table-layout: fixed; width: 100%;">-->
-<#--                    <table class="table">-->
-<#--                        <thead>-->
-<#--                            <tr>-->
-<#--                                <td>Дата создания</td>-->
-<#--                                <td>Время создания</td>-->
-<#--                                <td>Название файла</td>-->
-<#--                                <td>Скачать</td>-->
-<#--                            </tr>-->
-<#--                        </thead>-->
-<#--                        <tbody>-->
-<#--                        <#list reports as report>-->
-<#--                            <tr>-->
-<#--                                <td>${report.createdDate}</td>-->
-<#--                                <td>${report.createdTime}</td>-->
-<#--                                <td>${report.fileName}</td>-->
-<#--                                <td><a class="btn btn-primary" href="/journal/report/get/${report.id}">Скачать</a> </td>-->
-<#--                            </tr>-->
-<#--                        </#list>-->
-<#--                        </tbody>-->
-<#--                    </table>-->
-<#--                </div>-->
-<#--            </div>-->
-<#--        </div>-->
-<#--    </div>-->
-
-    <p style="justify-content: center; display: flex">
-        <a data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
-            <svg xmlns="http://www.w3.org/2000/svg" width="35" height="35" fill="currentColor" class="bi bi-arrow-bar-down" viewBox="0 0 16 16">
-                <path fill-rule="evenodd" d="M1 3.5a.5.5 0 0 1 .5-.5h13a.5.5 0 0 1 0 1h-13a.5.5 0 0 1-.5-.5zM8 6a.5.5 0 0 1 .5.5v5.793l2.146-2.147a.5.5 0 0 1 .708.708l-3 3a.5.5 0 0 1-.708 0l-3-3a.5.5 0 0 1 .708-.708L7.5 12.293V6.5A.5.5 0 0 1 8 6z"/>
+    <p style="justify-content: center; display: flex; margin-bottom: 0">
+        <a style="margin-top: -13px; padding-top: 0; color: #212529" data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+            <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor" class="bi bi-caret-down-fill" viewBox="0 0 16 16">
+                <path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z"/>
             </svg>
         </a>
     </p>
-    <div class="collapse" id="collapseExample">
-        <div class="card card-body">
-            <label class="card-title h5" for="search_date">Поиск отчета по дате создания</label>
-            <hr>
-            <p class="card-text">Введите пожалуйста дату, начиная с которой будет выполнен поиск</p>
-            <div class="input-group my-4">
-                <input class="form-control" name="search_date" id="search_date" type="date" <#if search_date??>value="${search_date}"</#if>>
-                <div class="input-group-append">
-                    <a href="/journal/report/get" class="btn btn-outline-primary">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-x-lg" viewBox="0 0 16 16">
-                            <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8z"/>
-                        </svg>
-                    </a>
-                </div>
+    <div class="container-fluid mb-3">
+        <div class="collapse" id="collapseExample">
+            <div class="card card-body">
+                <label class="card-title h5" for="search_date">Поиск отчета по дате создания</label>
+                <hr>
+                <p class="card-text">Введите пожалуйста дату, начиная с которой будет выполнен поиск</p>
+                <form action="/journal/report/get">
+                    <div class="input-group mb-2">
+                        <input class="form-control" name="search_date" id="search_date" type="date" <#if search_date??>value="${search_date}"</#if>>
+                        <div class="input-group-append">
+                            <a href="/journal/report/get" class="btn btn-danger">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-x-lg" viewBox="0 0 16 16">
+                                    <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8z"/>
+                                </svg>
+                            </a>
+                        </div>
+                    </div>
+                    <input class="btn btn-primary" type="submit" value="Поиск">
+                </form>
             </div>
-            <input class="btn btn-outline-primary" type="submit" value="Поиск">
         </div>
     </div>
 
-<#--    <p style="justify-content: center; display: flex">-->
-<#--        <a href="#" style="text-decoration: none; color: black" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">-->
-<#--            <svg xmlns="http://www.w3.org/2000/svg" width="35" height="35" fill="currentColor" class="bi bi-arrow-bar-down" viewBox="0 0 16 16">-->
-<#--                <path fill-rule="evenodd" d="M1 3.5a.5.5 0 0 1 .5-.5h13a.5.5 0 0 1 0 1h-13a.5.5 0 0 1-.5-.5zM8 6a.5.5 0 0 1 .5.5v5.793l2.146-2.147a.5.5 0 0 1 .708.708l-3 3a.5.5 0 0 1-.708 0l-3-3a.5.5 0 0 1 .708-.708L7.5 12.293V6.5A.5.5 0 0 1 8 6z"/>-->
-<#--            </svg>-->
-<#--        </a>-->
-<#--    </p>-->
-<#--    <div class="collapse" id="collapseExample">-->
-<#--        <form action="/journal/report/get" method="get">-->
-<#--            <div class="card">-->
-<#--                <div class="card-body">-->
-<#--                    <label class="card-title h5" for="search_date">Поиск отчета по дате создания</label>-->
-<#--                    <hr>-->
-<#--                    <p class="card-text">Введите пожалуйста дату, начиная с которой будет выполнен поиск</p>-->
-<#--                    <div class="input-group my-4">-->
-<#--                        <input class="form-control" name="search_date" id="search_date" type="date" <#if search_date??>value="${search_date}"</#if>>-->
-<#--                        <div class="input-group-append">-->
-<#--                            <a href="/journal/report/get" class="btn btn-outline-primary">-->
-<#--                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-x-lg" viewBox="0 0 16 16">-->
-<#--                                    <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8z"/>-->
-<#--                                </svg>-->
-<#--                            </a>-->
-<#--                        </div>-->
-<#--                    </div>-->
-<#--                    <input class="btn btn-outline-primary" type="submit" value="Поиск">-->
-<#--                </div>-->
-<#--            </div>-->
-<#--        </form>-->
-<#--    </div>-->
+
 
     <div class="container-fluid" style="justify-content: center; display: flex">
         <div class="card" style="width: 50%; min-width: 500px">

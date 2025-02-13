@@ -219,7 +219,6 @@
                             <button class="btn btn-outline-primary" type="submit">Поиск</button>
                         </form>
                     </#if>
-
                 </div>
             </div>
         </nav>
@@ -230,6 +229,7 @@
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
         <script>
+
 
             // открытие файла без скачивания
             function viewReport(id) {
