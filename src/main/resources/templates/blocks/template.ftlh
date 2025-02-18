@@ -167,6 +167,8 @@
            body {
                overflow-y: scroll;
            }
+
+
         </style>
 
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
@@ -192,10 +194,10 @@
                             <a class="nav-link active" aria-current="page" href="/">Главная</a>
                         </li>
                         <li class="nav-item me-3">
-                            <a class="nav-link" href="/journal/save">Добавить запись</a>
+                            <a class="nav-link" aria-current="page" href="/journal/save">Добавить запись</a>
                         </li>
                         <li class="nav-item dropdown" style="z-index: 9999">
-                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <a class="nav-link dropdown-toggle" aria-current="page" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                 Формирование отчетов
                             </a>
                             <ul class="dropdown-menu">
@@ -229,6 +231,51 @@
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
         <script>
+
+            document.addEventListener("DOMContentLoaded", function() {
+                // Получаем все элементы навигации
+                const navLinks = document.querySelectorAll('.navbar-nav .nav-link');
+
+                // Удаляем класс active у всех пунктов
+                navLinks.forEach(nav => nav.classList.remove('active'));
+
+                navLinks.forEach(link => {
+                    link.addEventListener('click', function(e) {
+
+                        // Добавляем класс active к текущему пункту
+                        this.classList.add('active');
+
+                        // Если пункт является выпадающим, выделяем родительский элемент
+                        if (this.closest('.dropdown')) {
+                            const dropdownToggle = this.closest('.dropdown').querySelector('.dropdown-toggle');
+                            dropdownToggle.classList.add('active');
+                        }
+                    });
+                });
+
+                // Получаем все элементы навигации
+                const navDropdown = document.querySelectorAll('.dropdown-item');
+
+                // Устанавливаем "active" для текущей страницы при загрузке
+                const currentLocation = window.location.pathname;
+
+                navLinks.forEach(link => {
+                    if (link.getAttribute('href') === currentLocation) {
+                        link.classList.add('active');
+                    }
+
+                });
+
+                navDropdown.forEach(link => {
+                    if (link.getAttribute('href') === currentLocation){
+                        // Проверяем, является ли это выпадающим пунктом
+                        if (link.closest('.dropdown')) {
+                            const dropdownToggle = link.closest('.dropdown').querySelector('.dropdown-toggle');
+                            dropdownToggle.classList.add('active');
+                        }
+                    }
+                })
+            });
 
             function checkSelectSearchReport(){
                 const selectSearch = document.getElementById('selectSearch');
@@ -346,6 +393,7 @@
 
             // после загрузки страницы
             $(function(){
+
                 // инициализации подсказок для всех элементов на странице, имеющих атрибут data-toggle="tooltip"
                 $('[data-bs-toggle="tooltip"]').tooltip();
                 // Проверяем значение select при загрузке страницы
