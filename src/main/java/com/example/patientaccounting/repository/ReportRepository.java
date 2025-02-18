@@ -1,10 +1,7 @@
 package com.example.patientaccounting.repository;
 
-import com.example.patientaccounting.models.Medical;
 import com.example.patientaccounting.models.Report;
-import jakarta.validation.constraints.NotNull;
 import org.springframework.data.jpa.repository.JpaRepository;
-
 import java.time.LocalDate;
 import java.util.Comparator;
 import java.util.List;

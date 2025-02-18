@@ -5,10 +5,9 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.web.client.RestTemplate;
 
 @Configuration
-public class CountryConfig {
-
+public class ApiConfig {
     @Bean
-    public RestTemplate restTemplateCountry() {
+    public RestTemplate restTemplate() {
         return new RestTemplate();
     }
 }

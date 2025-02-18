@@ -47,13 +47,12 @@ public class JournalService {
             log.info("Edit record with id = {}", journal.getId());
 
             assert beforeJournal != null;
-            log.info("Before edit record: {}", beforeJournal.toString());
+            log.info("Before edit record: {}", beforeJournal);
 
             journal.setNormal_date(getNormalDate(journal.getDate_receipt()));
             journal.setNormal_birth_day(getNormalDate(journal.getBirth_day()));
-            //journal.setNormal_date_outcome(getNormalDate(journal.getDate_time_discharge().toLocalDate()));
             journalRepository.save(journal);
-            log.info("After edit record: {}", journal.toString());
+            log.info("After edit record: {}", journal);
         }
 
     }

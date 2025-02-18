@@ -1,31 +1,32 @@
 package com.example.patientaccounting.controllers;
 
-import com.example.patientaccounting.services.AddressService;
+import com.example.patientaccounting.services.ApiService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
+import static com.example.patientaccounting.Constants.API_KEY;
+import static com.example.patientaccounting.Constants.API_URL;
+
 @RestController
 @Slf4j
 public class AddressController {
 
-    private final AddressService addressService;
+    private final ApiService apiService;
 
     @Autowired
-    public AddressController(AddressService addressService) {
-        this.addressService = addressService;
+    public AddressController(ApiService apiService) {
+        this.apiService = apiService;
     }
 
     @GetMapping("/api/suggest-address")
     public List<String> suggestAddress(@RequestParam(name = "query", required = false) String query) {
 
-        return addressService.getAddressSuggestions(query);
+        return apiService.getSuggestions(query,API_URL);
     }
 
 

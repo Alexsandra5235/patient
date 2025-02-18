@@ -49,9 +49,9 @@ public class ReportController {
         if(radioButton != null){
             model.addAttribute("radioButton", radioButton);
             if(radioButton.equals("day")){
-                reports = reportService.getFilterByTypeReport(reports,"Ежедневный отчет");
+                reports = reportService.getFilterByTypeReport("Ежедневный отчет");
             } else {
-                reports = reportService.getFilterByTypeReport(reports,"Ежемесячный отчет");
+                reports = reportService.getFilterByTypeReport("Ежемесячный отчет");
             }
         }
 

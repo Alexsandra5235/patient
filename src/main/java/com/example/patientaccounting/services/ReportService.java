@@ -1,21 +1,11 @@
 package com.example.patientaccounting.services;
-
 import com.example.patientaccounting.models.Report;
 import com.example.patientaccounting.repository.ReportRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PathVariable;
-
-import java.io.ByteArrayOutputStream;
-import java.sql.Blob;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -91,7 +81,7 @@ public class ReportService {
 
     }
 
-    public List<Report> getFilterByTypeReport(List<Report> reports, String type){
+    public List<Report> getFilterByTypeReport(String type){
         return getReportList(null).stream().filter(report ->
                 report.getTypeReport() != null && report.getTypeReport().equals(type)).toList();
     }

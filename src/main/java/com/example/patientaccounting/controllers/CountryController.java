@@ -1,29 +1,27 @@
 package com.example.patientaccounting.controllers;
 
-import com.example.patientaccounting.services.AddressService;
-import com.example.patientaccounting.services.CountryService;
+import com.example.patientaccounting.services.ApiService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
+import static com.example.patientaccounting.Constants.API_URL_COUNTRY;
+
 @RestController
 public class CountryController {
 
-    private final CountryService countryService;
+    private final ApiService apiService;
 
     @Autowired
-    public CountryController(CountryService countryService) {
-        this.countryService = countryService;
+    public CountryController(ApiService apiService) {
+        this.apiService = apiService;
     }
 
     @GetMapping("/api/suggest-country")
     public List<String> suggestAddress(@RequestParam(name = "query", required = false) String query) {
-
-
-        return countryService.getCountrySuggestions(query);
+        return apiService.getSuggestions(query,API_URL_COUNTRY);
     }
 }

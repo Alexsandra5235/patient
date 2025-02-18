@@ -19,8 +19,6 @@ public class MedicalService {
                 filter(code -> code.getId().contains(mkd))
                 .map(item -> item.getId() + " - " + item.getValue()) // Форматирование строки
                 .toList(); // Сбор в список
-
-
     }
 
 }
