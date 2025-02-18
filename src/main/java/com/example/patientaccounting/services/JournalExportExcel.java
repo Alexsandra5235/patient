@@ -8,6 +8,7 @@ import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.ss.util.CellRangeAddress;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -448,6 +449,64 @@ public class JournalExportExcel {
                 .headers(headers)
                 .contentType(MediaType.APPLICATION_OCTET_STREAM)
                 .body(bytes);
+    }
+
+    public ResponseEntity<byte[]> openToExcel(List<Journal> journals, String date1, String date2, String typeReport) throws IOException {
+        Workbook workbook = new XSSFWorkbook();
+        Sheet sheet = workbook.createSheet("Результат");
+        Sheet sheetPatient = workbook.createSheet("стр.2");
+
+        setSizeColumn(sheet);
+
+        createHeadRight(workbook,sheet);
+        createHeadLeft(workbook,sheet);
+        createTitle(workbook,sheet,date1,date2);
+
+        createColumnVertical(workbook,sheet);
+        createColumnHorizontal(workbook,sheet);
+
+        createNumsRow(workbook,sheet);
+        createColumnReport(workbook,sheet);
+
+        createBorder(workbook,sheet);
+
+        setReportData(workbook,sheet,journals);
+
+        createColumnsSheetPatient(workbook,sheetPatient);
+
+        setReportDataSheetTwo(workbook,sheetPatient,journals);
+
+        // Запись в поток
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        workbook.write(outputStream);
+        workbook.close();
+
+        byte[] bytes = outputStream.toByteArray();
+
+        HttpHeaders headers = new HttpHeaders();
+
+        String headerTitle = "report " + date1 + " " + date2 + ".xlsx";
+
+        String headerValue = "inline; filename=" + headerTitle;
+
+        headers.add(HttpHeaders.CONTENT_DISPOSITION, headerValue);
+        headers.add(HttpHeaders.CONTENT_TYPE, "application/vnd.ms-excel");
+
+//        // Сохранение в базе данных
+//        Report report = new Report();
+//        report.setFileName(headerTitle);
+//        report.setFileContent(bytes);
+//        report.setCreatedAt(LocalDateTime.now());
+//        if (Objects.equals(typeReport, "day")){
+//            report.setTypeReport("Ежедневный отчет");
+//        }
+//        else if (Objects.equals(typeReport, "month")){
+//            report.setTypeReport("Ежемесячный отчет");
+//        }
+//
+//        reportService.saveReportByBD(report);
+
+        return new ResponseEntity<>(bytes, headers, HttpStatus.OK);
     }
 
 }

@@ -109,14 +109,31 @@ public class JournalController {
         return "redirect:/";
     }
 
+//    @GetMapping("/export/excel")
+//    public ResponseEntity<byte[]> exportToExcel(@RequestParam(name = "data1", required = false) LocalDate data1,
+//                                                @RequestParam(name = "data2", required = false) LocalDate data2,
+//                                                @RequestParam(name = "typeReport", required = false) String typeReport) throws IOException {
+//
+//        List<Journal> journals = journalService.getFilterByDate(data1, data2);
+//
+//        return journalExportExcel.exportToExcel(journals, journalService.getNormalDate(data1), journalService.getNormalDate(data2), typeReport);
+//    }
+
     @GetMapping("/export/excel")
-    public ResponseEntity<byte[]> exportToExcel(@RequestParam(name = "data1", required = false) LocalDate data1,
-                                                @RequestParam(name = "data2", required = false) LocalDate data2,
-                                                @RequestParam(name = "typeReport", required = false) String typeReport) throws IOException {
+    public ResponseEntity<byte[]> openToExcel(@RequestParam(name = "data1", required = false) LocalDate data1,
+                                              @RequestParam(name = "data2", required = false) LocalDate data2,
+                                              @RequestParam(name = "typeReport", required = false) String typeReport,
+                                              @RequestParam(name = "open", required = false) String open)
+                                              throws IOException {
 
         List<Journal> journals = journalService.getFilterByDate(data1, data2);
 
-        return journalExportExcel.exportToExcel(journals, journalService.getNormalDate(data1), journalService.getNormalDate(data2), typeReport);
+        if (open != null) {
+            return journalExportExcel.openToExcel(journals, journalService.getNormalDate(data1), journalService.getNormalDate(data2), typeReport);
+        } else {
+            return journalExportExcel.exportToExcel(journals, journalService.getNormalDate(data1), journalService.getNormalDate(data2), typeReport);
+
+        }
     }
 
     @GetMapping("/journal/info/{id}")
