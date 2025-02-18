@@ -433,7 +433,7 @@ public class JournalExportExcel {
 
         // Сохранение в базе данных
         Report report = new Report();
-        report.setFileName(headerTitle);
+        report.setFileName(date1 + " - " + date2);
         report.setFileContent(bytes);
         report.setCreatedAt(LocalDateTime.now());
         if (Objects.equals(typeReport, "day")){

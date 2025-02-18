@@ -155,32 +155,5 @@
         </div>
     </div>
 
-
-
-
-
-<#--    <#list dates as data>-->
-<#--        <div class="card mb-4 mx-xxl-5">-->
-<#--            <div class="card-body">-->
-<#--                <h5 class="card-title">Дата создания: ${data}</h5>-->
-<#--                <hr>-->
-<#--                <div class="card-height">-->
-<#--                    <#list times as time>-->
-<#--                        <#list reports as report>-->
-<#--                            <#if report.createdDate == data && report.createdTime == time>-->
-<#--                                <h6 class="card-subtitle mb-2 text-body-secondary">Время создания: ${time}</h6>-->
-<#--                                <p class="card-text"> Имя файла: ${report.fileName}</p>-->
-<#--                                <a class="btn btn-outline-primary" href="/journal/report/get/${report.id}">Скачать ${report.fileName}</a>-->
-<#--                                <hr>-->
-<#--                            </#if>-->
-<#--                        </#list>-->
-<#--                    </#list>-->
-<#--                </div>-->
-<#--            </div>-->
-<#--        </div>-->
-<#--    <#else>-->
-<#--        <p>Данные не найдены</p>-->
-<#--    </#list>-->
-
     <input name="changeSelect" id="changeSelect" hidden="hidden">
 </@t.page>
