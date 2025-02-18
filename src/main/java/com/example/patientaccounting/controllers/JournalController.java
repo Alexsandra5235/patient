@@ -129,7 +129,7 @@ public class JournalController {
         List<Journal> journals = journalService.getFilterByDate(data1, data2);
 
         if (open != null) {
-            return journalExportExcel.openToExcel(journals, journalService.getNormalDate(data1), journalService.getNormalDate(data2), typeReport);
+            return journalExportExcel.openToExcel(journals, journalService.getNormalDate(data1), journalService.getNormalDate(data2));
         } else {
             return journalExportExcel.exportToExcel(journals, journalService.getNormalDate(data1), journalService.getNormalDate(data2), typeReport);
 

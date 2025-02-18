@@ -1,25 +1,15 @@
 package com.example.patientaccounting.services;
-
-import com.example.patientaccounting.models.Journal;
-import com.example.patientaccounting.models.Report;
+import com.example.patientaccounting.models.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.ss.util.CellRangeAddress;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
 import org.springframework.stereotype.Service;
-
-
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
+import java.io.*;
 import java.time.LocalDateTime;
-import java.util.List;
-import java.util.Objects;
-
+import java.util.*;
 import static com.example.patientaccounting.Constants.*;
 
 @Service
@@ -32,17 +22,30 @@ public class JournalExportExcel {
     Row rowCurrent;
     Cell cellCurrent;
 
+    /**
+     * Метод для применения основных настроек текста в ячейке
+     * @param workbook документ
+     * @param sheet лист документа
+     * @param firstRow начальная строка ячейки
+     * @param endRow конечная строка ячейки
+     * @param firstCol начальная колонка ячейки
+     * @param endCol конечная колонка ячейки
+     * @param nameCol содержание ячейки
+     * @param alignment выравнивание
+     * @param border наличие границ
+     * @param rotation положение в ячейке
+     * @param underline наличие подчеркивания
+     * @param fontHeight размер шрифта внутри ячейки
+     * @param bold наличие жирного шрифта
+     * @param borderButton наличие нижнего подчеркивания
+     * @param wrapText наличие переноса текста
+     */
     private void setDefaultSettings(Workbook workbook,Sheet sheet, int firstRow, int endRow, int firstCol, int endCol, String nameCol,
                                     HorizontalAlignment alignment, Boolean border, int rotation,
                                     boolean underline, int fontHeight, boolean bold, boolean borderButton,
-                                    boolean wrapText, boolean background){
+                                    boolean wrapText){
 
         CellStyle style = workbook.createCellStyle();
-
-        // Создаем стиль для белой заливки
-        CellStyle whiteFillStyle = workbook.createCellStyle();
-
-
         Font font = workbook.createFont();
 
         // Устанавливаем выравнивание текста
@@ -51,8 +54,6 @@ public class JournalExportExcel {
         style.setRotation((short) rotation);
 
         style.setWrapText(wrapText); // Включаем перенос текста
-
-
 
         // Устанавливаем шрифт
         font.setFontName("Times New Roman"); // Название шрифта
@@ -82,26 +83,17 @@ public class JournalExportExcel {
             style.setBorderRight(BorderStyle.NONE);
         }
 
-//        if (background) {
-//            style.setFillForegroundColor(IndexedColors.WHITE.getIndex());
-//            style.setFillPattern(FillPatternType.SOLID_FOREGROUND);
-//        }
-
         // Объединяем ячейки
         if ((firstRow != endRow) || (firstCol != endCol)) {
             sheet.addMergedRegion(new CellRangeAddress(firstRow, endRow, firstCol, endCol));
         }
 
-
+        // Получение ячейки для установки значения
         rowCurrent = sheet.getRow(firstRow);
-        if (rowCurrent == null) {
-            rowCurrent = sheet.createRow(firstRow);
-        }
+        if (rowCurrent == null) rowCurrent = sheet.createRow(firstRow);
 
         cellCurrent = rowCurrent.getCell(firstCol);
-        if (cellCurrent == null) {
-            cellCurrent = rowCurrent.createCell(firstCol);
-        }
+        if (cellCurrent == null) cellCurrent = rowCurrent.createCell(firstCol);
 
         if (nameCol != null) cellCurrent.setCellValue(nameCol); // Установка значения
 
@@ -122,91 +114,106 @@ public class JournalExportExcel {
 
     }
 
+    /**
+     * Создание шапки страницы (слева)
+     * @param workbook документ
+     * @param sheet лист
+     */
     public void createHeadLeft(Workbook workbook,Sheet sheet){
-
-
 
         for(int i = 0; i < 5; i++){
 
             if (i == 4) setDefaultSettings(workbook,sheet,i,i,0,4,headsLeft.get(i),
                     HorizontalAlignment.CENTER, false,0, true, fontHeightHead,
-                    false, false, true, false);
+                    false, false, true);
 
             else setDefaultSettings(workbook,sheet,i,i,0,4,headsLeft.get(i),HorizontalAlignment.LEFT,
                     false,0, false, fontHeightHead, false, false,
-                    true, true);
+                    true);
         }
 
     }
 
+    /**
+     * Создание шапки страницы (справа)
+     * @param workbook страница
+     * @param sheet лист
+     */
     public void createHeadRight(Workbook workbook,Sheet sheet){
-
 
         for (int i = 2; i < 6; i++){
             setDefaultSettings(workbook,sheet,i,i,19,24, headsRight.get(i-2),HorizontalAlignment.CENTER,
                     false,0, false, fontHeightHead, false, false,
-                    true, true);
+                    true);
         }
-
         setDefaultSettings(workbook,sheet,0,0,19,21,order,HorizontalAlignment.RIGHT,
                 false,0, false, fontHeightHead, false, false,
-                true, false);
+                true);
         setDefaultSettings(workbook,sheet,0,0,22,24,null, HorizontalAlignment.CENTER,
                 false,0, false, fontHeightHead, false, true,
-                true, false);
+                true);
 
     }
 
+    /**
+     * Генерация шапки (центр страницы)
+     * @param workbook страница
+     * @param sheet лист
+     * @param date1 начальная дата отчетного периода
+     * @param date2 конечная дата отчетного периода
+     */
     public void createTitle(Workbook workbook, Sheet sheet,String date1, String date2){
 
         String title3 = "за период с " + date1 + " 08:00 по " + date2 + " 07:59";
 
         List<String> titles = List.of(title1, title2, title3, title4);
 
-
         for (int i = 8; i < 12; i++){
             if (i == 11) setDefaultSettings(workbook,sheet,i,i,0,24, titles.get(i-8), HorizontalAlignment.CENTER,
                     false,0,false, fontHeightHead,false, false,
-                    true, false);
+                    true);
             else setDefaultSettings(workbook,sheet,i,i,0,24, titles.get(i-8), HorizontalAlignment.CENTER,
                     false,0,false, fontHeightTitle,true, false,
-                    true, false);
+                    true);
         }
     }
 
+    /**
+     * Генерация глав (нумерация колонок)
+     * @param workbook страница
+     * @param sheet лист
+     */
     public void createNumsRow(Workbook workbook, Sheet sheet){
 
         for (int i = 0; i < 10; i++){
             setDefaultSettings(workbook,sheet,18,18,i,i, String.valueOf(i+1),HorizontalAlignment.CENTER,
                     true,0,false,fontHeightHead,false,false,
-                    true, false);
+                    true);
         }
-
         for (int i = 13; i < 25; i++){
             setDefaultSettings(workbook,sheet,18,18,i,i, String.valueOf(i-1),HorizontalAlignment.CENTER,
                     true,0,false,fontHeightHead,false,false,
-                    true, false);
+                    true);
         }
-
         setDefaultSettings(workbook,sheet,18,18,10,10, "10A",HorizontalAlignment.CENTER,
                 true,0,false,fontHeightHead,false,false,
-                true, false);
-
+                true);
         setDefaultSettings(workbook,sheet,18,18,11,11, "11",HorizontalAlignment.CENTER,
                 true,0,false,fontHeightHead,false,false,
-                true, false);
-
+                true);
         setDefaultSettings(workbook,sheet,18,18,12,12, "11A",HorizontalAlignment.CENTER,
                 true,0,false,fontHeightHead,false,false,
-                true, false);
+                true);
     }
 
+    /**
+     * Измнение размеров ячеек
+     * @param sheet лист
+     */
     public void setSizeColumn(Sheet sheet){
 
         // Устанавливаем ширину столбца для лучшего отображения
         sheet.setColumnWidth(0, 9000); // Измените значение по необходимости
-
-        //Row rowI;
 
         for (int i = 14; i < 18; i++){
             // Устанавливаем высоту 18-й строки
@@ -218,69 +225,74 @@ public class JournalExportExcel {
             if (i != 17) rowCurrent.setHeightInPoints(32);
             else rowCurrent.setHeightInPoints(200);
 
-
         }
     }
 
+    /**
+     * Генерация заголовков строк, которые показывают итоговые данные по отчету
+     * @param workbook страница
+     * @param sheet лист
+     */
     public void createColumnReport(Workbook workbook,Sheet sheet){
 
         setDefaultSettings(workbook,sheet,19,19,0,0,nameRowTotal,HorizontalAlignment.RIGHT,
                 true,0,false,fontHeightHead,true,false,
-                true, false);
+                true);
 
         setDefaultSettings(workbook,sheet,20,20,0,0,nameRowDayHospital,HorizontalAlignment.LEFT,
                 true,0,false,fontHeightTableReport,true,false,
-                true, false);
-
+                true);
         for (int i = 21; i < 23; i++){
             setDefaultSettings(workbook,sheet,i,i,0,0, nameRowsReport.get(i-21), HorizontalAlignment.RIGHT,
                     true,0,false,fontHeightHead,false,false,
-                    false, false);
+                    false);
         }
-
         setDefaultSettings(workbook,sheet,25,25,16,18,endRow,HorizontalAlignment.RIGHT,
                 false,0,false,fontHeightHead,false,false,
-                true, true);
-
+                true);
         setDefaultSettings(workbook,sheet,25,25,19,21,null,HorizontalAlignment.CENTER,
                 false,0,false,fontHeightHead,false,true,
-                false, true);
+                false);
     }
 
+    /**
+     * Генерация колонок с вертикальным отображением текста
+     * @param workbook страница
+     * @param sheet лист
+     */
     public void createColumnVertical(Workbook workbook, Sheet sheet){
-
-
         for (int i = 1; i < 25; i++){
             int firstRow = cellsFirst.get(i-1);
             String nameCol = nameColumnsVerticals.get(i-1);
 
             setDefaultSettings(workbook,sheet,firstRow,17, i, i, nameCol,HorizontalAlignment.CENTER,
                     true, 90, false, fontHeightHead, false, false,
-                    true, false);
+                    true);
 
         }
-
-
     }
 
+    /**
+     * Генерация грац таблицы
+     * @param workbook страница
+     * @param sheet лист
+     */
     public void createBorder(Workbook workbook, Sheet sheet){
-
         for (int row = 19; row < 23; row++){
-            Row rowCurrent = sheet.getRow(row);
-            if (rowCurrent == null) rowCurrent = sheet.createRow(row);
             for (int col = 1; col < 25; col++){
-                Cell cell = rowCurrent.getCell(col);
-                if (cell == null) cell = rowCurrent.createCell(col);
                 setDefaultSettings(workbook,sheet,row,row,col,col,null,HorizontalAlignment.CENTER,
                         true,0,false,fontHeightHead,false,false,
-                        true, false);
+                        true);
             }
         }
     }
 
+    /**
+     * Генерация колонок с горизонтальным отображением текста
+     * @param workbook страница
+     * @param sheet лист
+     */
     public void createColumnHorizontal(Workbook workbook, Sheet sheet){
-
-
         for (int i = 0; i < 12; i++){
             int firstRow = RowFirst.get(i);
             int rowEnd = RowEnd.get(i);
@@ -291,40 +303,43 @@ public class JournalExportExcel {
 
             setDefaultSettings(workbook,sheet,firstRow,rowEnd, colFirst, colEnd, nameCol,HorizontalAlignment.CENTER,
                     true, 0, false, fontHeightHead, false, false,
-                    true, false);
-
+                    true);
         }
-
-
     }
 
+    /**
+     * Генерация итоговых значений в таблице по итогам отчетного периода
+     * @param workbook страница
+     * @param sheet лист
+     * @param journals данные о пациентах, попавшие в отчетный период
+     */
     public void setReportData(Workbook workbook,Sheet sheet,List<Journal> journals){
 
         setDefaultSettings(workbook,sheet,19,19,3,3,String.valueOf(journals.size()),
                 HorizontalAlignment.CENTER,true,0,false,fontHeightHead,
-                true,false,true,false);
-
+                true,false,true);
         setDefaultSettings(workbook,sheet,19,19,20,20,String.valueOf(journals.size()),
                 HorizontalAlignment.CENTER,true,0,false,fontHeightHead,
-                true,false,true,false);
-
+                true,false,true);
         setDefaultSettings(workbook,sheet,20,20,3,3,String.valueOf(journals.size()),
                 HorizontalAlignment.CENTER,true,0,false,fontHeightTableReport,
-                true,false,true,false);
-
+                true,false,true);
         setDefaultSettings(workbook,sheet,20,20,20,20,String.valueOf(journals.size()),
                 HorizontalAlignment.CENTER,true,0,false,fontHeightTableReport,
-                true,false,true,false);
-
+                true,false,true);
         setDefaultSettings(workbook,sheet,22,22,3,3,String.valueOf(journals.size()),
                 HorizontalAlignment.CENTER,true,0,false,fontHeightHead,
-                false,false,true,false);
-
+                false,false,true);
         setDefaultSettings(workbook,sheet,22,22,20,20,String.valueOf(journals.size()),
                 HorizontalAlignment.CENTER,true,0,false,fontHeightHead,
-                false,false,true,false);
+                false,false,true);
     }
 
+    /**
+     * Генерация глав (номера колонок) на странице 2
+     * @param workbook страница
+     * @param sheet лист
+     */
     public void createColumnsSheetPatient(Workbook workbook, Sheet sheet){
 
         for (int i = 0; i < rowFirstSheetPatient.size(); i++){
@@ -333,30 +348,30 @@ public class JournalExportExcel {
             int colFirst = colFirstSheetPatient.get(i);
             int colEnd = colEndSheetPatient.get(i);
 
-
             if (i < 6) {
                 int colEndNum = colEndSheetPatientNums.get(i);
                 int colStartNum = colFirstSheetPatientNums.get(i);
-
                 setDefaultSettings(workbook,sheet,6,6,colStartNum,colEndNum,
                         String.valueOf(i+1),HorizontalAlignment.CENTER,true,0,
-                        false,fontHeightHead,false,false,true,false);
+                        false,fontHeightHead,false,false,true);
             }
-
 
             setDefaultSettings(workbook,sheet,firstRow,rowEnd,colFirst,colEnd,
                     nameColumnsSheetPatient.get(i),HorizontalAlignment.CENTER,true,0,
-                    false,fontHeightHead,false,false,true,false);
+                    false,fontHeightHead,false,false,true);
 
         }
-
         setDefaultSettings(workbook,sheet,7,7,0,18,
                 nameRowDayHospital,HorizontalAlignment.CENTER,true,0,
-                false,fontHeightTableReport,true,false,true,false);
-
-
+                false,fontHeightTableReport,true,false,true);
     }
 
+    /**
+     * Генерация отчетных данных по результатам отчетного периода на странице 2
+     * @param workbook страница
+     * @param sheet лист
+     * @param journals пациенты, вошедшие в отчетный период
+     */
     public void setReportDataSheetTwo(Workbook workbook,Sheet sheet,List<Journal> journals){
 
         for (int i = 0; i < journals.size(); i++){
@@ -364,8 +379,7 @@ public class JournalExportExcel {
             setDefaultSettings(workbook,sheet,i+8,i+8,0,2,
                     String.join(" ",journals.get(i).getFull_name(), "\n№",
                             journals.get(i).getId().toString()), HorizontalAlignment.LEFT,true,
-                    0,false, fontHeightHead,false,false,true,
-                    false);
+                    0,false, fontHeightHead,false,false,true);
 
             // Устанавливаем высоту 18-й строки
             rowCurrent = sheet.getRow(i+8); // Индекс 17 соответствует 18-й строке
@@ -376,21 +390,25 @@ public class JournalExportExcel {
             rowCurrent.setHeightInPoints(45);
 
             for (int j = 1; j < colFirstSheetPatientNums.size(); j++) {
-
                 int colEndNum = colEndSheetPatientNums.get(j);
                 int colStartNum = colFirstSheetPatientNums.get(j);
 
                 setDefaultSettings(workbook, sheet, i+8, i+8, colStartNum, colEndNum,
                         null, HorizontalAlignment.CENTER, true, 0,
-                        false, fontHeightHead, false, false, true, false);
+                        false, fontHeightHead, false, false, true);
 
             }
         }
-
-
     }
 
-    public ResponseEntity<byte[]> exportToExcel(List<Journal> journals, String date1, String date2, String typeReport) throws IOException {
+    /**
+     * Заполнение документа
+     * @param journals пациенты, вошедшие в отчетный период
+     * @param date1 начальная дата отчетного периода
+     * @param date2 конечная дата отчетного периода
+     * @return заполненный документ
+     */
+    private Workbook setSettings(List<Journal> journals, String date1, String date2){
         Workbook workbook = new XSSFWorkbook();
         Sheet sheet = workbook.createSheet("Результат");
         Sheet sheetPatient = workbook.createSheet("стр.2");
@@ -415,21 +433,17 @@ public class JournalExportExcel {
 
         setReportDataSheetTwo(workbook,sheetPatient,journals);
 
-        // Запись в поток
-        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-        workbook.write(outputStream);
-        workbook.close();
+        return workbook;
+    }
 
-        byte[] bytes = outputStream.toByteArray();
-
-        HttpHeaders headers = new HttpHeaders();
-
-        String headerTitle = "report " + date1 + " " + date2 + ".xlsx";
-
-        String headerValue = "attachment; filename=" + headerTitle;
-
-        headers.add(HttpHeaders.CONTENT_DISPOSITION, headerValue);
-        headers.add(HttpHeaders.CONTENT_TYPE, "application/vnd.ms-excel");
+    /**
+     * Сохранение отчета в базе данных
+     * @param typeReport тип отчета
+     * @param date1 начальная дата отчетного периода
+     * @param date2 конечная дата отчетного периода
+     * @param bytes содержание отчета
+     */
+    private void saveReport(String typeReport, String date1, String date2, byte[] bytes){
 
         // Сохранение в базе данных
         Report report = new Report();
@@ -444,6 +458,21 @@ public class JournalExportExcel {
         }
 
         reportService.saveReportByBD(report);
+    }
+
+    /**
+     * Генерация отчета с его сохранением в базе данных и на локальной машине пользователя
+     * @param journals пациенты, вошедшие в отчетный период
+     * @param date1 начальная дата отчетного периода
+     * @param date2 конечная дата отчетного периода
+     * @param typeReport тип отчета
+     * @return ответ на запрос
+     */
+    public ResponseEntity<byte[]> exportToExcel(List<Journal> journals, String date1, String date2, String typeReport) throws IOException {
+
+        byte[] bytes = readOutputStream(setSettings(journals,date1,date2));
+        HttpHeaders headers = setHeadersForExport(date1,date2);
+        saveReport(typeReport,date1, date2, bytes);
 
         return ResponseEntity.ok()
                 .headers(headers)
@@ -451,62 +480,67 @@ public class JournalExportExcel {
                 .body(bytes);
     }
 
-    public ResponseEntity<byte[]> openToExcel(List<Journal> journals, String date1, String date2, String typeReport) throws IOException {
-        Workbook workbook = new XSSFWorkbook();
-        Sheet sheet = workbook.createSheet("Результат");
-        Sheet sheetPatient = workbook.createSheet("стр.2");
+    /**
+     * Генерация отчета и его открытие без скачивания
+     * @param journals пациенты, вошедшие в отчетный период
+     * @param date1 начальная дата отчетного периода
+     * @param date2 конечная дата отчетного периода
+     * @return ответ на запрос
+     */
+    public ResponseEntity<byte[]> openToExcel(List<Journal> journals, String date1, String date2) throws IOException {
 
-        setSizeColumn(sheet);
+        byte[] bytes = readOutputStream(setSettings(journals,date1,date2));
+        HttpHeaders headers = setHeadersForOpen(date1,date2);
+        return new ResponseEntity<>(bytes, headers, HttpStatus.OK);
+    }
 
-        createHeadRight(workbook,sheet);
-        createHeadLeft(workbook,sheet);
-        createTitle(workbook,sheet,date1,date2);
-
-        createColumnVertical(workbook,sheet);
-        createColumnHorizontal(workbook,sheet);
-
-        createNumsRow(workbook,sheet);
-        createColumnReport(workbook,sheet);
-
-        createBorder(workbook,sheet);
-
-        setReportData(workbook,sheet,journals);
-
-        createColumnsSheetPatient(workbook,sheetPatient);
-
-        setReportDataSheetTwo(workbook,sheetPatient,journals);
-
-        // Запись в поток
-        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-        workbook.write(outputStream);
-        workbook.close();
-
-        byte[] bytes = outputStream.toByteArray();
-
+    /**
+     * Назначение заголовка для открытия отчета без его скачивания
+     * @param date1 начальная дата отчетного периода
+     * @param date2 конечная дата отчетного периода
+     * @return заголовок запроса
+     */
+    private HttpHeaders setHeadersForOpen(String date1, String date2){
         HttpHeaders headers = new HttpHeaders();
 
         String headerTitle = "report " + date1 + " " + date2 + ".xlsx";
-
         String headerValue = "inline; filename=" + headerTitle;
 
         headers.add(HttpHeaders.CONTENT_DISPOSITION, headerValue);
         headers.add(HttpHeaders.CONTENT_TYPE, "application/vnd.ms-excel");
 
-//        // Сохранение в базе данных
-//        Report report = new Report();
-//        report.setFileName(headerTitle);
-//        report.setFileContent(bytes);
-//        report.setCreatedAt(LocalDateTime.now());
-//        if (Objects.equals(typeReport, "day")){
-//            report.setTypeReport("Ежедневный отчет");
-//        }
-//        else if (Objects.equals(typeReport, "month")){
-//            report.setTypeReport("Ежемесячный отчет");
-//        }
-//
-//        reportService.saveReportByBD(report);
+        return headers;
+    }
 
-        return new ResponseEntity<>(bytes, headers, HttpStatus.OK);
+    /**
+     * Назначение заголовка для скачивания отчета
+     * @param date1 начальная дата отчетного периода
+     * @param date2 конечная дата отчетного периода
+     * @return заголовок запроса
+     */
+    private HttpHeaders setHeadersForExport(String date1, String date2){
+        HttpHeaders headers = new HttpHeaders();
+
+        String headerTitle = "report " + date1 + " " + date2 + ".xlsx";
+        String headerValue = "attachment; filename=" + headerTitle;
+        headers.add(HttpHeaders.CONTENT_DISPOSITION, headerValue);
+        headers.add(HttpHeaders.CONTENT_TYPE, "application/vnd.ms-excel");
+
+        return headers;
+    }
+
+    /**
+     * Запись данных отчета в документ
+     * @param workbook страница
+     * @return содержимое отчета
+     */
+    private byte[] readOutputStream(Workbook workbook) throws IOException {
+        // Запись в поток
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        workbook.write(outputStream);
+        workbook.close();
+
+        return outputStream.toByteArray();
     }
 
 }
