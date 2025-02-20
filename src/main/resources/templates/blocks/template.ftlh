@@ -227,7 +227,7 @@
                                     </svg>
                                 </a>
                             </div>
-                            <button class="btn btn-outline-primary" type="submit">Поиск</button>
+                            <button class="btn btn-primary" type="submit">Поиск</button>
                         </form>
                     </#if>
                 </div>
