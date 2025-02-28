@@ -52,8 +52,6 @@ public class JournalController {
             }
         }
 
-
-
         model.addAttribute("journals", journals);
 
         if (fullName != null) {

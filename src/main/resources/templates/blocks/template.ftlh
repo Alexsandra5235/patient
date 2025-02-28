@@ -216,6 +216,9 @@
                                 <li><a class="dropdown-item" href="/journal/report/get">История формирования отчетов</a></li>
                             </ul>
                         </li>
+                        <li class="nav-item me-3">
+                            <a class="nav-link" aria-current="page" href="/mkd/info">Справочная информация</a>
+                        </li>
                     </ul>
                     <#if namePage == "journal">
                         <form action="/" method="get" autocomplete="off" class="d-flex">
