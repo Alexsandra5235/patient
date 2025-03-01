@@ -1,5 +1,6 @@
 package com.example.patientaccounting.controllers;
 
+import com.example.patientaccounting.models.Medical;
 import com.example.patientaccounting.services.MedicalService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
