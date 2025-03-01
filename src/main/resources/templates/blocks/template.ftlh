@@ -9,8 +9,14 @@
         <title>${titlePage}</title>
 
         <style>
+            /*.collapse {*/
+            /*    background-color: rgb(255 255 255 / 30%);*/
+            /*    backdrop-filter: blur(10px);*/
+            /*}*/
+
             .table-container {
-                height: 550px; /* Задайте желаемую высоту */
+                height: 440px; /* Задайте желаемую высоту */
+                /*min-height: 100vh;*/
                 overflow-y: auto; /* Включите вертикальную прокрутку */
                 /*border: 1px solid #ccc; !* Добавьте границу для контейнера *!*/
             }
@@ -169,6 +175,7 @@
            body {
                overflow-y: scroll;
            }
+
         </style>
 
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
@@ -183,65 +190,231 @@
             </a>
         </div>
 
-        <nav class="navbar navbar-expand-lg navbar-dark bg-dark py-3" id="sticky">
-            <div class="container-fluid">
-                <a class="navbar-brand px-xxl-5" href="/">
-                    <div class="input-group align-content-center">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-journals" viewBox="0 0 16 16">
-                            <path d="M5 0h8a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2 2 2 0 0 1-2 2H3a2 2 0 0 1-2-2h1a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V4a1 1 0 0 0-1-1H3a1 1 0 0 0-1 1H1a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v9a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H5a1 1 0 0 0-1 1H3a2 2 0 0 1 2-2"/>
-                            <path d="M1 6v-.5a.5.5 0 0 1 1 0V6h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1zm0 3v-.5a.5.5 0 0 1 1 0V9h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1zm0 2.5v.5H.5a.5.5 0 0 0 0 1h2a.5.5 0 0 0 0-1H2v-.5a.5.5 0 0 0-1 0"/>
-                        </svg>
-                        <span class="px-2">JOURNAL</span>
-                    </div>
-                </a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Переключатель навигации">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                        <li class="nav-item me-3">
-                            <a class="nav-link active" aria-current="page" href="/">Главная</a>
-                        </li>
-                        <li class="nav-item me-3">
-                            <a class="nav-link" aria-current="page" href="/journal/save">Добавить запись</a>
-                        </li>
-                        <li class="nav-item dropdown" style="z-index: 9999">
-                            <a class="nav-link dropdown-toggle" aria-current="page" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                Формирование отчетов
+<#--        <nav class="navbar navbar-expand-lg navbar-dark bg-dark py-3" id="sticky">-->
+<#--            <div class="container-fluid">-->
+<#--                <a class="navbar-brand px-xxl-5" href="/">-->
+<#--                    <div class="input-group align-content-center">-->
+<#--                        <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-journals" viewBox="0 0 16 16">-->
+<#--                            <path d="M5 0h8a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2 2 2 0 0 1-2 2H3a2 2 0 0 1-2-2h1a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V4a1 1 0 0 0-1-1H3a1 1 0 0 0-1 1H1a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v9a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H5a1 1 0 0 0-1 1H3a2 2 0 0 1 2-2"/>-->
+<#--                            <path d="M1 6v-.5a.5.5 0 0 1 1 0V6h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1zm0 3v-.5a.5.5 0 0 1 1 0V9h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1zm0 2.5v.5H.5a.5.5 0 0 0 0 1h2a.5.5 0 0 0 0-1H2v-.5a.5.5 0 0 0-1 0"/>-->
+<#--                        </svg>-->
+<#--                        <span class="px-2">JOURNAL</span>-->
+<#--                    </div>-->
+<#--                </a>-->
+<#--                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Переключатель навигации">-->
+<#--                    <span class="navbar-toggler-icon"></span>-->
+<#--                </button>-->
+<#--                <div class="collapse navbar-collapse" id="navbarSupportedContent">-->
+<#--                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">-->
+<#--                        <li class="nav-item me-3">-->
+<#--                            <a class="nav-link active" aria-current="page" href="/">Главная</a>-->
+<#--                        </li>-->
+<#--                        <li class="nav-item me-3">-->
+<#--                            <a class="nav-link" aria-current="page" href="/journal/save">Добавить запись</a>-->
+<#--                        </li>-->
+<#--                        <li class="nav-item dropdown" style="z-index: 9999">-->
+<#--                            <a class="nav-link dropdown-toggle" aria-current="page" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">-->
+<#--                                Формирование отчетов-->
+<#--                            </a>-->
+<#--                            <ul class="dropdown-menu">-->
+<#--                                <li><a class="dropdown-item" href="/journal/excel/day">Ежедневный отчет</a></li>-->
+<#--                                <li><a class="dropdown-item" href="/journal/excel/month">Ежемесячный отчет</a></li>-->
+<#--                                <li><hr class="dropdown-divider"></li>-->
+<#--                                <li><a class="dropdown-item" href="/journal/report/get">История формирования отчетов</a></li>-->
+<#--                            </ul>-->
+<#--                        </li>-->
+<#--                        <li class="nav-item me-3">-->
+<#--                            <a class="nav-link" aria-current="page" href="/mkd/info">Справочная информация</a>-->
+<#--                        </li>-->
+<#--                    </ul>-->
+<#--                    <#if namePage == "journal">-->
+<#--                        <form action="/" method="get" autocomplete="off" class="d-flex">-->
+<#--                            <div class="input-group me-2">-->
+<#--                                <input class="form-control pe-xxl-5 text-left" name="full_name" id="full_name" <#if full_name??>value="${full_name}"</#if> type="text" placeholder="Поиск пациента по ФИО">-->
+<#--                                <a href="/" class="btn btn-danger">-->
+<#--                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-x-lg" viewBox="0 0 16 16">-->
+<#--                                        <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8z"/>-->
+<#--                                    </svg>-->
+<#--                                </a>-->
+<#--                            </div>-->
+<#--                            <button class="btn btn-primary" type="submit">Поиск</button>-->
+<#--                        </form>-->
+<#--                    </#if>-->
+<#--                </div>-->
+<#--            </div>-->
+<#--        </nav>-->
+<#--        <div class="d-flex flex-column flex-shrink-0 bg-light" style="width: 4.5rem;">-->
+<#--            <a href="/" class="d-block p-3 link-dark text-decoration-none" title="Icon-only" data-bs-toggle="tooltip" data-bs-placement="right">-->
+<#--                <svg class="bi" width="40" height="32"><use xlink:href="#bootstrap"/></svg>-->
+<#--                <span class="visually-hidden">Icon-only</span>-->
+<#--            </a>-->
+<#--            <ul class="nav nav-pills nav-flush flex-column mb-auto text-center">-->
+<#--                <li class="nav-item">-->
+<#--                    <a href="#" class="nav-link active py-3 border-bottom" aria-current="page" title="Home" data-bs-toggle="tooltip" data-bs-placement="right">-->
+<#--                        <svg class="bi" width="24" height="24" role="img" aria-label="Home"><use xlink:href="#home"/></svg>-->
+<#--                    </a>-->
+<#--                </li>-->
+<#--                <li>-->
+<#--                    <a href="#" class="nav-link py-3 border-bottom" title="Dashboard" data-bs-toggle="tooltip" data-bs-placement="right">-->
+<#--                        <svg class="bi" width="24" height="24" role="img" aria-label="Dashboard"><use xlink:href="#speedometer2"/></svg>-->
+<#--                    </a>-->
+<#--                </li>-->
+<#--                <li>-->
+<#--                    <a href="#" class="nav-link py-3 border-bottom" title="Orders" data-bs-toggle="tooltip" data-bs-placement="right">-->
+<#--                        <svg class="bi" width="24" height="24" role="img" aria-label="Orders"><use xlink:href="#table"/></svg>-->
+<#--                    </a>-->
+<#--                </li>-->
+<#--                <li>-->
+<#--                    <a href="#" class="nav-link py-3 border-bottom" title="Products" data-bs-toggle="tooltip" data-bs-placement="right">-->
+<#--                        <svg class="bi" width="24" height="24" role="img" aria-label="Products"><use xlink:href="#grid"/></svg>-->
+<#--                    </a>-->
+<#--                </li>-->
+<#--                <li>-->
+<#--                    <a href="#" class="nav-link py-3 border-bottom" title="Customers" data-bs-toggle="tooltip" data-bs-placement="right">-->
+<#--                        <svg class="bi" width="24" height="24" role="img" aria-label="Customers"><use xlink:href="#people-circle"/></svg>-->
+<#--                    </a>-->
+<#--                </li>-->
+<#--            </ul>-->
+<#--            <div class="dropdown border-top">-->
+<#--                <a href="#" class="d-flex align-items-center justify-content-center p-3 link-dark text-decoration-none dropdown-toggle" id="dropdownUser3" data-bs-toggle="dropdown" aria-expanded="false">-->
+<#--                    <img src="https://github.com/mdo.png" alt="mdo" width="24" height="24" class="rounded-circle">-->
+<#--                </a>-->
+<#--                <ul class="dropdown-menu text-small shadow" aria-labelledby="dropdownUser3">-->
+<#--                    <li><a class="dropdown-item" href="#">New project...</a></li>-->
+<#--                    <li><a class="dropdown-item" href="#">Settings</a></li>-->
+<#--                    <li><a class="dropdown-item" href="#">Profile</a></li>-->
+<#--                    <li><hr class="dropdown-divider"></li>-->
+<#--                    <li><a class="dropdown-item" href="#">Sign out</a></li>-->
+<#--                </ul>-->
+<#--            </div>-->
+
+
+        <div class="container-fluid p-0 d-flex min-vh-100 sticky-bottom">
+            <div class="d-flex flex-column flex-shrink-0 p-3 text-white min-vh-100 sticky-bottom bg-dark offcanvas-md offcanvas-start" style="width: 20%">
+<#--                <nav class="navbar navbar-expand-lg navbar-dark bg-dark py-3">-->
+                    <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
+                        <svg class="bi me-2" width="40" height="32"><use xlink:href="#bootstrap"/></svg>
+                        <span class="fs-4">Sidebar</span>
+                    </a>
+                    <hr>
+                    <ul class="nav nav-pills flex-column mb-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link active" aria-current="page">
+                                <svg class="bi me-2" width="16" height="16"><use xlink:href="#home"/></svg>
+                                Home
                             </a>
-                            <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" href="/journal/excel/day">Ежедневный отчет</a></li>
-                                <li><a class="dropdown-item" href="/journal/excel/month">Ежемесячный отчет</a></li>
-                                <li><hr class="dropdown-divider"></li>
-                                <li><a class="dropdown-item" href="/journal/report/get">История формирования отчетов</a></li>
-                            </ul>
                         </li>
-                        <li class="nav-item me-3">
-                            <a class="nav-link" aria-current="page" href="/mkd/info">Справочная информация</a>
+                        <li>
+                            <a href="#" class="nav-link text-white">
+                                <svg class="bi me-2" width="16" height="16"><use xlink:href="#speedometer2"/></svg>
+                                Dashboard
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" class="nav-link text-white">
+                                <svg class="bi me-2" width="16" height="16"><use xlink:href="#table"/></svg>
+                                Orders
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" class="nav-link text-white">
+                                <svg class="bi me-2" width="16" height="16"><use xlink:href="#grid"/></svg>
+                                Products
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" class="nav-link text-white">
+                                <svg class="bi me-2" width="16" height="16"><use xlink:href="#people-circle"/></svg>
+                                Customers
+                            </a>
                         </li>
                     </ul>
-                    <#if namePage == "journal">
-                        <form action="/" method="get" autocomplete="off" class="d-flex">
-                            <div class="input-group me-2">
-                                <input class="form-control pe-xxl-5 text-left" name="full_name" id="full_name" <#if full_name??>value="${full_name}"</#if> type="text" placeholder="Поиск пациента по ФИО">
-                                <a href="/" class="btn btn-danger">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-x-lg" viewBox="0 0 16 16">
-                                        <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8z"/>
-                                    </svg>
-                                </a>
-                            </div>
-                            <button class="btn btn-primary" type="submit">Поиск</button>
-                        </form>
-                    </#if>
-                </div>
+                    <hr>
+                    <div class="dropdown">
+                        <a href="#" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
+                            <img src="https://github.com/mdo.png" alt="" width="32" height="32" class="rounded-circle me-2">
+                            <strong>mdo</strong>
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-dark text-small shadow" aria-labelledby="dropdownUser1">
+                            <li><a class="dropdown-item" href="#">New project...</a></li>
+                            <li><a class="dropdown-item" href="#">Settings</a></li>
+                            <li><a class="dropdown-item" href="#">Profile</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="#">Sign out</a></li>
+                        </ul>
+                    </div>
+<#--                </nav>-->
             </div>
-        </nav>
+
+        <#--        <div class="container-fluid p-0 d-flex h-100">-->
+<#--            <div class="d-flex flex-column-->
+<#--                    flex-shrink-0-->
+<#--                    p-3 bg-dark-->
+<#--                    offcanvas-md offcanvas-start">-->
+<#--                <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">-->
+<#--                    <svg class="bi me-2" width="40" height="32"><use xlink:href="#bootstrap"/></svg>-->
+<#--                    <span class="fs-4">Sidebar</span>-->
+<#--                </a>-->
+<#--                <hr>-->
+<#--                <ul class="nav nav-pills flex-column mb-auto">-->
+<#--                    <li class="nav-item">-->
+<#--                        <a href="#" class="nav-link active" aria-current="page">-->
+<#--                            <svg class="bi me-2" width="16" height="16"><use xlink:href="#home"/></svg>-->
+<#--                            Home-->
+<#--                        </a>-->
+<#--                    </li>-->
+<#--                    <li>-->
+<#--                        <a href="#" class="nav-link text-white">-->
+<#--                            <svg class="bi me-2" width="16" height="16"><use xlink:href="#speedometer2"/></svg>-->
+<#--                            Dashboard-->
+<#--                        </a>-->
+<#--                    </li>-->
+<#--                    <li>-->
+<#--                        <a href="#" class="nav-link text-white">-->
+<#--                            <svg class="bi me-2" width="16" height="16"><use xlink:href="#table"/></svg>-->
+<#--                            Orders-->
+<#--                        </a>-->
+<#--                    </li>-->
+<#--                    <li>-->
+<#--                        <a href="#" class="nav-link text-white">-->
+<#--                            <svg class="bi me-2" width="16" height="16"><use xlink:href="#grid"/></svg>-->
+<#--                            Products-->
+<#--                        </a>-->
+<#--                    </li>-->
+<#--                    <li>-->
+<#--                        <a href="#" class="nav-link text-white">-->
+<#--                            <svg class="bi me-2" width="16" height="16"><use xlink:href="#people-circle"/></svg>-->
+<#--                            Customers-->
+<#--                        </a>-->
+<#--                    </li>-->
+<#--                </ul>-->
+<#--                <hr>-->
+<#--                <div class="dropdown">-->
+<#--                    <a href="#" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">-->
+<#--                        <img src="https://github.com/mdo.png" alt="" width="32" height="32" class="rounded-circle me-2">-->
+<#--                        <strong>mdo</strong>-->
+<#--                    </a>-->
+<#--                    <ul class="dropdown-menu dropdown-menu-dark text-small shadow" aria-labelledby="dropdownUser1">-->
+<#--                        <li><a class="dropdown-item" href="#">New project...</a></li>-->
+<#--                        <li><a class="dropdown-item" href="#">Settings</a></li>-->
+<#--                        <li><a class="dropdown-item" href="#">Profile</a></li>-->
+<#--                        <li><hr class="dropdown-divider"></li>-->
+<#--                        <li><a class="dropdown-item" href="#">Sign out</a></li>-->
+<#--                    </ul>-->
+<#--                </div>-->
+<#--            </div>-->
+
+<#--        </div>-->
 
         <@t.report typeReport=typeReport>
 
         </@t.report>
 
         <#nested>
+
+        </div>
+
+
 
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
