@@ -11,11 +11,12 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 
-@Controller
+@RestController
 @RequiredArgsConstructor
 public class MedicalController {
 
     private final MedicalService medicalService;
+
 
     @GetMapping("/api/suggest-medical")
     public List<String> suggestAddress(@RequestParam(name = "query", required = false) String query) throws Exception {

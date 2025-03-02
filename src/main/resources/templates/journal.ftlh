@@ -4,13 +4,15 @@
 
         <div style="height: 100vh; width: 100vw; overflow-y: auto; position: relative; padding: 0" class="container blurBG">
             <div class="container-fluid text-white">
-                <h5 class="my-4">Просмотр журнала приема и выписки пациентов
+                <h5 class="my-4">Просмотр журнала учета пациентов
                     <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-journal-text" viewBox="0 0 16 16">
                         <path d="M5 10.5a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 0 1h-2a.5.5 0 0 1-.5-.5zm0-2a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5zm0-2a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5zm0-2a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5z"/>
                         <path d="M3 0h10a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2v-1h1v1a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H3a1 1 0 0 0-1 1v1H1V2a2 2 0 0 1 2-2z"/>
                         <path d="M1 5v-.5a.5.5 0 0 1 1 0V5h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1zm0 3v-.5a.5.5 0 0 1 1 0V8h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1zm0 3v-.5a.5.5 0 0 1 1 0v.5h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1z"/>
                     </svg>
                 </h5>
+                <p class="card-text">На этой странице отображается краткая информация о пациентах.
+                    При необходимости просмотра полной информации нажмите на соответствующую кнопку.</p>
                 <hr>
                 <form action="/" method="get" autocomplete="off" class="d-flex">
                     <div class="input-group me-2">
@@ -28,8 +30,6 @@
                     </div>
                 </form>
                 <hr>
-                <p class="card-text">На этой странице отображается краткая информация о пациентах.
-                    При необходимости просмотра полной информации нажмите на соответствующую кнопку.</p>
                 <#if lastJournal??>
                     <a href="/journal/info/${lastJournal.id}" class="btn btn-primary mb-4" id="btn-show" role="button">
                         Просмотр последней добавленной записи
@@ -99,7 +99,8 @@
                             </td>
                         </tr>
                     <#else>
-                        <h3>Данные не найдены</h3>
+                        <h3 class="m-4">Данные не найдены.</h3>
+                        <p class="m-4">Для того, чтобы данные отобразились необходимо их <a style="font-weight: bold" href="/journal/save">добавить.</a></p>
                     </#list>
                     </tbody>
                 </table>

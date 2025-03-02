@@ -29,6 +29,8 @@
         </span>
 
         <div class="container text-white blurBG" style="justify-content: center; width: 50vw; border-radius: 7px">
+            <h4 style="padding-top: 16px">Добавление записи</h4>
+            <hr>
             <form action="/journal/add" method="post" autocomplete="off" id="formAddJournal" style="padding: 10px">
                 <label class="form-label" for="date_receipt">Дата поступления
                     <a href="#" style="text-decoration: none"
@@ -108,11 +110,11 @@
 
                 <label class="form-label" for="registration_place_stay">Регистрация по месту пребывания пациента</label><br>
                 <input type="text" class="form-control" name="registration_place_stay" id="registration_place_stay">
+                <div id="suggestions-stay" style="margin-top: 0"></div>
                 <label class="mb-4">
                     <input type="checkbox" class="custom-checkbox" value="Совпадает с местом регистрации" onclick="copyText()">
                     Совпадает с местом регистрации
                 </label>
-                <div id="suggestions-stay"></div>
 
                 <label class="form-label" for="number_phone_representative">Номер телефона законного представителя, лица, которому может
                     быть передана информация о состоянии здоровья пациента</label>
@@ -174,8 +176,8 @@
                 <input class="form-control mb-4" type="text" id="cause_injury" name="cause_injury" oninput="toUpperCaseInput(this)">
                 <div id="suggestions_cause"></div>
 
-                <label class="form-label" for="fact_alcohol">Факт употребления алкоголя и иных психоактивных веществ,<br>
-                    установление наличия или отсутствия признаков состояния опьянения при поступленим пациента<br>
+                <label class="form-label" for="fact_alcohol">Факт употребления алкоголя и иных психоактивных веществ,
+                    установление наличия или отсутствия признаков состояния опьянения при поступленим пациента
                     в медицинскую организацию</label>
                 <input class="form-control mb-4" type="text" id="fact_alcohol" name="fact_alcohol" autocomplete="off">
 

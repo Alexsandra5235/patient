@@ -1,14 +1,18 @@
 <#import "blocks/template.ftlh" as t>
 
-<@t.page titlePage="ИНФОРМАЦИЯ О ПАЦИЕНТЕ">
+<@t.page titlePage="ИНФОРМАЦИЯ О ПАЦИЕНТЕ" namePage="infoJournal">
 
-<#--    <div class="container-fluid py-4">-->
-<#--        <div class="card">-->
-<#--            <div class="card-body">-->
-<#--                <h5 class="card-title">Полная информация по пациенту<span class="h5" style="color: dodgerblue"> ${journal.full_name}</span></h5>-->
-<#--                <#if journal.dateAddRecord?? && journal.timeAddRecord??>-->
-<#--                    <p class="card-text" style="margin-bottom: 8px">Дата и время создания записи: ${journal.dateAddRecord} ${journal.timeAddRecord}</p>-->
-<#--                </#if>-->
+
+
+<div class="container" style="height: 100vh; width: 100vw; overflow-y: auto; position: relative; ">
+
+    <div class="container-fluid pt-4">
+        <div class="card bg-dark text-white">
+            <div class="card-body">
+                <h5 class="card-title">Полная информация по пациенту<span class="h5" style="color: dodgerblue"> ${journal.full_name}</span></h5>
+                <#if journal.dateAddRecord?? && journal.timeAddRecord??>
+                    <p class="card-text" style="margin-bottom: 8px">Дата и время создания записи: ${journal.dateAddRecord} ${journal.timeAddRecord}</p>
+                </#if>
 <#--                <p class="card-text">На этой странице отображаются все данные по пациенту.-->
 <#--                    Выбирите действие, если необходимо-->
 <#--                    <span class="card-text" style="color: red">удалить</span>-->
@@ -33,108 +37,120 @@
 <#--                        </button>-->
 <#--                    </form>-->
 <#--                </div>-->
-<#--            </div>-->
-<#--        </div>-->
-<#--    </div>-->
-
-<#--    <fieldset disabled>-->
-        <div class="container text-left">
-            <h4>Полная информация</h4>
-            <hr>
-
-            <label class="form-label" for="date_receipt">Дата поступления</label><br>
-            <input class="form-control mb-4" id="date_receipt" type="date" <#if journal.date_receipt??>value="${journal.date_receipt}"</#if>>
-
-            <label class="form-label" for="string_time_receipt">Время поступления</label><br>
-            <input class="form-control mb-4" type="time" id="string_time_receipt" <#if journal.string_time_receipt??>value="${journal.string_time_receipt}"</#if>>
-
-            <label class="form-label" for="full_name">Фамилия, имя, отчестов (при наличии)</label><br>
-            <input class="form-control mb-4" type="text" id="full_name" <#if journal.full_name??>value="${journal.full_name}"</#if>>
-
-            <label class="form-label" for="birth_day">Дата рождения (число, месяц, год):</label><br>
-            <input class="form-control mb-4" type="date" id="birth_day" <#if journal.birth_day??>value="${journal.birth_day}"</#if>>
-
-            <label class="form-label" for="gender">Пол (мужской, женский)</label><br>
-            <input class="form-select mb-4" type="text" id="gender" <#if journal.gender??>value="${journal.gender}"</#if>>
-
-            <label class="form-label" for="password">Серия и номер паспорта или иного документа, удостоверяющего личность (при наличии)</label><br>
-            <input class="form-control mb-4" type="text" id="password" <#if journal.password??>value="${journal.password}"</#if>>
-
-            <label class="form-label" for="nationality">Гражданство</label><br>
-            <input class="form-control mb-4" type="text" id="nationality" <#if journal.nationality??>value="${journal.nationality}"</#if>>
-
-            <label class="form-label" for="address">Регистрация по месту жительсва</label><br>
-            <input class="form-control mb-4" type="text" id="address" size="300" <#if journal.address??> value="${journal.address}"</#if>>
-
-            <label class="form-label" for="registration_place_stay">Регистрация по месту пребывания пациента</label><br>
-            <input type="text" class="form-control mb-4" id="registration_place_stay" size="300" <#if journal.registration_place_stay??>value="${journal.registration_place_stay}"</#if>>
-
-            <label class="form-label" for="number_phone_representative">Номер телефона законного представителя, лица, которому может
-                быть передана информация о состоянии здоровья пациента</label>
-            <input class="form-control mb-4" type="text" id="number_phone_representative" <#if journal.number_phone_representative??>value="${journal.number_phone_representative}"</#if>>
-
-            <label class="form-label" for="snils">СНИСЛ (при наличии)</label>
-            <input class="form-control mb-4" type="text" id="snils" <#if journal.snils??>value="${journal.snils}"</#if>>
-
-            <label class="form-label" for="polis">Полис обязательного медицинского страхования (при наличии)</label>
-            <input class="form-control mb-4" type="text" id="polis" <#if journal.polis??>value="${journal.polis}"</#if>>
-
-            <label class="form-label" for="delivered">Пациент доставлен (направлен)</label>
-            <input class="form-select mb-4" type="text" id="delivered" <#if journal.delivered??>value="${journal.delivered}"</#if>>
-
-            <label class="form-label" for="medical_card">Номер медицинской карты</label>
-            <input class="form-control mb-4" type="text" id="medical_card" <#if journal.medical_card??>value="${journal.medical_card}"</#if>>
-
-            <label class="form-label" for="medical">Диагноз заболевания (состояния), поставленный направившей медицинской организацией,<br>
-                выездной бригадой скорой медицинской помощи (код по МКБ)</label>
-            <input class="form-control mb-4" type="text" id="medical" <#if journal.medical??>value="${journal.medical}"</#if>>
-
-            <label class="form-label" for="cause_injury">Причина и обстоятельства трамвы (в том числе при дорожно-транспортных проишествиях)
-                отравления (код по МКБ)</label>
-            <input class="form-control mb-4" type="text" id="cause_injury" <#if journal.cause_injury??>value="${journal.cause_injury}"</#if>>
-
-            <label class="form-label" for="fact_alcohol">Факт употребления алкоголя и иных психоактивных веществ,<br>
-                установление наличия или отсутствия признаков состояния опьянения при поступленим пациента<br>
-                в медицинскую организацию</label>
-            <input class="form-control mb-4" type="text" id="fact_alcohol" <#if journal.fact_alcohol??>value="${journal.fact_alcohol}"</#if>>
-
-            <label class="form-label" for="date_time_alcohol">Дата и время взятия пробы</label>
-            <input class="form-control mb-4" type="datetime-local" id="date_time_alcohol" <#if journal.date_time_alcohol??>value="${journal.date_time_alcohol}"</#if>>
-
-            <label class="form-label" for="result_research">Результаты лабораторных исследований</label>
-            <input class="form-control mb-4" type="text" id="result_research" <#if journal.result_research??>value="${journal.result_research}"</#if>>
-
-            <label class="form-label" for="department_medical_organization">Отделение медицинской организации, в которое направлен пациент</label>
-            <input class="form-control mb-4" type="text" id="department_medical_organization" <#if journal.department_medical_organization??>value="${journal.department_medical_organization}"</#if>>
-
-            <label class="form-label" for="outcome_hospitalization">Исход госпитализации</label>
-            <input class="form-select mb-4" type="text" id="outcome_hospitalization" <#if journal.outcome_hospitalization??>value="${journal.outcome_hospitalization}"</#if>>
-
-            <label class="form-label" for="date_time_discharge">Дата и время исхода</label>
-            <input class="form-control mb-4" type="datetime-local" id="date_time_discharge" <#if journal.local_date_time_discharge??>value="${journal.local_date_time_discharge}"</#if>>
-
-            <#if journal.outcome_hospitalization == option>
-                <label class="form-label" for="medical_organization_transferred">Наименование медицинской организации, куда переведен пациент</label>
-                <input class="form-control mb-4" type="text" id="medical_organization_transferred" value="${journal.medical_organization_transferred}">
-            </#if>
-
-            <label class="form-label" for="date_time_inform"> Дата и время сообщения законному представителю, иному лицу<br>
-                или медицинской организации, направившей пациента, о госпитализации (отказе в госпитализации) пациента, ее исходе</label>
-            <input class="form-control mb-4" type="datetime-local" id="date_time_inform" <#if journal.date_time_inform??>value="${journal.date_time_inform}"</#if>>
-
-            <h4> В случае отказа в госпитализации в стационар, дневной стационар</h4>
-
-            <label class="form-label" for="reason_refusal">Причина отказа в гослитализации</label>
-            <input class="form-select mb-4" type="text" id="reason_refusal" <#if journal.reason_refusal??>value="${journal.reason_refusal}"</#if>>
-
-            <label class="form-label" for="full_name_medical_worker">Фамилия, имя, отчество (при наличии) медицинского работника,
-                зафиксировавшего причину отказа в госпитализации</label>
-            <input class="form-control mb-4" type="text" id="full_name_medical_worker" <#if journal.full_name_medical_worker??>value="${journal.full_name_medical_worker}"</#if>>
-
-            <label class="form-label" for="additional_information">Дополнительные сведения</label>
-            <input class="form-control mb-4" type="text" id="additional_information" <#if journal.additional_information??>value="${journal.additional_information}"</#if>>
-
+            </div>
         </div>
-<#--    </fieldset>-->
+    </div>
+
+    <span class="d-flex text-dark justify-content-center" style="padding: 20px 0 20px 0; font-weight: bold">
+        <svg xmlns="http://www.w3.org/2000/svg" width="60" height="60" fill="currentColor" class="bi bi-eyeglasses" viewBox="0 0 16 16">
+            <path d="M4 6a2 2 0 1 1 0 4 2 2 0 0 1 0-4zm2.625.547a3 3 0 0 0-5.584.953H.5a.5.5 0 0 0 0 1h.541A3 3 0 0 0 7 8a1 1 0 0 1 2 0 3 3 0 0 0 5.959.5h.541a.5.5 0 0 0 0-1h-.541a3 3 0 0 0-5.584-.953A1.993 1.993 0 0 0 8 6c-.532 0-1.016.208-1.375.547zM14 8a2 2 0 1 1-4 0 2 2 0 0 1 4 0z"/>
+        </svg>
+    </span>
+
+    <div class="container text-white blurBG" style="justify-content: center; width: 50vw; border-radius: 7px">
+        <a href="/journal/edit/${journal.id}" hidden="hidden" id="formEditRecord"></a>
+        <form action="/journal/delete/${journal.id}" method="post" hidden="hidden" id="btnDelete">
+        </form>
+        <fieldset disabled>
+            <div class="container text-left">
+                <h4 style="padding-top: 16px">Полная информация</h4>
+                <hr>
+
+                <label class="form-label" for="date_receipt">Дата поступления</label><br>
+                <input class="form-control mb-4" id="date_receipt" type="date" <#if journal.date_receipt??>value="${journal.date_receipt}"</#if>>
+
+                <label class="form-label" for="string_time_receipt">Время поступления</label><br>
+                <input class="form-control mb-4" type="time" id="string_time_receipt" <#if journal.string_time_receipt??>value="${journal.string_time_receipt}"</#if>>
+
+                <label class="form-label" for="full_name">Фамилия, имя, отчестов (при наличии)</label><br>
+                <input class="form-control mb-4" type="text" id="full_name" <#if journal.full_name??>value="${journal.full_name}"</#if>>
+
+                <label class="form-label" for="birth_day">Дата рождения (число, месяц, год):</label><br>
+                <input class="form-control mb-4" type="date" id="birth_day" <#if journal.birth_day??>value="${journal.birth_day}"</#if>>
+
+                <label class="form-label" for="gender">Пол (мужской, женский)</label><br>
+                <input class="form-select mb-4" type="text" id="gender" <#if journal.gender??>value="${journal.gender}"</#if>>
+
+                <label class="form-label" for="password">Серия и номер паспорта или иного документа, удостоверяющего личность (при наличии)</label><br>
+                <input class="form-control mb-4" type="text" id="password" <#if journal.password??>value="${journal.password}"</#if>>
+
+                <label class="form-label" for="nationality">Гражданство</label><br>
+                <input class="form-control mb-4" type="text" id="nationality" <#if journal.nationality??>value="${journal.nationality}"</#if>>
+
+                <label class="form-label" for="address">Регистрация по месту жительсва</label><br>
+                <input class="form-control mb-4" type="text" id="address" size="300" <#if journal.address??> value="${journal.address}"</#if>>
+
+                <label class="form-label" for="registration_place_stay">Регистрация по месту пребывания пациента</label><br>
+                <input type="text" class="form-control mb-4" id="registration_place_stay" size="300" <#if journal.registration_place_stay??>value="${journal.registration_place_stay}"</#if>>
+
+                <label class="form-label" for="number_phone_representative">Номер телефона законного представителя, лица, которому может
+                    быть передана информация о состоянии здоровья пациента</label>
+                <input class="form-control mb-4" type="text" id="number_phone_representative" <#if journal.number_phone_representative??>value="${journal.number_phone_representative}"</#if>>
+
+                <label class="form-label" for="snils">СНИСЛ (при наличии)</label>
+                <input class="form-control mb-4" type="text" id="snils" <#if journal.snils??>value="${journal.snils}"</#if>>
+
+                <label class="form-label" for="polis">Полис обязательного медицинского страхования (при наличии)</label>
+                <input class="form-control mb-4" type="text" id="polis" <#if journal.polis??>value="${journal.polis}"</#if>>
+
+                <label class="form-label" for="delivered">Пациент доставлен (направлен)</label>
+                <input class="form-select mb-4" type="text" id="delivered" <#if journal.delivered??>value="${journal.delivered}"</#if>>
+
+                <label class="form-label" for="medical_card">Номер медицинской карты</label>
+                <input class="form-control mb-4" type="text" id="medical_card" <#if journal.medical_card??>value="${journal.medical_card}"</#if>>
+
+                <label class="form-label" for="medical">Диагноз заболевания (состояния), поставленный направившей медицинской организацией,<br>
+                    выездной бригадой скорой медицинской помощи (код по МКБ)</label>
+                <input class="form-control mb-4" type="text" id="medical" <#if journal.medical??>value="${journal.medical}"</#if>>
+
+                <label class="form-label" for="cause_injury">Причина и обстоятельства трамвы (в том числе при дорожно-транспортных проишествиях)
+                    отравления (код по МКБ)</label>
+                <input class="form-control mb-4" type="text" id="cause_injury" <#if journal.cause_injury??>value="${journal.cause_injury}"</#if>>
+
+                <label class="form-label" for="fact_alcohol">Факт употребления алкоголя и иных психоактивных веществ,<br>
+                    установление наличия или отсутствия признаков состояния опьянения при поступленим пациента<br>
+                    в медицинскую организацию</label>
+                <input class="form-control mb-4" type="text" id="fact_alcohol" <#if journal.fact_alcohol??>value="${journal.fact_alcohol}"</#if>>
+
+                <label class="form-label" for="date_time_alcohol">Дата и время взятия пробы</label>
+                <input class="form-control mb-4" type="datetime-local" id="date_time_alcohol" <#if journal.date_time_alcohol??>value="${journal.date_time_alcohol}"</#if>>
+
+                <label class="form-label" for="result_research">Результаты лабораторных исследований</label>
+                <input class="form-control mb-4" type="text" id="result_research" <#if journal.result_research??>value="${journal.result_research}"</#if>>
+
+                <label class="form-label" for="department_medical_organization">Отделение медицинской организации, в которое направлен пациент</label>
+                <input class="form-control mb-4" type="text" id="department_medical_organization" <#if journal.department_medical_organization??>value="${journal.department_medical_organization}"</#if>>
+
+                <label class="form-label" for="outcome_hospitalization">Исход госпитализации</label>
+                <input class="form-select mb-4" type="text" id="outcome_hospitalization" <#if journal.outcome_hospitalization??>value="${journal.outcome_hospitalization}"</#if>>
+
+                <label class="form-label" for="date_time_discharge">Дата и время исхода</label>
+                <input class="form-control mb-4" type="datetime-local" id="date_time_discharge" <#if journal.local_date_time_discharge??>value="${journal.local_date_time_discharge}"</#if>>
+
+                <#if journal.outcome_hospitalization == option>
+                    <label class="form-label" for="medical_organization_transferred">Наименование медицинской организации, куда переведен пациент</label>
+                    <input class="form-control mb-4" type="text" id="medical_organization_transferred" value="${journal.medical_organization_transferred}">
+                </#if>
+
+                <label class="form-label" for="date_time_inform"> Дата и время сообщения законному представителю, иному лицу<br>
+                    или медицинской организации, направившей пациента, о госпитализации (отказе в госпитализации) пациента, ее исходе</label>
+                <input class="form-control mb-4" type="datetime-local" id="date_time_inform" <#if journal.date_time_inform??>value="${journal.date_time_inform}"</#if>>
+
+                <h4> В случае отказа в госпитализации в стационар, дневной стационар</h4>
+
+                <label class="form-label" for="reason_refusal">Причина отказа в гослитализации</label>
+                <input class="form-select mb-4" type="text" id="reason_refusal" <#if journal.reason_refusal??>value="${journal.reason_refusal}"</#if>>
+
+                <label class="form-label" for="full_name_medical_worker">Фамилия, имя, отчество (при наличии) медицинского работника,
+                    зафиксировавшего причину отказа в госпитализации</label>
+                <input class="form-control mb-4" type="text" id="full_name_medical_worker" <#if journal.full_name_medical_worker??>value="${journal.full_name_medical_worker}"</#if>>
+
+                <label class="form-label" for="additional_information">Дополнительные сведения</label>
+                <input class="form-control mb-4" type="text" id="additional_information" <#if journal.additional_information??>value="${journal.additional_information}"</#if>>
+
+            </div>
+        </fieldset>
+    </div>
+</div>
 </@t.page>
 

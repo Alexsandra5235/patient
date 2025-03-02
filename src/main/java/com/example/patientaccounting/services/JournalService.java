@@ -71,13 +71,10 @@ public class JournalService {
         if (journal != null) {
             Journal beforeJournal = journalRepository.findById(journal.getId()).orElse(null);
 
-            log.info("Edit record with id = {}", journal.getId());
-
             assert beforeJournal != null;
-            log.info("Before edit record: {}", beforeJournal);
+            journal.setLocalDateAddRecord(beforeJournal.getLocalDateAddRecord());
+            journal.setLocalTimeAddRecord(beforeJournal.getLocalTimeAddRecord());
 
-            journal.setNormal_date(getNormalDate(journal.getDate_receipt()));
-            journal.setNormal_birth_day(getNormalDate(journal.getBirth_day()));
             journalRepository.save(journal);
             log.info("After edit record: {}", journal);
         }

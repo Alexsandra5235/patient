@@ -54,18 +54,21 @@
             #suggestions, #suggestions_country, #suggestions-stay, #suggestions_medical,
             #suggestions_cause {
                 background-color: white;
-                border: 1px solid #ccc;
+                /*border: 1px solid #212529;*/
                 max-height: 150px;
                 overflow-y: auto;
                 margin-bottom: 25px;
                 margin-top: -25px;
                 display: none; /* Скрываем изначально */
+                border-bottom-left-radius: 7px;
+                border-bottom-right-radius: 7px;
             }
 
             .suggestion-item, .suggestion-item-country, .suggestion-item-stay, .suggestion-item-medical,
             .suggestion-item-cause {
                 padding: 8px;
                 cursor: pointer;
+                color: black;
             }
 
             /*.suggestion-item, .suggestion-item-stay, .suggestion-item-country, .suggestion-item-medical,*/
@@ -296,7 +299,7 @@
 
 <#--        <div class="container-fluid p-0 d-flex vh-100">-->
         <div class="d-flex" style="position: absolute">
-            <div class="bg-dark d-flex flex-column vh-100 p-3" style="width: 20%">
+            <div class="bg-dark d-flex flex-column vh-100 p-3" style="width: 25%">
                     <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
                         <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-journals" viewBox="0 0 16 16">-->
                             <path d="M5 0h8a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2 2 2 0 0 1-2 2H3a2 2 0 0 1-2-2h1a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V4a1 1 0 0 0-1-1H3a1 1 0 0 0-1 1H1a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v9a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H5a1 1 0 0 0-1 1H3a2 2 0 0 1 2-2"/>
@@ -353,7 +356,7 @@
                                     <hr>
                                     <p class="card-text">Нажмите на соответствующую кнопку ниже, если необходимо <span style="font-weight: bold" class="card-text text-dark">добавить</span>
                                         новую запись или <span style="font-weight: bold" class="card-text text-dark">отчистить</span> внесенные данные.</p>
-                                    <button type="submit" class="btn btn-success mb-2" id="btnAddJournal">
+                                    <button type="submit" class="btn btn-success mb-2" id="btnAddJournal" onclick="forAdd()">
                                         Добавить запись
                                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-person-plus-fill" viewBox="0 0 16 16">
                                             <path d="M1 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
@@ -368,6 +371,47 @@
                                     </button>
                                 </div>
                             </li>
+                        </#if>
+                        <#if namePage = "infoJournal">
+                            <div class="card bg-primary text-white p-3 mt-4">
+                                <p style="margin: 0">Просмотр записи</p>
+                                <hr>
+                                <p class="card-text">Нажмите на соответствующую кнопку ниже, если необходимо <span style="font-weight: bold" class="card-text text-dark">редактировать</span>
+                                    новую запись или <span style="font-weight: bold" class="card-text text-dark">удалить</span> запись.</p>
+                                <button type="submit" class="btn btn-success mb-2" id="btnEditJournal" onclick="forEdit()">
+                                    Редактировать запись
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-vector-pen" viewBox="0 0 16 16">
+                                        <path fill-rule="evenodd" d="M10.646.646a.5.5 0 0 1 .708 0l4 4a.5.5 0 0 1 0 .708l-1.902 1.902-.829 3.313a1.5 1.5 0 0 1-1.024 1.073L1.254 14.746 4.358 4.4A1.5 1.5 0 0 1 5.43 3.377l3.313-.828L10.646.646zm-1.8 2.908-3.173.793a.5.5 0 0 0-.358.342l-2.57 8.565 8.567-2.57a.5.5 0 0 0 .34-.357l.794-3.174-3.6-3.6z"/>
+                                        <path fill-rule="evenodd" d="M2.832 13.228 8 9a1 1 0 1 0-1-1l-4.228 5.168-.026.086.086-.026z"/>
+                                    </svg>
+                                </button>
+                                <button type="submit" onclick="forDelete()" class="btn btn-secondary">
+                                    Удалить запись
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash3-fill" viewBox="0 0 16 16">
+                                        <path d="M11 1.5v1h3.5a.5.5 0 0 1 0 1h-.538l-.853 10.66A2 2 0 0 1 11.115 16h-6.23a2 2 0 0 1-1.994-1.84L2.038 3.5H1.5a.5.5 0 0 1 0-1H5v-1A1.5 1.5 0 0 1 6.5 0h3A1.5 1.5 0 0 1 11 1.5Zm-5 0v1h4v-1a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5ZM4.5 5.029l.5 8.5a.5.5 0 1 0 .998-.06l-.5-8.5a.5.5 0 1 0-.998.06Zm6.53-.528a.5.5 0 0 0-.528.47l-.5 8.5a.5.5 0 0 0 .998.058l.5-8.5a.5.5 0 0 0-.47-.528ZM8 4.5a.5.5 0 0 0-.5.5v8.5a.5.5 0 0 0 1 0V5a.5.5 0 0 0-.5-.5Z"/>
+                                    </svg>
+                                </button>
+                            </div>
+                        </#if>
+                        <#if namePage = "editJournal">
+                            <div class="card bg-primary text-white p-3 mt-4">
+                                <p style="margin: 0">Редактирование записи</p>
+                                <hr>
+                                <p class="card-text">Нажмите на соответствующую кнопку ниже, если необходимо <span style="font-weight: bold" class="card-text text-dark">отчистить</span>
+                                    внесенные изменения или <span style="font-weight: bold" class="card-text text-dark">сохранить</span> их.</p>
+                                <button type="submit" class="btn btn-secondary mb-2" id="btnEditJournal" onclick="location.reload()">
+                                    Отчистить измнения
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eraser" viewBox="0 0 16 16">
+                                        <path d="M8.086 2.207a2 2 0 0 1 2.828 0l3.879 3.879a2 2 0 0 1 0 2.828l-5.5 5.5A2 2 0 0 1 7.879 15H5.12a2 2 0 0 1-1.414-.586l-2.5-2.5a2 2 0 0 1 0-2.828l6.879-6.879zm2.121.707a1 1 0 0 0-1.414 0L4.16 7.547l5.293 5.293 4.633-4.633a1 1 0 0 0 0-1.414l-3.879-3.879zM8.746 13.547 3.453 8.254 1.914 9.793a1 1 0 0 0 0 1.414l2.5 2.5a1 1 0 0 0 .707.293H7.88a1 1 0 0 0 .707-.293l.16-.16z"/>
+                                    </svg>
+                                </button>
+                                <button type="submit" onclick="forSaveEdit()" class="btn btn-success">
+                                    Сохранить запись
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-floppy2" viewBox="0 0 16 16">
+                                        <path d="M1.5 0h11.586a1.5 1.5 0 0 1 1.06.44l1.415 1.414A1.5 1.5 0 0 1 16 2.914V14.5a1.5 1.5 0 0 1-1.5 1.5h-13A1.5 1.5 0 0 1 0 14.5v-13A1.5 1.5 0 0 1 1.5 0ZM1 1.5v13a.5.5 0 0 0 .5.5H2v-4.5A1.5 1.5 0 0 1 3.5 9h9a1.5 1.5 0 0 1 1.5 1.5V15h.5a.5.5 0 0 0 .5-.5V2.914a.5.5 0 0 0-.146-.353l-1.415-1.415A.5.5 0 0 0 13.086 1H13v3.5A1.5 1.5 0 0 1 11.5 6h-7A1.5 1.5 0 0 1 3 4.5V1H1.5a.5.5 0 0 0-.5.5Zm9.5-.5a.5.5 0 0 0-.5.5v3a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-3a.5.5 0 0 0-.5-.5h-1Z"/>
+                                    </svg>
+                                </button>
+                            </div>
                         </#if>
 
                     </ul>
@@ -404,12 +448,34 @@
 
         <script>
 
-            let btnForm = document.getElementById('btnFormAdd');
-            let button = document.getElementById('btnAddJournal');
-
-            button.addEventListener('click', function(event) {
+            function forAdd(){
+                let btnForm = document.getElementById('btnFormAdd');
                 btnForm.click();
-            });
+            }
+
+            function forEdit(){
+                let btnFormEdit = document.getElementById('formEditRecord');
+                btnFormEdit.click();
+            }
+
+            function forDelete(){
+                let btnDelete = document.getElementById('btnDelete');
+                btnDelete.submit();
+            }
+
+            function forSaveEdit(){
+                let btnSaveEdit = document.getElementById('btnSaveEdit');
+                btnSaveEdit.click();
+            }
+
+
+            // let btnFormEdit = document.getElementById('formEditRecord');
+            // let btnEdit = document.getElementById('btnEditJournal');
+            //
+            // btnEdit.addEventListener('click', function(event) {
+            //     btnFormEdit.click();
+            // });
+
 
             document.addEventListener("DOMContentLoaded", function() {
                 // Получаем все элементы навигации
@@ -781,6 +847,8 @@
 
                 input.value = formattedValue;
             }
+
+
 
 
             // Получение подсказок кода МКД

@@ -51,7 +51,7 @@ public class JournalController {
     }
 
     @GetMapping("/journal/save")
-    public String saveJournal(Journal journal, Model model) {
+    public String saveJournal(Model model) {
         String full_time = String.format(LocalDate.now() + " " + journalService.getLocalTime());
 
         model.addAttribute("date_now", LocalDate.now());

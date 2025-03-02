@@ -127,22 +127,23 @@ public class Journal {
             String timeDischarge = local_date_time_discharge.toLocalTime().toString();
             date_time_discharge = String.format(normal_date_discharge + " " + timeDischarge);
         }
+        if (localDateAddRecord != null){
+            dateAddRecord = getNormalData(localDateAddRecord);
+        }
+        if (localTimeAddRecord != null){
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
 
-
-
+            timeAddRecord = localTimeAddRecord.format(formatter);
+        }
     }
 
     @PrePersist
     protected void onCreate() {
-        onUpdate();
 
         localDateAddRecord = LocalDate.now();
         localTimeAddRecord = LocalTime.now();
 
-        dateAddRecord = getNormalData(localDateAddRecord);
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
-
-        timeAddRecord = localTimeAddRecord.format(formatter);
+        onUpdate();
     }
 
     protected String getNormalData(LocalDate data){

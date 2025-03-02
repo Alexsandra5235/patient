@@ -1,34 +1,47 @@
 <#import "blocks/template.ftlh" as t>
 
-<@t.page titlePage="ИЗМЕНЕНИЕ ЗАПИСИ">
+<@t.page titlePage="ИЗМЕНЕНИЕ ЗАПИСИ" namePage="editJournal">
 
-    <form action="/journal/save/edit/${journal.id}" method="post" autocomplete="off">
-        <div class="edit-header container-fluid py-4">
-            <div class="card">
-                <div class="card-body">
-                    <h5 class="card-title">Редактирование информации по пациенту <span class="h5" style="color: dodgerblue"> ${journal.full_name}</span></h5>
-                    <p class="card-text">Выбирите действие, если необходимо <span class="card-text" style="color: dodgerblue">отчистить</span> внесенные изменения или <span class="card-text" style="color: darkgreen">сохранить</span> их.</p>
-                    <a onclick="location.reload()" class="btn btn-primary me-3">
-                        Отчистить изменения
-                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-reply-all" viewBox="0 0 16 16">
-                            <path d="M8.098 5.013a.144.144 0 0 1 .202.134V6.3a.5.5 0 0 0 .5.5c.667 0 2.013.005 3.3.822.984.624 1.99 1.76 2.595 3.876-1.02-.983-2.185-1.516-3.205-1.799a8.74 8.74 0 0 0-1.921-.306 7.404 7.404 0 0 0-.798.008h-.013l-.005.001h-.001L8.8 9.9l-.05-.498a.5.5 0 0 0-.45.498v1.153c0 .108-.11.176-.202.134L4.114 8.254a.502.502 0 0 0-.042-.028.147.147 0 0 1 0-.252.497.497 0 0 0 .042-.028l3.984-2.933zM9.3 10.386c.068 0 .143.003.223.006.434.02 1.034.086 1.7.271 1.326.368 2.896 1.202 3.94 3.08a.5.5 0 0 0 .933-.305c-.464-3.71-1.886-5.662-3.46-6.66-1.245-.79-2.527-.942-3.336-.971v-.66a1.144 1.144 0 0 0-1.767-.96l-3.994 2.94a1.147 1.147 0 0 0 0 1.946l3.994 2.94a1.144 1.144 0 0 0 1.767-.96v-.667z"/>
-                            <path d="M5.232 4.293a.5.5 0 0 0-.7-.106L.54 7.127a1.147 1.147 0 0 0 0 1.946l3.994 2.94a.5.5 0 1 0 .593-.805L1.114 8.254a.503.503 0 0 0-.042-.028.147.147 0 0 1 0-.252.5.5 0 0 0 .042-.028l4.012-2.954a.5.5 0 0 0 .106-.699z"/>
-                        </svg>
-                    </a>
-                    <button type="submit" class="btn btn-success">
-                        Применить изменения
-                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-send" viewBox="0 0 16 16">
-                            <path d="M15.854.146a.5.5 0 0 1 .11.54l-5.819 14.547a.75.75 0 0 1-1.329.124l-3.178-4.995L.643 7.184a.75.75 0 0 1 .124-1.33L15.314.037a.5.5 0 0 1 .54.11ZM6.636 10.07l2.761 4.338L14.13 2.576 6.636 10.07Zm6.787-8.201L1.591 6.602l4.339 2.76 7.494-7.493Z"/>
-                        </svg>
-                    </button>
-                </div>
+<div class="container" style="height: 100vh; width: 100vw; overflow-y: auto; position: relative;">
+
+    <div class="container-fluid pt-4">
+        <div class="card bg-dark text-white">
+            <div class="card-body">
+                <h5 class="card-title">Редактирование информации по пациенту <span class="h5" style="color: dodgerblue"> ${journal.full_name}</span></h5>
+                <#if journal.dateAddRecord?? && journal.timeAddRecord??>
+                    <p class="card-text" style="margin-bottom: 8px">Дата и время создания записи: ${journal.dateAddRecord} ${journal.timeAddRecord}</p>
+                </#if>
+<#--                <p class="card-text">Выбирите действие, если необходимо <span class="card-text" style="color: dodgerblue">отчистить</span> внесенные изменения или <span class="card-text" style="color: darkgreen">сохранить</span> их.</p>-->
+<#--                <a onclick="location.reload()" class="btn btn-primary me-3">-->
+<#--                    Отчистить изменения-->
+<#--                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-reply-all" viewBox="0 0 16 16">-->
+<#--                        <path d="M8.098 5.013a.144.144 0 0 1 .202.134V6.3a.5.5 0 0 0 .5.5c.667 0 2.013.005 3.3.822.984.624 1.99 1.76 2.595 3.876-1.02-.983-2.185-1.516-3.205-1.799a8.74 8.74 0 0 0-1.921-.306 7.404 7.404 0 0 0-.798.008h-.013l-.005.001h-.001L8.8 9.9l-.05-.498a.5.5 0 0 0-.45.498v1.153c0 .108-.11.176-.202.134L4.114 8.254a.502.502 0 0 0-.042-.028.147.147 0 0 1 0-.252.497.497 0 0 0 .042-.028l3.984-2.933zM9.3 10.386c.068 0 .143.003.223.006.434.02 1.034.086 1.7.271 1.326.368 2.896 1.202 3.94 3.08a.5.5 0 0 0 .933-.305c-.464-3.71-1.886-5.662-3.46-6.66-1.245-.79-2.527-.942-3.336-.971v-.66a1.144 1.144 0 0 0-1.767-.96l-3.994 2.94a1.147 1.147 0 0 0 0 1.946l3.994 2.94a1.144 1.144 0 0 0 1.767-.96v-.667z"/>-->
+<#--                        <path d="M5.232 4.293a.5.5 0 0 0-.7-.106L.54 7.127a1.147 1.147 0 0 0 0 1.946l3.994 2.94a.5.5 0 1 0 .593-.805L1.114 8.254a.503.503 0 0 0-.042-.028.147.147 0 0 1 0-.252.5.5 0 0 0 .042-.028l4.012-2.954a.5.5 0 0 0 .106-.699z"/>-->
+<#--                    </svg>-->
+<#--                </a>-->
+<#--                <button type="submit" class="btn btn-success">-->
+<#--                    Применить изменения-->
+<#--                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-send" viewBox="0 0 16 16">-->
+<#--                        <path d="M15.854.146a.5.5 0 0 1 .11.54l-5.819 14.547a.75.75 0 0 1-1.329.124l-3.178-4.995L.643 7.184a.75.75 0 0 1 .124-1.33L15.314.037a.5.5 0 0 1 .54.11ZM6.636 10.07l2.761 4.338L14.13 2.576 6.636 10.07Zm6.787-8.201L1.591 6.602l4.339 2.76 7.494-7.493Z"/>-->
+<#--                    </svg>-->
+<#--                </button>-->
             </div>
         </div>
+    </div>
 
-        <div class="container text-left">
+    <span class="d-flex text-dark justify-content-center" style="padding: 20px 0 20px 0; font-weight: bold">
+        <svg xmlns="http://www.w3.org/2000/svg" width="60" height="60" fill="currentColor" class="bi bi-vector-pen" viewBox="0 0 16 16">
+          <path fill-rule="evenodd" d="M10.646.646a.5.5 0 0 1 .708 0l4 4a.5.5 0 0 1 0 .708l-1.902 1.902-.829 3.313a1.5 1.5 0 0 1-1.024 1.073L1.254 14.746 4.358 4.4A1.5 1.5 0 0 1 5.43 3.377l3.313-.828L10.646.646zm-1.8 2.908-3.173.793a.5.5 0 0 0-.358.342l-2.57 8.565 8.567-2.57a.5.5 0 0 0 .34-.357l.794-3.174-3.6-3.6z"/>
+          <path fill-rule="evenodd" d="M2.832 13.228 8 9a1 1 0 1 0-1-1l-4.228 5.168-.026.086.086-.026z"/>
+        </svg>
+    </span>
 
-            <h4>Редактирование записи</h4>
-            <hr>
+    <div class="container text-white blurBG" style="justify-content: center; width: 50vw; border-radius: 7px">
+        <h4 style="padding-top: 16px">Редактирование записи</h4>
+        <hr>
+
+        <form action="/journal/save/edit/${journal.id}" method="post" autocomplete="off">
+            <button type="submit" hidden="hidden" id="btnSaveEdit"></button>
             <label class="form-label" for="date_receipt">Дата поступления
                 <a href="#" style="text-decoration: none"
                    data-bs-toggle="tooltip" data-bs-placement="top"
@@ -51,7 +64,7 @@
                     </svg>
                 </a>
             </label><br>
-            <input class="form-control mb-4" type="time" name="string_time_receipt" id="string_time_receipt" maxlength="5" <#if journal.string_time_receipt??>value="${journal.string_time_receipt}"</#if> required>
+            <input class="form-control mb-4" type="time" name="string_time_receipt" id="string_time_receipt" <#if journal.string_time_receipt??>value="${journal.string_time_receipt}"</#if> required>
 
             <label class="form-label" for="full_name">Фамилия, имя, отчестов (при наличии)
                 <a href="#" style="text-decoration: none"
@@ -224,9 +237,10 @@
 
             <label class="form-label" for="additional_information">Дополнительные сведения</label>
             <input class="form-control mb-4" type="text" id="additional_information" name="additional_information" autocomplete="off" <#if journal.additional_information??>value="${journal.additional_information}"</#if>>
+        </form>
+    </div>
+</div>
 
-        </div>
-    </form>
 </@t.page>
 
 
