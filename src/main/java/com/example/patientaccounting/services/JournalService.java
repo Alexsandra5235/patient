@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.util.Comparator;
 import java.util.List;
 
 @Service
@@ -19,8 +20,11 @@ public class JournalService {
     private final JournalRepository journalRepository;
 
     public List<Journal> journalList(String fullName){
-        log.info(fullName);
-        if (fullName != null) return journalRepository.findByFullName(fullName);
+        if (fullName != null){
+            List<Journal> journals = journalRepository.findByFullName(fullName);
+            if (!journals.isEmpty())
+                return journals;
+        }
         return journalRepository.findAll();
     }
 
@@ -28,6 +32,29 @@ public class JournalService {
 
         journalRepository.save(journal);
         log.info("Save record with id = {}", journal.getId());
+    }
+
+    public Journal getLastRecord(){
+        List<Journal> journals = new java.util.ArrayList<>(journalRepository.findAll().stream()
+                .filter(
+                        item -> item.getLocalDateAddRecord() != null && item.getLocalTimeAddRecord() != null
+                )
+                .toList());
+        if (journals.isEmpty()) return null;
+
+        journals.sort(Comparator.comparing(Journal::getLocalDateAddRecord)
+                .thenComparing(Journal::getLocalTimeAddRecord));
+        return journals.get(journals.size() - 1);
+    }
+
+    public void makeComparingJournal(String sort, List<Journal> journals){
+        if (sort.equals("asc")) {
+            journals.sort(Comparator.comparing(Journal::getDate_receipt)
+                    .thenComparing(Journal::getString_time_receipt));
+        } else if (sort.equals("desc")) {
+            journals.sort(Comparator.comparing(Journal::getDate_receipt)
+                    .thenComparing(Journal::getString_time_receipt).reversed());
+        }
     }
 
     public void deleteRecord(Long id) {

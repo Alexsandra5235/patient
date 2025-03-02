@@ -35,28 +35,18 @@ public class JournalController {
                           Model model) {
 
         List<Journal> journals = journalService.journalList(fullName);
+        Journal journal = journalService.getLastRecord();
 
-        model.addAttribute("lastJournal", journals.get(journals.size() - 1));
+        if (journal != null) model.addAttribute("lastJournal", journal);
+
+        if (fullName != null) model.addAttribute("full_name", fullName);
 
         model.addAttribute("sort", sort);
 
-        log.info(sort);
-
-        if (sort != null){
-            if (sort.equals("asc")) {
-                journals.sort(Comparator.comparing(Journal::getDate_receipt)
-                        .thenComparing(Journal::getString_time_receipt));
-            } else if (sort.equals("desc")) {
-                journals.sort(Comparator.comparing(Journal::getDate_receipt)
-                        .thenComparing(Journal::getString_time_receipt).reversed());
-            }
-        }
+        if (sort != null) journalService.makeComparingJournal(sort,journals);
 
         model.addAttribute("journals", journals);
 
-        if (fullName != null) {
-            model.addAttribute("full_name", fullName);
-        }
         return "journal";
     }
 

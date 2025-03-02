@@ -22,7 +22,11 @@ public class Journal {
 
     private String dateAddRecord;
 
+    private LocalDate localDateAddRecord;
+
     private String timeAddRecord;
+
+    private LocalTime localTimeAddRecord;
 
     @Column(name = "date_receipt")
     private LocalDate date_receipt;
@@ -132,13 +136,13 @@ public class Journal {
     protected void onCreate() {
         onUpdate();
 
-        LocalDate dateAdd = LocalDate.now();
-        LocalTime timeAdd = LocalTime.now();
+        localDateAddRecord = LocalDate.now();
+        localTimeAddRecord = LocalTime.now();
 
-        dateAddRecord = getNormalData(dateAdd);
+        dateAddRecord = getNormalData(localDateAddRecord);
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
 
-        timeAddRecord = timeAdd.format(formatter);
+        timeAddRecord = localTimeAddRecord.format(formatter);
     }
 
     protected String getNormalData(LocalDate data){

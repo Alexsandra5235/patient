@@ -9,10 +9,10 @@
         <title>${titlePage}</title>
 
         <style>
-            /*.collapse {*/
-            /*    background-color: rgb(255 255 255 / 30%);*/
-            /*    backdrop-filter: blur(10px);*/
-            /*}*/
+            .blurBG {
+                background-color: rgb(33 37 41 / 50%);
+                backdrop-filter: blur(20px);
+            }
 
             .table-container {
                 /*height: 440px; !* Задайте желаемую высоту *!*/
@@ -25,6 +25,9 @@
                 border-collapse: collapse;
                 /*padding: 5px;*/
                 margin: 0;
+            }
+            .table-container tbody td {
+                padding: 0;
             }
             .table-container th, td {
                 /*padding: 10px;*/
@@ -75,15 +78,15 @@
             }
 
 
-            #scrollToTop {
-                position: fixed;
-                bottom: 30px;
-                right: 30px;
-                display: none;
-                align-items: center;
-                justify-content: center;
-                cursor: pointer;
-            }
+            /*#scrollToTop {*/
+            /*    position: fixed;*/
+            /*    bottom: 30px;*/
+            /*    right: 30px;*/
+            /*    display: none;*/
+            /*    align-items: center;*/
+            /*    justify-content: center;*/
+            /*    cursor: pointer;*/
+            /*}*/
 
             #card-day {
                 width: 50vw;
@@ -174,8 +177,9 @@
             }
 
            body {
-               overflow-y: scroll;
+               /*overflow-y: scroll;*/
            }
+
 
         </style>
 
@@ -183,13 +187,13 @@
     </head>
     <body>
 
-        <div class="alert-primary" id="scrollToTop">
-            <a href="#" style="text-decoration: none">
-                <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="currentColor" class="bi bi-arrow-up-circle" viewBox="0 0 16 16">
-                    <path fill-rule="evenodd" d="M1 8a7 7 0 1 0 14 0A7 7 0 0 0 1 8zm15 0A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-7.5 3.5a.5.5 0 0 1-1 0V5.707L5.354 7.854a.5.5 0 1 1-.708-.708l3-3a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1-.708.708L8.5 5.707V11.5z"/>
-                </svg>
-            </a>
-        </div>
+<#--        <div class="alert-primary" id="scrollToTop">-->
+<#--            <a href="#" style="text-decoration: none">-->
+<#--                <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="currentColor" class="bi bi-arrow-up-circle" viewBox="0 0 16 16">-->
+<#--                    <path fill-rule="evenodd" d="M1 8a7 7 0 1 0 14 0A7 7 0 0 0 1 8zm15 0A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-7.5 3.5a.5.5 0 0 1-1 0V5.707L5.354 7.854a.5.5 0 1 1-.708-.708l3-3a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1-.708.708L8.5 5.707V11.5z"/>-->
+<#--                </svg>-->
+<#--            </a>-->
+<#--        </div>-->
 
 <#--        <nav class="navbar navbar-expand-lg navbar-dark bg-dark py-3" id="sticky">-->
 <#--            <div class="container-fluid">-->
@@ -290,9 +294,9 @@
 <#--            </div>-->
 
 
-        <div class="container-fluid p-0 d-flex min-vh-100 sticky-bottom" style="position: absolute">
-            <div class="d-flex flex-column flex-shrink-0 p-3 text-white min-vh-100 sticky-bottom bg-dark offcanvas-md offcanvas-start" style="width: 20%">
-<#--                <nav class="navbar navbar-expand-lg navbar-dark bg-dark py-3">-->
+<#--        <div class="container-fluid p-0 d-flex vh-100">-->
+        <div class="d-flex" style="position: absolute">
+            <div class="bg-dark d-flex flex-column vh-100 p-3" style="width: 20%">
                     <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
                         <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-journals" viewBox="0 0 16 16">-->
                             <path d="M5 0h8a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2 2 2 0 0 1-2 2H3a2 2 0 0 1-2-2h1a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V4a1 1 0 0 0-1-1H3a1 1 0 0 0-1 1H1a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v9a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H5a1 1 0 0 0-1 1H3a2 2 0 0 1 2-2"/>
@@ -300,10 +304,10 @@
                         </svg>
                         <span class="px-2">JOURNAL</span>
                     </a>
-                    <hr>
+                    <hr class="text-white">
                     <ul class="nav nav-pills flex-column mb-auto">
                         <li class="nav-item">
-                            <a href="/" class="nav-link active text-white" aria-current="page">
+                            <a href="/" class="nav-link active text-white" aria-current="page" style="text-wrap: wrap">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-house" viewBox="0 0 16 16">
                                     <path d="M8.707 1.5a1 1 0 0 0-1.414 0L.646 8.146a.5.5 0 0 0 .708.708L2 8.207V13.5A1.5 1.5 0 0 0 3.5 15h9a1.5 1.5 0 0 0 1.5-1.5V8.207l.646.647a.5.5 0 0 0 .708-.708L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293L8.707 1.5ZM13 7.207V13.5a.5.5 0 0 1-.5.5h-9a.5.5 0 0 1-.5-.5V7.207l5-5 5 5Z"/>
                                 </svg>
@@ -311,7 +315,7 @@
                             </a>
                         </li>
                         <li>
-                            <a href="/journal/save" class="nav-link text-white" aria-current="page" >
+                            <a href="/journal/save" class="nav-link text-white" aria-current="page" style="text-wrap: wrap">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-plus-square" viewBox="0 0 16 16">
                                     <path d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h12zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z"/>
                                     <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
@@ -320,7 +324,7 @@
                             </a>
                         </li>
                         <li>
-                            <a href="/mkd/info" class="nav-link text-white" aria-current="page" >
+                            <a href="/mkd/info" class="nav-link text-white" aria-current="page" style="text-wrap: wrap">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-book" viewBox="0 0 16 16">
                                     <path d="M1 2.828c.885-.37 2.154-.769 3.388-.893 1.33-.134 2.458.063 3.112.752v9.746c-.935-.53-2.12-.603-3.213-.493-1.18.12-2.37.461-3.287.811V2.828zm7.5-.141c.654-.689 1.782-.886 3.112-.752 1.234.124 2.503.523 3.388.893v9.923c-.918-.35-2.107-.692-3.287-.81-1.094-.111-2.278-.039-3.213.492V2.687zM8 1.783C7.015.936 5.587.81 4.287.94c-1.514.153-3.042.672-3.994 1.105A.5.5 0 0 0 0 2.5v11a.5.5 0 0 0 .707.455c.882-.4 2.303-.881 3.68-1.02 1.409-.142 2.59.087 3.223.877a.5.5 0 0 0 .78 0c.633-.79 1.814-1.019 3.222-.877 1.378.139 2.8.62 3.681 1.02A.5.5 0 0 0 16 13.5v-11a.5.5 0 0 0-.293-.455c-.952-.433-2.48-.952-3.994-1.105C10.413.809 8.985.936 8 1.783z"/>
                                 </svg>
@@ -328,22 +332,46 @@
                             </a>
                         </li>
                         <li class="nav-item dropdown" style="z-index: 9999">
-                            <a class="nav-link dropdown-toggle text-white" aria-current="page" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <a style="text-wrap: wrap" class="nav-link dropdown-toggle text-white" aria-current="page" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-file-text" viewBox="0 0 16 16">
                                     <path d="M5 4a.5.5 0 0 0 0 1h6a.5.5 0 0 0 0-1H5zm-.5 2.5A.5.5 0 0 1 5 6h6a.5.5 0 0 1 0 1H5a.5.5 0 0 1-.5-.5zM5 8a.5.5 0 0 0 0 1h6a.5.5 0 0 0 0-1H5zm0 2a.5.5 0 0 0 0 1h3a.5.5 0 0 0 0-1H5z"/>
                                     <path d="M2 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V2zm10-1H4a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1z"/>
                                 </svg>
                                 Формирование отчетов
                             </a>
-                            <ul class="dropdown-menu">
+                            <ul class="dropdown-menu dropdown-menu-dark text-small shadow" style="text-wrap: wrap">
                                 <li><a class="dropdown-item" href="/journal/excel/day">Ежедневный отчет</a></li>
                                 <li><a class="dropdown-item" href="/journal/excel/month">Ежемесячный отчет</a></li>
                                 <li><hr class="dropdown-divider"></li>
                                 <li><a class="dropdown-item" href="/journal/report/get">История формирования отчетов</a></li>
                             </ul>
                         </li>
+                        <#if namePage = "addJournal">
+                            <li>
+                                <div class="card bg-primary text-white p-3 mt-4">
+                                    <p style="margin: 0">Добавление записи</p>
+                                    <hr>
+                                    <p class="card-text">Нажмите на соответствующую кнопку ниже, если необходимо <span style="font-weight: bold" class="card-text text-dark">добавить</span>
+                                        новую запись или <span style="font-weight: bold" class="card-text text-dark">отчистить</span> внесенные данные.</p>
+                                    <button type="submit" class="btn btn-success mb-2" id="btnAddJournal">
+                                        Добавить запись
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-person-plus-fill" viewBox="0 0 16 16">
+                                            <path d="M1 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
+                                            <path fill-rule="evenodd" d="M13.5 5a.5.5 0 0 1 .5.5V7h1.5a.5.5 0 0 1 0 1H14v1.5a.5.5 0 0 1-1 0V8h-1.5a.5.5 0 0 1 0-1H13V5.5a.5.5 0 0 1 .5-.5z"/>
+                                        </svg>
+                                    </button>
+                                    <button type="submit" class="btn btn-secondary" onclick="window.location.reload()">
+                                        Отчистить форму
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-eraser" viewBox="0 0 16 16">
+                                            <path d="M8.086 2.207a2 2 0 0 1 2.828 0l3.879 3.879a2 2 0 0 1 0 2.828l-5.5 5.5A2 2 0 0 1 7.879 15H5.12a2 2 0 0 1-1.414-.586l-2.5-2.5a2 2 0 0 1 0-2.828l6.879-6.879zm2.121.707a1 1 0 0 0-1.414 0L4.16 7.547l5.293 5.293 4.633-4.633a1 1 0 0 0 0-1.414l-3.879-3.879zM8.746 13.547 3.453 8.254 1.914 9.793a1 1 0 0 0 0 1.414l2.5 2.5a1 1 0 0 0 .707.293H7.88a1 1 0 0 0 .707-.293l.16-.16z"/>
+                                        </svg>
+                                    </button>
+                                </div>
+                            </li>
+                        </#if>
+
                     </ul>
-                    <hr>
+                    <hr class="text-white">
                     <div class="dropdown">
                         <a href="#" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
                             <img src="https://github.com/mdo.png" alt="" width="32" height="32" class="rounded-circle me-2">
@@ -357,76 +385,17 @@
                             <li><a class="dropdown-item" href="#">Sign out</a></li>
                         </ul>
                     </div>
-<#--                </nav>-->
             </div>
-
-        <#--        <div class="container-fluid p-0 d-flex h-100">-->
-<#--            <div class="d-flex flex-column-->
-<#--                    flex-shrink-0-->
-<#--                    p-3 bg-dark-->
-<#--                    offcanvas-md offcanvas-start">-->
-<#--                <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">-->
-<#--                    <svg class="bi me-2" width="40" height="32"><use xlink:href="#bootstrap"/></svg>-->
-<#--                    <span class="fs-4">Sidebar</span>-->
-<#--                </a>-->
-<#--                <hr>-->
-<#--                <ul class="nav nav-pills flex-column mb-auto">-->
-<#--                    <li class="nav-item">-->
-<#--                        <a href="#" class="nav-link active" aria-current="page">-->
-<#--                            <svg class="bi me-2" width="16" height="16"><use xlink:href="#home"/></svg>-->
-<#--                            Home-->
-<#--                        </a>-->
-<#--                    </li>-->
-<#--                    <li>-->
-<#--                        <a href="#" class="nav-link text-white">-->
-<#--                            <svg class="bi me-2" width="16" height="16"><use xlink:href="#speedometer2"/></svg>-->
-<#--                            Dashboard-->
-<#--                        </a>-->
-<#--                    </li>-->
-<#--                    <li>-->
-<#--                        <a href="#" class="nav-link text-white">-->
-<#--                            <svg class="bi me-2" width="16" height="16"><use xlink:href="#table"/></svg>-->
-<#--                            Orders-->
-<#--                        </a>-->
-<#--                    </li>-->
-<#--                    <li>-->
-<#--                        <a href="#" class="nav-link text-white">-->
-<#--                            <svg class="bi me-2" width="16" height="16"><use xlink:href="#grid"/></svg>-->
-<#--                            Products-->
-<#--                        </a>-->
-<#--                    </li>-->
-<#--                    <li>-->
-<#--                        <a href="#" class="nav-link text-white">-->
-<#--                            <svg class="bi me-2" width="16" height="16"><use xlink:href="#people-circle"/></svg>-->
-<#--                            Customers-->
-<#--                        </a>-->
-<#--                    </li>-->
-<#--                </ul>-->
-<#--                <hr>-->
-<#--                <div class="dropdown">-->
-<#--                    <a href="#" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">-->
-<#--                        <img src="https://github.com/mdo.png" alt="" width="32" height="32" class="rounded-circle me-2">-->
-<#--                        <strong>mdo</strong>-->
-<#--                    </a>-->
-<#--                    <ul class="dropdown-menu dropdown-menu-dark text-small shadow" aria-labelledby="dropdownUser1">-->
-<#--                        <li><a class="dropdown-item" href="#">New project...</a></li>-->
-<#--                        <li><a class="dropdown-item" href="#">Settings</a></li>-->
-<#--                        <li><a class="dropdown-item" href="#">Profile</a></li>-->
-<#--                        <li><hr class="dropdown-divider"></li>-->
-<#--                        <li><a class="dropdown-item" href="#">Sign out</a></li>-->
-<#--                    </ul>-->
-<#--                </div>-->
-<#--            </div>-->
-
 <#--        </div>-->
 
-        <@t.report typeReport=typeReport>
+            <@t.report typeReport=typeReport>
 
-        </@t.report>
+            </@t.report>
 
-        <#nested>
+            <#nested>
 
         </div>
+
 
 
 
@@ -434,6 +403,13 @@
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
         <script>
+
+            let btnForm = document.getElementById('btnFormAdd');
+            let button = document.getElementById('btnAddJournal');
+
+            button.addEventListener('click', function(event) {
+                btnForm.click();
+            });
 
             document.addEventListener("DOMContentLoaded", function() {
                 // Получаем все элементы навигации

@@ -2,8 +2,8 @@
 
 <@t.page namePage="journal" titlePage="ЖУРНАЛ УЧЕТА ПРИЕМА ПАЦИЕНТОВ">
 
-        <div style="height: 100vh; width: 100vw; overflow-y: auto; position: relative; background-color: white">
-            <div class="container-fluid">
+        <div style="height: 100vh; width: 100vw; overflow-y: auto; position: relative; padding: 0" class="container blurBG">
+            <div class="container-fluid text-white">
                 <h5 class="my-4">Просмотр журнала приема и выписки пациентов
                     <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-journal-text" viewBox="0 0 16 16">
                         <path d="M5 10.5a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 0 1h-2a.5.5 0 0 1-.5-.5zm0-2a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5zm0-2a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5zm0-2a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5z"/>
@@ -30,19 +30,26 @@
                 <hr>
                 <p class="card-text">На этой странице отображается краткая информация о пациентах.
                     При необходимости просмотра полной информации нажмите на соответствующую кнопку.</p>
-                <a href="/journal/info/${lastJournal.id}" class="btn btn-primary mb-4" id="btn-show" role="button">
-                    Просмотр последней добавленной записи
-                    <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor" class="bi bi-eye" viewBox="0 0 16 16">
-                        <path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8zM1.173 8a13.133 13.133 0 0 1 1.66-2.043C4.12 4.668 5.88 3.5 8 3.5c2.12 0 3.879 1.168 5.168 2.457A13.133 13.133 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12.5 8 12.5c-2.12 0-3.879-1.168-5.168-2.457A13.134 13.134 0 0 1 1.172 8z"/>
-                        <path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z"/>
-                    </svg>
-                </a>
+                <#if lastJournal??>
+                    <a href="/journal/info/${lastJournal.id}" class="btn btn-primary mb-4" id="btn-show" role="button">
+                        Просмотр последней добавленной записи
+                        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor" class="bi bi-eye" viewBox="0 0 16 16">
+                            <path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8zM1.173 8a13.133 13.133 0 0 1 1.66-2.043C4.12 4.668 5.88 3.5 8 3.5c2.12 0 3.879 1.168 5.168 2.457A13.133 13.133 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12.5 8 12.5c-2.12 0-3.879-1.168-5.168-2.457A13.134 13.134 0 0 1 1.172 8z"/>
+                            <path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z"/>
+                        </svg>
+                    </a>
+                </#if>
             </div>
             <div class="table-container" style="table-layout: fixed; position: absolute">
                 <table class="table">
                     <thead>
                     <tr>
                         <td onclick="filterData()" style="cursor: pointer">
+                            <#--    для передачи значения сортировки таблицы в контроллер-->
+                            <form action="/" method="get" id="formSort" hidden="hidden">
+                                <label for="sort"></label>
+                                <input type="text" name="sortData" id="sort" <#if sort??>value="${sort}"</#if>>
+                            </form>
                             Дата послупления
                             <#if sort??>
                                 <#if sort == "desc">
@@ -179,11 +186,7 @@
 <#--        </div>-->
 <#--    </div>-->
 
-<#--    для передачи значения сортировки таблицы в контроллер-->
-    <form action="/" method="get" id="formSort" hidden="hidden">
-        <label for="sort"></label>
-        <input type="text" name="sortData" id="sort" <#if sort??>value="${sort}"</#if>>
-    </form>
+
 
 </@t.page>
 
