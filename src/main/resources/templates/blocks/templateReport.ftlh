@@ -1,8 +1,9 @@
 <#macro report typeReport="">
     <#if typeReport != "">
-        <div class="container-fluid my-4" id="card-day" >
-            <div class="card" style="width: 35rem;">
-                <div class="card-header">
+
+        <div style="height: 100vh; width: 100vw; overflow-y: auto; position: relative; padding: 0" class="container">
+            <div class="container blurBG text-white" style="width: 40vw; border-radius: 7px; margin-top: 10%">
+                <div class="card-header" style="padding-top: 16px">
                     <#if typeReport == "day">
                         Ежедневный отчет
                     <#elseif typeReport == "month">
@@ -13,9 +14,10 @@
                         <path d="M11 7.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1zm-3 0a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1zm-2 3a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1zm-3 0a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1z"/>
                     </svg>
                 </div>
+                <hr>
                 <div class="card-body">
                     <form method="get" action="/export/excel">
-                        <input name="typeReport" id="typeReport" value="day" style="visibility: hidden">
+                        <input name="typeReport" id="typeReport" value="day" hidden="hidden">
                         <h5 class="card-title">Выбор диапазона дат</h5>
                         <p class="card-text">Пожалуйста, введите необходимый диапазон дат для формирования
                             <#if typeReport == "day"> ежедневного <#elseif typeReport == "month">ежемесячного</#if> отчета, после нажмите на соответствующую кнопку.</p>
