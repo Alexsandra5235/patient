@@ -24,13 +24,6 @@ public class MedicalController {
         return medicalService.getMedical(query);
     }
 
-    @GetMapping("/mkd/info")
-    public String medicalInfo(Model model) throws Exception {
-        model.addAttribute("medicals", medicalService.getMedicals());
-        model.addAttribute("classes", medicalService.getClassMkd());
-        model.addAttribute("size", medicalService.getClassMkd().size());
 
-        return "mkd";
-    }
 
 }

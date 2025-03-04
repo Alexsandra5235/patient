@@ -4,9 +4,23 @@
 
 <div class="container" style="height: 100vh; width: 100vw; overflow-y: auto; position: relative;">
 
+<#--    <a href="/journal/info/${journal.id}" class="btn btn-primary">-->
+<#--        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-left" viewBox="0 0 16 16">-->
+<#--            <path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z"/>-->
+<#--        </svg>-->
+<#--        Назад-->
+<#--    </a>-->
+
     <div class="container-fluid pt-4">
         <div class="card bg-dark text-white">
             <div class="card-body">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="/" style="padding-right: 14px">Главная</a>></li>
+                        <li class="breadcrumb-item"><a href="/journal/info/${journal.id}" style="padding-right: 14px">Просмотр записи</a>></li>
+                        <li class="breadcrumb-item active text-white" aria-current="page" style="padding-left: 0">Редактирование записи</li>
+                    </ol>
+                </nav>
                 <h5 class="card-title">Редактирование информации по пациенту <span class="h5" style="color: dodgerblue"> ${journal.full_name}</span></h5>
                 <#if journal.dateAddRecord?? && journal.timeAddRecord??>
                     <p class="card-text" style="margin-bottom: 8px">Дата и время создания записи: ${journal.dateAddRecord} ${journal.timeAddRecord}</p>
@@ -40,7 +54,7 @@
         <h4 style="padding-top: 16px">Редактирование записи</h4>
         <hr>
 
-        <form action="/journal/save/edit/${journal.id}" method="post" autocomplete="off">
+        <form action="/journal/save/edit/${journal.id}" method="post" autocomplete="off" style="padding: 10px; margin-bottom: 20px">
             <button type="submit" hidden="hidden" id="btnSaveEdit"></button>
             <label class="form-label" for="date_receipt">Дата поступления
                 <a href="#" style="text-decoration: none"
@@ -119,13 +133,18 @@
             <div id="suggestions"></div>
 
             <label class="form-label" for="registration_place_stay">Регистрация по месту пребывания пациента</label><br>
-            <div class="input-group mb-4">
-                <input type="text" class="form-control" name="registration_place_stay" id="registration_place_stay" <#if journal.registration_place_stay??>value="${journal.registration_place_stay}"</#if>>
-                <div class="input-group-append">
-                    <button class="btn btn-primary" type="button" onclick="copyText()">Совпадает с местом регистрации</button>
-                </div>
-            </div>
-            <div id="suggestions-stay"></div>
+            <input type="text" class="form-control" name="registration_place_stay" id="registration_place_stay" <#if journal.registration_place_stay??>value="${journal.registration_place_stay}"</#if>>
+<#--            <div class="input-group mb-4">-->
+<#--&lt;#&ndash;                <input type="text" class="form-control" name="registration_place_stay" id="registration_place_stay" <#if journal.registration_place_stay??>value="${journal.registration_place_stay}"</#if>>&ndash;&gt;-->
+<#--&lt;#&ndash;                <div class="input-group-append">&ndash;&gt;-->
+<#--&lt;#&ndash;                    <button class="btn btn-primary" type="button" onclick="copyText()">Совпадает с местом регистрации</button>&ndash;&gt;-->
+<#--&lt;#&ndash;                </div>&ndash;&gt;-->
+<#--            </div>-->
+            <div id="suggestions-stay" style="margin-top: 0"></div>
+            <label class="mb-4">
+                <input type="checkbox" class="custom-checkbox" value="Совпадает с местом регистрации" onclick="copyText()">
+                Совпадает с местом регистрации
+            </label>
 
             <label class="form-label" for="number_phone_representative">Номер телефона законного представителя, лица, которому может
                 быть передана информация о состоянии здоровья пациента</label>

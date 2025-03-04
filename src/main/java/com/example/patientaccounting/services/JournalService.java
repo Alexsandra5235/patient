@@ -11,6 +11,7 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @Slf4j
@@ -80,7 +81,6 @@ public class JournalService {
         }
 
     }
-
 
     public String getLocalTime(){
 

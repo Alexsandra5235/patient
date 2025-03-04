@@ -4,6 +4,7 @@ import com.example.patientaccounting.models.Report;
 import com.example.patientaccounting.services.JournalExportExcel;
 import com.example.patientaccounting.models.Journal;
 import com.example.patientaccounting.services.JournalService;
+import com.example.patientaccounting.services.MedicalService;
 import com.example.patientaccounting.services.ReportService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -27,7 +28,7 @@ public class JournalController {
 
     private final JournalService journalService;
     private final JournalExportExcel journalExportExcel;
-    private final ReportService reportService;
+    private final MedicalService medicalService;
 
     @GetMapping("/")
     public String journal(@RequestParam(name = "full_name", required = false) String fullName,
@@ -95,6 +96,15 @@ public class JournalController {
     public String deleteJournal(@PathVariable Long id) {
         journalService.deleteRecord(id);
         return "redirect:/";
+    }
+
+    @GetMapping("/mkd/info")
+    public String medicalInfo(Model model) throws Exception {
+        model.addAttribute("medicals", medicalService.getMedicals());
+        model.addAttribute("classes", medicalService.getClassMkd());
+        model.addAttribute("size", medicalService.getClassMkd().size());
+
+        return "mkd";
     }
 
 //    @GetMapping("/export/excel")

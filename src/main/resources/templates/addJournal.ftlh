@@ -31,7 +31,7 @@
         <div class="container text-white blurBG" style="justify-content: center; width: 50vw; border-radius: 7px">
             <h4 style="padding-top: 16px">Добавление записи</h4>
             <hr>
-            <form action="/journal/add" method="post" autocomplete="off" id="formAddJournal" style="padding: 10px">
+            <form action="/journal/add" method="post" autocomplete="off" id="formAddJournal" style="padding: 10px; margin-bottom: 20px">
                 <label class="form-label" for="date_receipt">Дата поступления
                     <a href="#" style="text-decoration: none"
                        data-bs-toggle="tooltip" data-bs-placement="top"

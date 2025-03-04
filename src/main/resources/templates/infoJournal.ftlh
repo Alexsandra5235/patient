@@ -5,10 +5,15 @@
 
 
 <div class="container" style="height: 100vh; width: 100vw; overflow-y: auto; position: relative; ">
-
     <div class="container-fluid pt-4">
         <div class="card bg-dark text-white">
             <div class="card-body">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="/" style="padding-right: 14px">Главная</a>></li>
+                        <li class="breadcrumb-item active text-white" aria-current="page" style="padding-left: 0">Просмотр записи</li>
+                    </ol>
+                </nav>
                 <h5 class="card-title">Полная информация по пациенту<span class="h5" style="color: dodgerblue"> ${journal.full_name}</span></h5>
                 <#if journal.dateAddRecord?? && journal.timeAddRecord??>
                     <p class="card-text" style="margin-bottom: 8px">Дата и время создания записи: ${journal.dateAddRecord} ${journal.timeAddRecord}</p>
@@ -47,7 +52,7 @@
         </svg>
     </span>
 
-    <div class="container text-white blurBG" style="justify-content: center; width: 50vw; border-radius: 7px">
+    <div class="container text-white blurBG" style="justify-content: center; width: 50vw; border-radius: 7px; margin-bottom: 20px">
         <a href="/journal/edit/${journal.id}" hidden="hidden" id="formEditRecord"></a>
         <form action="/journal/delete/${journal.id}" method="post" hidden="hidden" id="btnDelete">
         </form>
@@ -56,20 +61,25 @@
                 <h4 style="padding-top: 16px">Полная информация</h4>
                 <hr>
 
-                <label class="form-label" for="date_receipt">Дата поступления</label><br>
-                <input class="form-control mb-4" id="date_receipt" type="date" <#if journal.date_receipt??>value="${journal.date_receipt}"</#if>>
+                <label class="form-label" for="date_receipt">Дата поступления:</label>
+                <p id="date_receipt"><#if journal.normal_date??>${journal.normal_date}</#if></p>
+                <hr>
 
-                <label class="form-label" for="string_time_receipt">Время поступления</label><br>
-                <input class="form-control mb-4" type="time" id="string_time_receipt" <#if journal.string_time_receipt??>value="${journal.string_time_receipt}"</#if>>
+                <label class="form-label" for="string_time_receipt">Время поступления:</label>
+                <p id="string_time_receipt"><#if journal.string_time_receipt??>${journal.string_time_receipt}</#if></p>
+                <hr>
 
-                <label class="form-label" for="full_name">Фамилия, имя, отчестов (при наличии)</label><br>
-                <input class="form-control mb-4" type="text" id="full_name" <#if journal.full_name??>value="${journal.full_name}"</#if>>
+                <label class="form-label" for="full_name">Фамилия, имя, отчестов (при наличии):</label>
+                <p id="full_name"><#if journal.full_name??>${journal.full_name}</#if></p>
+                <hr>
 
-                <label class="form-label" for="birth_day">Дата рождения (число, месяц, год):</label><br>
-                <input class="form-control mb-4" type="date" id="birth_day" <#if journal.birth_day??>value="${journal.birth_day}"</#if>>
+                <label class="form-label" for="birth_day">Дата рождения (число, месяц, год):</label>
+                <p id="birth_day"><#if journal.normal_birth_day??>${journal.normal_birth_day}</#if></p>
+                <hr>
 
-                <label class="form-label" for="gender">Пол (мужской, женский)</label><br>
-                <input class="form-select mb-4" type="text" id="gender" <#if journal.gender??>value="${journal.gender}"</#if>>
+                <label class="form-label" for="gender">Пол (мужской, женский):</label>
+                <p id="gender"><#if journal.gender??>${journal.gender}</#if></p>
+                <hr>
 
                 <label class="form-label" for="password">Серия и номер паспорта или иного документа, удостоверяющего личность (при наличии)</label><br>
                 <input class="form-control mb-4" type="text" id="password" <#if journal.password??>value="${journal.password}"</#if>>
