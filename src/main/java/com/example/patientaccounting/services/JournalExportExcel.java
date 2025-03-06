@@ -24,21 +24,6 @@ public class JournalExportExcel {
 
     /**
      * Метод для применения основных настроек текста в ячейке
-     * @param workbook документ
-     * @param sheet лист документа
-     * @param firstRow начальная строка ячейки
-     * @param endRow конечная строка ячейки
-     * @param firstCol начальная колонка ячейки
-     * @param endCol конечная колонка ячейки
-     * @param nameCol содержание ячейки
-     * @param alignment выравнивание
-     * @param border наличие границ
-     * @param rotation положение в ячейке
-     * @param underline наличие подчеркивания
-     * @param fontHeight размер шрифта внутри ячейки
-     * @param bold наличие жирного шрифта
-     * @param borderButton наличие нижнего подчеркивания
-     * @param wrapText наличие переноса текста
      */
     private void setDefaultSettings(Workbook workbook,Sheet sheet, int firstRow, int endRow, int firstCol, int endCol, String nameCol,
                                     HorizontalAlignment alignment, Boolean border, int rotation,
@@ -116,8 +101,6 @@ public class JournalExportExcel {
 
     /**
      * Создание шапки страницы (слева)
-     * @param workbook документ
-     * @param sheet лист
      */
     public void createHeadLeft(Workbook workbook,Sheet sheet){
 
@@ -136,8 +119,6 @@ public class JournalExportExcel {
 
     /**
      * Создание шапки страницы (справа)
-     * @param workbook страница
-     * @param sheet лист
      */
     public void createHeadRight(Workbook workbook,Sheet sheet){
 
@@ -157,10 +138,6 @@ public class JournalExportExcel {
 
     /**
      * Генерация шапки (центр страницы)
-     * @param workbook страница
-     * @param sheet лист
-     * @param date1 начальная дата отчетного периода
-     * @param date2 конечная дата отчетного периода
      */
     public void createTitle(Workbook workbook, Sheet sheet,String date1, String date2){
 
@@ -180,8 +157,6 @@ public class JournalExportExcel {
 
     /**
      * Генерация глав (нумерация колонок)
-     * @param workbook страница
-     * @param sheet лист
      */
     public void createNumsRow(Workbook workbook, Sheet sheet){
 
@@ -208,7 +183,6 @@ public class JournalExportExcel {
 
     /**
      * Измнение размеров ячеек
-     * @param sheet лист
      */
     public void setSizeColumn(Sheet sheet){
 
@@ -230,8 +204,6 @@ public class JournalExportExcel {
 
     /**
      * Генерация заголовков строк, которые показывают итоговые данные по отчету
-     * @param workbook страница
-     * @param sheet лист
      */
     public void createColumnReport(Workbook workbook,Sheet sheet){
 
@@ -257,8 +229,6 @@ public class JournalExportExcel {
 
     /**
      * Генерация колонок с вертикальным отображением текста
-     * @param workbook страница
-     * @param sheet лист
      */
     public void createColumnVertical(Workbook workbook, Sheet sheet){
         for (int i = 1; i < 25; i++){
@@ -274,8 +244,6 @@ public class JournalExportExcel {
 
     /**
      * Генерация грац таблицы
-     * @param workbook страница
-     * @param sheet лист
      */
     public void createBorder(Workbook workbook, Sheet sheet){
         for (int row = 19; row < 23; row++){
@@ -289,8 +257,6 @@ public class JournalExportExcel {
 
     /**
      * Генерация колонок с горизонтальным отображением текста
-     * @param workbook страница
-     * @param sheet лист
      */
     public void createColumnHorizontal(Workbook workbook, Sheet sheet){
         for (int i = 0; i < 12; i++){
@@ -309,9 +275,6 @@ public class JournalExportExcel {
 
     /**
      * Генерация итоговых значений в таблице по итогам отчетного периода
-     * @param workbook страница
-     * @param sheet лист
-     * @param journals данные о пациентах, попавшие в отчетный период
      */
     public void setReportData(Workbook workbook,Sheet sheet,List<Journal> journals){
 
@@ -337,8 +300,6 @@ public class JournalExportExcel {
 
     /**
      * Генерация глав (номера колонок) на странице 2
-     * @param workbook страница
-     * @param sheet лист
      */
     public void createColumnsSheetPatient(Workbook workbook, Sheet sheet){
 
@@ -368,9 +329,6 @@ public class JournalExportExcel {
 
     /**
      * Генерация отчетных данных по результатам отчетного периода на странице 2
-     * @param workbook страница
-     * @param sheet лист
-     * @param journals пациенты, вошедшие в отчетный период
      */
     public void setReportDataSheetTwo(Workbook workbook,Sheet sheet,List<Journal> journals){
 
@@ -403,10 +361,6 @@ public class JournalExportExcel {
 
     /**
      * Заполнение документа
-     * @param journals пациенты, вошедшие в отчетный период
-     * @param date1 начальная дата отчетного периода
-     * @param date2 конечная дата отчетного периода
-     * @return заполненный документ
      */
     private Workbook setSettings(List<Journal> journals, String date1, String date2){
         Workbook workbook = new XSSFWorkbook();
@@ -438,10 +392,6 @@ public class JournalExportExcel {
 
     /**
      * Сохранение отчета в базе данных
-     * @param typeReport тип отчета
-     * @param date1 начальная дата отчетного периода
-     * @param date2 конечная дата отчетного периода
-     * @param bytes содержание отчета
      */
     private void saveReport(String typeReport, String date1, String date2, byte[] bytes){
 
@@ -462,11 +412,6 @@ public class JournalExportExcel {
 
     /**
      * Генерация отчета с его сохранением в базе данных и на локальной машине пользователя
-     * @param journals пациенты, вошедшие в отчетный период
-     * @param date1 начальная дата отчетного периода
-     * @param date2 конечная дата отчетного периода
-     * @param typeReport тип отчета
-     * @return ответ на запрос
      */
     public ResponseEntity<byte[]> exportToExcel(List<Journal> journals, String date1, String date2, String typeReport) throws IOException {
 
@@ -482,10 +427,6 @@ public class JournalExportExcel {
 
     /**
      * Генерация отчета и его открытие без скачивания
-     * @param journals пациенты, вошедшие в отчетный период
-     * @param date1 начальная дата отчетного периода
-     * @param date2 конечная дата отчетного периода
-     * @return ответ на запрос
      */
     public ResponseEntity<byte[]> openToExcel(List<Journal> journals, String date1, String date2) throws IOException {
 
@@ -496,9 +437,6 @@ public class JournalExportExcel {
 
     /**
      * Назначение заголовка для открытия отчета без его скачивания
-     * @param date1 начальная дата отчетного периода
-     * @param date2 конечная дата отчетного периода
-     * @return заголовок запроса
      */
     private HttpHeaders setHeadersForOpen(String date1, String date2){
         HttpHeaders headers = new HttpHeaders();
@@ -514,9 +452,6 @@ public class JournalExportExcel {
 
     /**
      * Назначение заголовка для скачивания отчета
-     * @param date1 начальная дата отчетного периода
-     * @param date2 конечная дата отчетного периода
-     * @return заголовок запроса
      */
     private HttpHeaders setHeadersForExport(String date1, String date2){
         HttpHeaders headers = new HttpHeaders();
@@ -531,8 +466,6 @@ public class JournalExportExcel {
 
     /**
      * Запись данных отчета в документ
-     * @param workbook страница
-     * @return содержимое отчета
      */
     private byte[] readOutputStream(Workbook workbook) throws IOException {
         // Запись в поток
