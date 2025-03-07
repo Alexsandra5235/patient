@@ -35,23 +35,22 @@ public class JournalService {
 
     public void saveRecord(Journal journal, String medical, String cause) {
 
-        setMedicalCode(journal,medical,cause);
+        setMedicalCode(null,journal,medical,cause);
         normalJournalDataService.setNormalJournalData(new NormalJournalData(),journal);
         journalRepository.save(journal);
         log.info("Save record with id = {}", journal.getId());
     }
 
-    private void setMedicalCode(Journal journal, String medical, String cause){
-//        if (medical.isEmpty() && cause.isEmpty()) return;
-        if (!medical.isEmpty()){
-            journal.setMedical(
-                    medicalService.getMedicalByCode(medical)
-            );
-        } else if (!cause.isEmpty()){
-            journal.setCause_injury(
-                    medicalService.getMedicalByCode(cause)
-            );
+    private void setMedicalCode(Journal beforeJournal,Journal journal, String medical, String cause){
+
+        if (beforeJournal != null){
+            if (beforeJournal.getMedical() != null) journal.setMedical(beforeJournal.getMedical());
+            if (beforeJournal.getCause_injury() != null) journal.setCause_injury(beforeJournal.getCause_injury());
         }
+
+        if (!medical.isEmpty()) journal.setMedical(medicalService.getMedicalByCode(medical));
+        if (!cause.isEmpty()) journal.setCause_injury(medicalService.getMedicalByCode(cause));
+
     }
 
     public Journal getLastRecord(){
@@ -95,7 +94,7 @@ public class JournalService {
             journal.setLocalDateAddRecord(beforeJournal.getLocalDateAddRecord());
             journal.setLocalTimeAddRecord(beforeJournal.getLocalTimeAddRecord());
 
-            setMedicalCode(journal,medical,cause);
+            setMedicalCode(beforeJournal,journal,medical,cause);
             normalJournalDataService.setNormalJournalData(beforeJournal.getNormal_data(),journal);
             journalRepository.save(journal);
             log.info("After edit record: {}", journal);
