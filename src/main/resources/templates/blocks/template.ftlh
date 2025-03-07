@@ -615,15 +615,15 @@
             // Подстановка даты для ежедневного отчета
             function onCopyInput() {
 
-                const typeReport = document.getElementById('typeReport');
+                const typeReport = document.getElementById('typeReport').value;
                 const data2 = document.getElementById('data2');
                 const data1 = document.getElementById('data1');
 
                 let dateUpdate = new Date(data1.value);
 
-                if (typeReport.value === 'day'){
+                if (typeReport === "day"){
                     dateUpdate.setDate(dateUpdate.getDate() + 1);  // Добавляем один день
-                } else if (typeReport.value === 'month'){
+                } else if (typeReport === "month"){
                     // Добавляем один месяц
                     dateUpdate.setMonth(dateUpdate.getMonth() + 1);
                 }

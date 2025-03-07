@@ -4,6 +4,7 @@ import com.example.patientaccounting.models.Journal;
 import com.example.patientaccounting.repository.JournalRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.catalina.authenticator.SavedRequest;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -79,7 +80,7 @@ public class JournalService {
         return journalRepository.findById(id).orElse(null);
     }
 
-    public void editRecord(Journal journal) {
+    public void editRecord(Journal journal, String medical, String cause) {
 
         if (journal != null) {
             Journal beforeJournal = journalRepository.findById(journal.getId()).orElse(null);
@@ -88,6 +89,7 @@ public class JournalService {
             journal.setLocalDateAddRecord(beforeJournal.getLocalDateAddRecord());
             journal.setLocalTimeAddRecord(beforeJournal.getLocalTimeAddRecord());
 
+            setMedicalCode(journal,medical,cause);
             journalRepository.save(journal);
             log.info("After edit record: {}", journal);
         }

@@ -17,7 +17,7 @@
                 <hr>
                 <div class="card-body">
                     <form method="get" action="/export/excel">
-                        <input name="typeReport" id="typeReport" value="day" hidden="hidden">
+                        <input name="typeReport" id="typeReport" value="${typeReport}" hidden="hidden">
                         <h5 class="card-title">Выбор диапазона дат</h5>
                         <p class="card-text">Пожалуйста, введите необходимый диапазон дат для формирования
                             <#if typeReport == "day"> ежедневного <#elseif typeReport == "month">ежемесячного</#if> отчета, после нажмите на соответствующую кнопку.</p>
