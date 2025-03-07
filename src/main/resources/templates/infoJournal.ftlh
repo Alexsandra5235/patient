@@ -113,11 +113,11 @@
 
                 <label class="form-label" for="medical">Диагноз заболевания (состояния), поставленный направившей медицинской организацией,
                     выездной бригадой скорой медицинской помощи (код по МКБ)</label>
-                <input class="form-control mb-4" type="text" id="medical" <#if journal.medical.code??>value="${journal.medical.code}"</#if>>
+<#--                <input class="form-control mb-4" type="text" id="medical" <#if journal.medical.code??>value="${journal.medical.code}"</#if>>-->
 
                 <label class="form-label" for="cause_injury">Причина и обстоятельства трамвы (в том числе при дорожно-транспортных проишествиях)
                     отравления (код по МКБ)</label>
-                <input class="form-control mb-4" type="text" id="cause_injury" <#if journal.cause_injury.code??>value="${journal.cause_injury.code}"</#if>>
+<#--                <input class="form-control mb-4" type="text" id="cause_injury" <#if journal.cause_injury.code??>value="${journal.cause_injury.code}"</#if>>-->
 
                 <label class="form-label" for="fact_alcohol">Факт употребления алкоголя и иных психоактивных веществ,
                     установление наличия или отсутствия признаков состояния опьянения при поступленим пациента

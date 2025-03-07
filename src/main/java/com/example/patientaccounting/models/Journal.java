@@ -1,5 +1,6 @@
 package com.example.patientaccounting.models;
 
+import com.example.patientaccounting.repository.NormalJournalDataRepository;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -20,24 +21,25 @@ public class Journal {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String dateAddRecord;
-    private LocalDate localDateAddRecord;
+    private LocalDateTime localDateAddRecord;
     private String timeAddRecord;
     private LocalTime localTimeAddRecord;
-    @Column(name = "date_receipt")
-    private LocalDate date_receipt;
-    // Для отображения в таблице в формате dd.mm.yyyy
+
+    @OneToOne(cascade = CascadeType.ALL)
+    private NormalJournalData normal_data;
+
     @Column(name = "normal_date")
     private String normal_date;
-    // Для отображения в таблице в формате hh:mm
-    @Column(name = "string_time_receipt")
-    private String string_time_receipt;
-    @Column(name = "full_name")
-    private String full_name;
-    @Column(name = "birth_day")
-    private LocalDate birth_day;
-    // Для отображения в таблице в формате dd.mm.yyyy
     @Column(name = "normal_birth_day")
     private String normal_birth_day;
+    // Дата и время выписки
+    private String date_time_discharge;
+
+    private LocalDate date_receipt;
+    // Для отображения в таблице в формате hh:mm
+    private String string_time_receipt;
+    private String full_name;
+    private LocalDate birth_day;
     private String gender;
     private String password;
     private String nationality;
@@ -57,9 +59,6 @@ public class Journal {
     private String result_research;
     private String department_medical_organization;
     private String outcome_hospitalization;
-    // Дата и время выписки
-    private String date_time_discharge;
-    // Дата и время выписки для заполнения input
     private LocalDateTime local_date_time_discharge;
     private String medical_organization_transferred;
     private LocalDateTime date_time_inform;
@@ -95,7 +94,7 @@ public class Journal {
             date_time_discharge = String.format(normal_date_discharge + " " + timeDischarge);
         }
         if (localDateAddRecord != null){
-            dateAddRecord = getNormalData(localDateAddRecord);
+            dateAddRecord = getNormalData(localDateAddRecord.toLocalDate());
         }
         if (localTimeAddRecord != null){
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
@@ -107,18 +106,34 @@ public class Journal {
     @PrePersist
     protected void onCreate() {
 
-        localDateAddRecord = LocalDate.now();
+        localDateAddRecord = LocalDateTime.now();
         localTimeAddRecord = LocalTime.now();
+
 
         onUpdate();
     }
 
     protected String getNormalData(LocalDate data){
+        if (data == null) return null;
+
         int yearDischarge = data.getYear();
         int monthDischarge = data.getMonthValue();
         int dayDischarge = data.getDayOfMonth();
 
         return String.format("%02d.%02d.%04d", dayDischarge, monthDischarge, yearDischarge);
+    }
+
+    protected String getNormalDataTime(LocalDateTime data){
+        if (data == null) return null;
+
+        int yearDischarge = data.getYear();
+        int monthDischarge = data.getMonthValue();
+        int dayDischarge = data.getDayOfMonth();
+
+        int hour = data.getHour();
+        int minute = data.getMinute();
+
+        return String.format("%02d.%02d.%04d %02d:%02d", dayDischarge, monthDischarge, yearDischarge, hour, minute);
     }
 
 }

@@ -1,6 +1,7 @@
 package com.example.patientaccounting.services;
 
 import com.example.patientaccounting.models.Journal;
+import com.example.patientaccounting.models.NormalJournalData;
 import com.example.patientaccounting.repository.JournalRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -21,6 +22,7 @@ public class JournalService {
 
     private final JournalRepository journalRepository;
     private final MedicalService medicalService;
+    private final NormalJournalDataService normalJournalDataService;
 
     public List<Journal> journalList(String fullName){
         if (fullName != null){
@@ -34,18 +36,22 @@ public class JournalService {
     public void saveRecord(Journal journal, String medical, String cause) {
 
         setMedicalCode(journal,medical,cause);
+        normalJournalDataService.setNormalJournalData(new NormalJournalData(),journal);
         journalRepository.save(journal);
         log.info("Save record with id = {}", journal.getId());
     }
 
     private void setMedicalCode(Journal journal, String medical, String cause){
-        if (medical.isEmpty() && !cause.isEmpty()) return;
-        journal.setMedical(
-                medicalService.getMedicalByCode(medical)
-        );
-        journal.setCause_injury(
-                medicalService.getMedicalByCode(cause)
-        );
+//        if (medical.isEmpty() && cause.isEmpty()) return;
+        if (!medical.isEmpty()){
+            journal.setMedical(
+                    medicalService.getMedicalByCode(medical)
+            );
+        } else if (!cause.isEmpty()){
+            journal.setCause_injury(
+                    medicalService.getMedicalByCode(cause)
+            );
+        }
     }
 
     public Journal getLastRecord(){
