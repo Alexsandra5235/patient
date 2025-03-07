@@ -27,9 +27,9 @@ public class Medical {
     @ManyToMany
     private List<Medical> groupData = new ArrayList<>();
 
-    @OneToMany(cascade = CascadeType.REFRESH, mappedBy = "medical")
-    private List<Journal> journal_medical;
-    @OneToMany(cascade = CascadeType.REFRESH, mappedBy = "cause_injury")
-    private List<Journal> journal_cause_injury;
+//    @OneToOne(cascade = CascadeType.REFRESH)
+//    private Journal journal_medical;
+//    @OneToOne(cascade = CascadeType.REFRESH)
+//    private Journal journal_cause_injury;
 
 }

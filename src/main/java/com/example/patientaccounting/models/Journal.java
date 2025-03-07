@@ -48,11 +48,9 @@ public class Journal {
     private String polis;
     private String delivered;
     private String medical_card;
-    @ManyToOne(cascade = CascadeType.REFRESH)
-    @JoinColumn(name = "id_medical")
+    @OneToOne(cascade = CascadeType.REFRESH)
     private Medical medical;
-    @ManyToOne(cascade = CascadeType.REFRESH)
-    @JoinColumn(name = "id_cause_injury")
+    @OneToOne(cascade = CascadeType.REFRESH)
     private Medical cause_injury;
     private String fact_alcohol;
     private LocalDateTime date_time_alcohol;
