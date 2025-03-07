@@ -19,86 +19,55 @@ public class Journal {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-
     private String dateAddRecord;
-
     private LocalDate localDateAddRecord;
-
     private String timeAddRecord;
-
     private LocalTime localTimeAddRecord;
-
     @Column(name = "date_receipt")
     private LocalDate date_receipt;
-
     // Для отображения в таблице в формате dd.mm.yyyy
     @Column(name = "normal_date")
     private String normal_date;
-
     // Для отображения в таблице в формате hh:mm
     @Column(name = "string_time_receipt")
     private String string_time_receipt;
-
     @Column(name = "full_name")
     private String full_name;
-
     @Column(name = "birth_day")
     private LocalDate birth_day;
-
     // Для отображения в таблице в формате dd.mm.yyyy
     @Column(name = "normal_birth_day")
     private String normal_birth_day;
-
     private String gender;
-
     private String password;
-
     private String nationality;
-
     private String address;
-
     private String registration_place_stay;
-
     private String number_phone_representative;
-
     private String snils;
-
     private String polis;
-
     private String delivered;
-
     private String medical_card;
-
-    private String medical;
-
-    private String cause_injury;
-
+    @ManyToOne(cascade = CascadeType.REFRESH)
+    @JoinColumn(name = "id_medical")
+    private Medical medical;
+    @ManyToOne(cascade = CascadeType.REFRESH)
+    @JoinColumn(name = "id_cause_injury")
+    private Medical cause_injury;
     private String fact_alcohol;
-
     private LocalDateTime date_time_alcohol;
-
     private String result_research;
-
     private String department_medical_organization;
-
     private String outcome_hospitalization;
-
     // Дата и время выписки
     private String date_time_discharge;
-
     // Дата и время выписки для заполнения input
     private LocalDateTime local_date_time_discharge;
-
     private String medical_organization_transferred;
-
     private LocalDateTime date_time_inform;
-
     private String reason_refusal;
-
     private String full_name_medical_worker;
-
     private String additional_information;
-
 
     @PreUpdate
     protected void onUpdate() {

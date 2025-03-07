@@ -54,7 +54,9 @@
 
     <div class="container text-white blurBG" style="justify-content: center; width: 50vw; border-radius: 7px; margin-bottom: 20px">
         <a href="/journal/edit/${journal.id}" hidden="hidden" id="formEditRecord"></a>
-        <form action="/journal/delete/${journal.id}" method="post" hidden="hidden" id="btnDelete">
+
+        <form action="/journal/delete/${journal.id}" method="post" hidden="hidden">
+            <input type="submit" id="btnDelete">
         </form>
         <fieldset disabled>
             <div class="container text-left">

@@ -67,8 +67,9 @@ public class JournalController {
     }
 
     @PostMapping("/journal/add")
-    public String addJournal(Journal journal) {
-        journalService.saveRecord(journal);
+    public String addJournal(Journal journal, @RequestParam(name = "medical_str", required = false) String medical,
+                             @RequestParam(name = "cause_injury_str", required = false) String cause) {
+        journalService.saveRecord(journal,medical,cause);
         return "redirect:/";
     }
 

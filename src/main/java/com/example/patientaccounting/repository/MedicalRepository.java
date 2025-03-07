@@ -4,5 +4,5 @@ import com.example.patientaccounting.models.Journal;
 import com.example.patientaccounting.models.Medical;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface MedicalRepository extends JpaRepository<Medical, String> {
+public interface MedicalRepository extends JpaRepository<Medical, Long> {
 }

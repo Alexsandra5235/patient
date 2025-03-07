@@ -158,7 +158,7 @@
                         </svg>
                     </a>
                 </label>
-                <input class="form-control mb-4" type="text" id="medical" name="medical" oninput="toUpperCaseInput(this)">
+                <input class="form-control mb-4" type="text" id="medical" name="medical_str" oninput="toUpperCaseInput(this)">
                 <div id="suggestions_medical"></div>
 
                 <label class="form-label" for="cause_injury">Причина и обстоятельства трамвы (в том числе при дорожно-транспортных проишествиях)
@@ -173,7 +173,7 @@
                         </svg>
                     </a>
                 </label>
-                <input class="form-control mb-4" type="text" id="cause_injury" name="cause_injury" oninput="toUpperCaseInput(this)">
+                <input class="form-control mb-4" type="text" id="cause_injury" name="cause_injury_str" oninput="toUpperCaseInput(this)">
                 <div id="suggestions_cause"></div>
 
                 <label class="form-label" for="fact_alcohol">Факт употребления алкоголя и иных психоактивных веществ,

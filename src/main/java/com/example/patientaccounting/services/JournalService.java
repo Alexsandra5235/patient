@@ -19,6 +19,7 @@ import java.util.stream.Collectors;
 public class JournalService {
 
     private final JournalRepository journalRepository;
+    private final MedicalService medicalService;
 
     public List<Journal> journalList(String fullName){
         if (fullName != null){
@@ -29,10 +30,21 @@ public class JournalService {
         return journalRepository.findAll();
     }
 
-    public void saveRecord(Journal journal) {
+    public void saveRecord(Journal journal, String medical, String cause) {
 
+        setMedicalCode(journal,medical,cause);
         journalRepository.save(journal);
         log.info("Save record with id = {}", journal.getId());
+    }
+
+    private void setMedicalCode(Journal journal, String medical, String cause){
+        if (medical.isEmpty() && !cause.isEmpty()) return;
+        journal.setMedical(
+                medicalService.getMedicalByCode(medical)
+        );
+        journal.setCause_injury(
+                medicalService.getMedicalByCode(cause)
+        );
     }
 
     public Journal getLastRecord(){

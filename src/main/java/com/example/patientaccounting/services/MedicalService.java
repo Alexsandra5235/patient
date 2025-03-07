@@ -14,31 +14,29 @@ public class MedicalService {
 
     private final MedicalRepository medicalRepository;
 
-    public List<String> getMedical(String mkd) {
+    public List<String> getMedicalsByFragment(String mkd) {
 
         return medicalRepository.findAll().stream().
                 filter(code -> code.getCode().contains(mkd))
                 .map(item -> item.getCode() + " - " + item.getValue()) // Форматирование строки
                 .toList(); // Сбор в список
+
     }
 
     public List<Medical> getMedicals() {
         return medicalRepository.findAll();
     }
 
+    public Medical getMedicalByCode(String code) {
+        return medicalRepository.findAll().stream()
+                .filter(item -> item.getCode().equals(code))
+                .findFirst().orElse(null);
+    }
+
     // Метод для проверки, является ли индикатор корректным
     private boolean isIndicatorValid(Medical item) {
         try {
             return Integer.parseInt(item.getIndicator()) <= 21;
-        } catch (NumberFormatException e) {
-            return false; // Если преобразование не удалось, возвращаем false
-        }
-    }
-
-    private boolean isParse(Medical item) {
-        try {
-            Integer.parseInt(item.getIndicator());
-            return true;
         } catch (NumberFormatException e) {
             return false; // Если преобразование не удалось, возвращаем false
         }

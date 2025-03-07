@@ -477,7 +477,7 @@
 
             function forDelete(){
                 let btnDelete = document.getElementById('btnDelete');
-                btnDelete.submit();
+                btnDelete.click();
             }
 
             function forSaveEdit(){

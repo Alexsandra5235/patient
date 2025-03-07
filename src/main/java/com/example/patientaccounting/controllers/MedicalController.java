@@ -21,7 +21,7 @@ public class MedicalController {
     @GetMapping("/api/suggest-medical")
     public List<String> suggestAddress(@RequestParam(name = "query", required = false) String query) throws Exception {
 
-        return medicalService.getMedical(query);
+        return medicalService.getMedicalsByFragment(query);
     }
 
 
