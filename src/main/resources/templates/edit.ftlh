@@ -134,12 +134,6 @@
 
             <label class="form-label" for="registration_place_stay">Регистрация по месту пребывания пациента</label><br>
             <input type="text" class="form-control" name="registration_place_stay" id="registration_place_stay" <#if journal.registration_place_stay??>value="${journal.registration_place_stay}"</#if>>
-<#--            <div class="input-group mb-4">-->
-<#--&lt;#&ndash;                <input type="text" class="form-control" name="registration_place_stay" id="registration_place_stay" <#if journal.registration_place_stay??>value="${journal.registration_place_stay}"</#if>>&ndash;&gt;-->
-<#--&lt;#&ndash;                <div class="input-group-append">&ndash;&gt;-->
-<#--&lt;#&ndash;                    <button class="btn btn-primary" type="button" onclick="copyText()">Совпадает с местом регистрации</button>&ndash;&gt;-->
-<#--&lt;#&ndash;                </div>&ndash;&gt;-->
-<#--            </div>-->
             <div id="suggestions-stay" style="margin-top: 0"></div>
             <label class="mb-4">
                 <input type="checkbox" class="custom-checkbox" value="Совпадает с местом регистрации" onclick="copyText()">
@@ -188,7 +182,7 @@
                     </svg>
                 </a>
             </label>
-            <input class="form-control mb-4" type="text" id="medical" name="medical_str" oninput="toUpperCaseInput(this)" <#if journal.medical.code??>value="${journal.medical.code}"</#if>>
+            <input class="form-control mb-4" type="text" id="medical" name="medical_str" oninput="toUpperCaseInput(this)" <#if journal.medical?? && journal.medical.code??>value="${journal.medical.code}"</#if>>
             <div id="suggestions_medical"></div>
 
             <label class="form-label" for="cause_injury">Причина и обстоятельства трамвы (в том числе при дорожно-транспортных проишествиях)
@@ -203,11 +197,11 @@
                     </svg>
                 </a>
             </label>
-            <input class="form-control mb-4" type="text" id="cause_injury" name="cause_injury_str" oninput="toUpperCaseInput(this)" <#if journal.cause_injury.code??>value="${journal.cause_injury.code}"</#if>>
+            <input class="form-control mb-4" type="text" id="cause_injury" name="cause_injury_str" oninput="toUpperCaseInput(this)" <#if journal.cause_injury?? && journal.cause_injury.code??>value="${journal.cause_injury.code}"</#if>>
             <div id="suggestions_cause"></div>
 
-            <label class="form-label" for="fact_alcohol">Факт употребления алкоголя и иных психоактивных веществ,<br>
-                установление наличия или отсутствия признаков состояния опьянения при поступленим пациента<br>
+            <label class="form-label" for="fact_alcohol">Факт употребления алкоголя и иных психоактивных веществ,
+                установление наличия или отсутствия признаков состояния опьянения при поступленим пациента
                 в медицинскую организацию</label>
             <input class="form-control mb-4" type="text" id="fact_alcohol" name="fact_alcohol" autocomplete="off" <#if journal.fact_alcohol??>value="${journal.fact_alcohol}"</#if>>
 
@@ -228,8 +222,8 @@
                 </#list>
             </select>
 
-            <label class="form-label" for="date_time_discharge">Дата и время исхода</label>
-            <input class="form-control mb-4" type="datetime-local" id="date_time_discharge" name="date_time_discharge" autocomplete="off" <#if journal.local_date_time_discharge??>value="${journal.local_date_time_discharge}"</#if>>
+            <label class="form-label" for="local_date_time_discharge">Дата и время исхода</label>
+            <input class="form-control mb-4" type="datetime-local" id="local_date_time_discharge" name="local_date_time_discharge" autocomplete="off" <#if journal.local_date_time_discharge??>value="${journal.local_date_time_discharge}"</#if>>
 
             <div id="medicalOrgField">
                 <label class="form-label" for="medical_organization_transferred">Наименование медицинской организации, куда переведен пациент</label>

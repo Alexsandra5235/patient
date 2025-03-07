@@ -19,6 +19,7 @@ public class NormalJournalDataService {
 
     public void setNormalJournalData(NormalJournalData normalJournalData, Journal journal) {
 
+        if (normalJournalData == null || journal == null) return;
         normalJournalData.setStr_birth_day(getNormalData(journal.getBirth_day()));
         normalJournalData.setStr_date_receipt(getNormalData(journal.getDate_receipt()));
         normalJournalData.setStr_date_time_alcohol(getNormalDataTime(journal.getDate_time_alcohol()));

@@ -96,6 +96,7 @@ public class JournalService {
             journal.setLocalTimeAddRecord(beforeJournal.getLocalTimeAddRecord());
 
             setMedicalCode(journal,medical,cause);
+            normalJournalDataService.setNormalJournalData(beforeJournal.getNormal_data(),journal);
             journalRepository.save(journal);
             log.info("After edit record: {}", journal);
         }

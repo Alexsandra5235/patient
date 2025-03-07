@@ -64,7 +64,7 @@
                 <hr>
 
                 <label class="form-label" for="date_receipt">Дата поступления:</label>
-                <p id="date_receipt"><#if journal.normal_date??>${journal.normal_date}</#if></p>
+                <p id="date_receipt"><#if journal.normal_data?? && journal.normal_data.str_date_receipt??>${journal.normal_data.str_date_receipt}</#if></p>
                 <hr>
 
                 <label class="form-label" for="string_time_receipt">Время поступления:</label>
@@ -76,7 +76,7 @@
                 <hr>
 
                 <label class="form-label" for="birth_day">Дата рождения (число, месяц, год):</label>
-                <p id="birth_day"><#if journal.normal_birth_day??>${journal.normal_birth_day}</#if></p>
+                <p id="birth_day"><#if journal.normal_data?? && journal.normal_data.str_birth_day??>${journal.normal_data.str_birth_day}</#if></p>
                 <hr>
 
                 <label class="form-label" for="gender">Пол (мужской, женский):</label>
@@ -84,82 +84,103 @@
                 <hr>
 
                 <label class="form-label" for="password">Серия и номер паспорта или иного документа, удостоверяющего личность (при наличии)</label><br>
-                <input class="form-control mb-4" type="text" id="password" <#if journal.password??>value="${journal.password}"</#if>>
+                <p id="password"><#if journal.password??> ${journal.password}</#if></p>
+                <hr>
 
                 <label class="form-label" for="nationality">Гражданство</label><br>
-                <input class="form-control mb-4" type="text" id="nationality" <#if journal.nationality??>value="${journal.nationality}"</#if>>
+                <p id="nationality"><#if journal.nationality??>${journal.nationality}<#else> - </#if></p>
+                <hr>
 
                 <label class="form-label" for="address">Регистрация по месту жительсва</label><br>
-                <input class="form-control mb-4" type="text" id="address" size="300" <#if journal.address??> value="${journal.address}"</#if>>
+                <p id="address"><#if journal.address??>${journal.address}<#else> - </#if></p>
+                <hr>
 
                 <label class="form-label" for="registration_place_stay">Регистрация по месту пребывания пациента</label><br>
-                <input type="text" class="form-control mb-4" id="registration_place_stay" size="300" <#if journal.registration_place_stay??>value="${journal.registration_place_stay}"</#if>>
+                <p id="registration_place_stay"><#if journal.registration_place_stay??>${journal.registration_place_stay}<#else> - </#if></p>
+                <hr>
 
                 <label class="form-label" for="number_phone_representative">Номер телефона законного представителя, лица, которому может
                     быть передана информация о состоянии здоровья пациента</label>
-                <input class="form-control mb-4" type="text" id="number_phone_representative" <#if journal.number_phone_representative??>value="${journal.number_phone_representative}"</#if>>
+                <p id="number_phone_representative"><#if journal.number_phone_representative??>${journal.number_phone_representative}</#if></p>
+                <hr>
 
                 <label class="form-label" for="snils">СНИСЛ (при наличии)</label>
-                <input class="form-control mb-4" type="text" id="snils" <#if journal.snils??>value="${journal.snils}"</#if>>
+                <p id="snils"><#if journal.snils??>${journal.snils}</#if></p>
+                <hr>
 
                 <label class="form-label" for="polis">Полис обязательного медицинского страхования (при наличии)</label>
-                <input class="form-control mb-4" type="text" id="polis" <#if journal.polis??>value="${journal.polis}"</#if>>
+                <p id="polis"><#if journal.polis??>${journal.polis}</#if></p>
+                <hr>
 
                 <label class="form-label" for="delivered">Пациент доставлен (направлен)</label>
-                <input class="form-select mb-4" type="text" id="delivered" <#if journal.delivered??>value="${journal.delivered}"</#if>>
+                <p id="delivered"><#if journal.delivered??>${journal.delivered}</#if></p>
+                <hr>
 
                 <label class="form-label" for="medical_card">Номер медицинской карты</label>
-                <input class="form-control mb-4" type="text" id="medical_card" <#if journal.medical_card??>value="${journal.medical_card}"</#if>>
+                <p id="medical_card"><#if journal.medical_card??>${journal.medical_card}</#if></p>
+                <hr>
 
                 <label class="form-label" for="medical">Диагноз заболевания (состояния), поставленный направившей медицинской организацией,
                     выездной бригадой скорой медицинской помощи (код по МКБ)</label>
-<#--                <input class="form-control mb-4" type="text" id="medical" <#if journal.medical.code??>value="${journal.medical.code}"</#if>>-->
+                <p id="medical"><#if journal.medical?? && journal.medical.code??>${journal.medical.code}</#if></p>
+                <hr>
 
                 <label class="form-label" for="cause_injury">Причина и обстоятельства трамвы (в том числе при дорожно-транспортных проишествиях)
                     отравления (код по МКБ)</label>
-<#--                <input class="form-control mb-4" type="text" id="cause_injury" <#if journal.cause_injury.code??>value="${journal.cause_injury.code}"</#if>>-->
+                <p id="cause_injury"><#if journal.cause_injury?? && journal.cause_injury.code??>${journal.cause_injury.code}</#if></p>
+                <hr>
 
                 <label class="form-label" for="fact_alcohol">Факт употребления алкоголя и иных психоактивных веществ,
                     установление наличия или отсутствия признаков состояния опьянения при поступленим пациента
                     в медицинскую организацию</label>
-                <input class="form-control mb-4" type="text" id="fact_alcohol" <#if journal.fact_alcohol??>value="${journal.fact_alcohol}"</#if>>
+                <p id="fact_alcohol"><#if journal.fact_alcohol??>${journal.fact_alcohol}</#if></p>
+                <hr>
 
                 <label class="form-label" for="date_time_alcohol">Дата и время взятия пробы</label>
-                <input class="form-control mb-4" type="datetime-local" id="date_time_alcohol" <#if journal.date_time_alcohol??>value="${journal.date_time_alcohol}"</#if>>
+                <p id="date_time_alcohol"><#if journal.normal_data?? && journal.normal_data.str_date_time_alcohol??>${journal.normal_data.str_date_time_alcohol}</#if></p>
+                <hr>
 
                 <label class="form-label" for="result_research">Результаты лабораторных исследований</label>
-                <input class="form-control mb-4" type="text" id="result_research" <#if journal.result_research??>value="${journal.result_research}"</#if>>
+                <p id="result_research"><#if journal.result_research??>${journal.result_research}</#if></p>
+                <hr>
 
                 <label class="form-label" for="department_medical_organization">Отделение медицинской организации, в которое направлен пациент</label>
-                <input class="form-control mb-4" type="text" id="department_medical_organization" <#if journal.department_medical_organization??>value="${journal.department_medical_organization}"</#if>>
+                <p id="department_medical_organization"><#if journal.department_medical_organization??>${journal.department_medical_organization}</#if></p>
+                <hr>
 
                 <label class="form-label" for="outcome_hospitalization">Исход госпитализации</label>
-                <input class="form-select mb-4" type="text" id="outcome_hospitalization" <#if journal.outcome_hospitalization??>value="${journal.outcome_hospitalization}"</#if>>
+                <p id="outcome_hospitalization"><#if journal.outcome_hospitalization??>${journal.outcome_hospitalization}</#if></p>
+                <hr>
 
                 <label class="form-label" for="date_time_discharge">Дата и время исхода</label>
-                <input class="form-control mb-4" type="datetime-local" id="date_time_discharge" <#if journal.local_date_time_discharge??>value="${journal.local_date_time_discharge}"</#if>>
+                <p id="date_time_discharge"><#if journal.normal_data?? && journal.normal_data.str_local_date_time_discharge??>${journal.normal_data.str_local_date_time_discharge}</#if></p>
+                <hr>
 
                 <#if journal.outcome_hospitalization == option>
                     <label class="form-label" for="medical_organization_transferred">Наименование медицинской организации, куда переведен пациент</label>
-                    <input class="form-control mb-4" type="text" id="medical_organization_transferred" value="${journal.medical_organization_transferred}">
+                    <p id="medical_organization_transferred">${journal.medical_organization_transferred}</p>
+                    <hr>
                 </#if>
 
                 <label class="form-label" for="date_time_inform"> Дата и время сообщения законному представителю, иному лицу<br>
                     или медицинской организации, направившей пациента, о госпитализации (отказе в госпитализации) пациента, ее исходе</label>
-                <input class="form-control mb-4" type="datetime-local" id="date_time_inform" <#if journal.date_time_inform??>value="${journal.date_time_inform}"</#if>>
+                <p id="date_time_inform"><#if journal.normal_data?? && journal.normal_data.str_date_time_inform??>${journal.normal_data.str_date_time_inform}</#if></p>
+                <hr>
 
                 <h4> В случае отказа в госпитализации в стационар, дневной стационар</h4>
 
                 <label class="form-label" for="reason_refusal">Причина отказа в гослитализации</label>
-                <input class="form-select mb-4" type="text" id="reason_refusal" <#if journal.reason_refusal??>value="${journal.reason_refusal}"</#if>>
+                <p id="reason_refusal"><#if journal.reason_refusal??>${journal.reason_refusal}</#if></p>
+                <hr>
 
                 <label class="form-label" for="full_name_medical_worker">Фамилия, имя, отчество (при наличии) медицинского работника,
                     зафиксировавшего причину отказа в госпитализации</label>
-                <input class="form-control mb-4" type="text" id="full_name_medical_worker" <#if journal.full_name_medical_worker??>value="${journal.full_name_medical_worker}"</#if>>
+                <p id="full_name_medical_worker"><#if journal.full_name_medical_worker??>${journal.full_name_medical_worker}</#if></p>
+                <hr>
 
                 <label class="form-label" for="additional_information">Дополнительные сведения</label>
-                <input class="form-control mb-4" type="text" id="additional_information" <#if journal.additional_information??>value="${journal.additional_information}"</#if>>
-
+                <p id="additional_information"><#if journal.additional_information??>${journal.additional_information}</#if></p>
+                <hr>
             </div>
         </fieldset>
     </div>

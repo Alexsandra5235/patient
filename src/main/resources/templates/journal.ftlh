@@ -78,14 +78,14 @@
                     <tbody>
                     <#list journals as journal>
                         <tr>
-                            <td><#if journal.normal_date??> ${journal.normal_date} </#if></td>
+                            <td><#if journal.normal_data?? && journal.normal_data.str_date_receipt??> ${journal.normal_data.str_date_receipt} </#if></td>
                             <td><#if journal.string_time_receipt??> ${journal.string_time_receipt} </#if></td>
                             <td><#if journal.full_name??> ${journal.full_name} </#if></td>
-                            <td><#if journal.birth_day??> ${journal.normal_birth_day} </#if></td>
+                            <td><#if journal.normal_data?? && journal.normal_data.str_birth_day??> ${journal.normal_data.str_birth_day} </#if></td>
                             <td><#if journal.medical_card??> ${journal.medical_card} </#if></td>
                             <td>
                                 <#if journal.outcome_hospitalization != "">Пациент ${journal.outcome_hospitalization} </#if><br>
-                                <#if journal.date_time_discharge != "">Дата и время исхода: ${journal.date_time_discharge} </#if><br>
+                                <#if journal.normal_data?? && journal.normal_data.str_local_date_time_discharge??>Дата и время исхода: ${journal.normal_data.str_local_date_time_discharge} </#if><br>
                                 <#if journal.medical_organization_transferred != "">Переведен: ${journal.medical_organization_transferred} </#if><br>
                             </td>
                             <td>
