@@ -20,10 +20,9 @@ public class Journal {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    private String dateAddRecord;
-    private LocalDateTime localDateAddRecord;
-    private String timeAddRecord;
-    private LocalTime localTimeAddRecord;
+
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "journal")
+    private JournalInfo journalInfo;
 
     @OneToOne(cascade = CascadeType.ALL)
     private NormalJournalData normal_data;

@@ -23,6 +23,7 @@ public class JournalService {
     private final JournalRepository journalRepository;
     private final MedicalService medicalService;
     private final NormalJournalDataService normalJournalDataService;
+    private final JournalInfoService journalInfoService;
 
     public List<Journal> journalList(String fullName){
         if (fullName != null){
@@ -35,9 +36,11 @@ public class JournalService {
 
     public void saveRecord(Journal journal, String medical, String cause) {
 
+
         setMedicalCode(null,journal,medical,cause);
         normalJournalDataService.setNormalJournalData(new NormalJournalData(),journal);
         journalRepository.save(journal);
+        journalInfoService.saveJournalInfo(journal);
         log.info("Save record with id = {}", journal.getId());
     }
 
@@ -54,16 +57,17 @@ public class JournalService {
     }
 
     public Journal getLastRecord(){
-        List<Journal> journals = new java.util.ArrayList<>(journalRepository.findAll().stream()
-                .filter(
-                        item -> item.getLocalDateAddRecord() != null && item.getLocalTimeAddRecord() != null
-                )
-                .toList());
-        if (journals.isEmpty()) return null;
-
-        journals.sort(Comparator.comparing(Journal::getLocalDateAddRecord)
-                .thenComparing(Journal::getLocalTimeAddRecord));
-        return journals.get(journals.size() - 1);
+//        List<Journal> journals = new java.util.ArrayList<>(journalRepository.findAll().stream()
+//                .filter(
+//                        item -> item.getLocalDateAddRecord() != null && item.getLocalTimeAddRecord() != null
+//                )
+//                .toList());
+//        if (journals.isEmpty()) return null;
+//
+//        journals.sort(Comparator.comparing(Journal::getLocalDateAddRecord)
+//                .thenComparing(Journal::getLocalTimeAddRecord));
+//        return journals.get(journals.size() - 1);
+        return null;
     }
 
     public void makeComparingJournal(String sort, List<Journal> journals){
@@ -87,18 +91,18 @@ public class JournalService {
 
     public void editRecord(Journal journal, String medical, String cause) {
 
-        if (journal != null) {
-            Journal beforeJournal = journalRepository.findById(journal.getId()).orElse(null);
+        if (journal == null) return;
 
-            assert beforeJournal != null;
-            journal.setLocalDateAddRecord(beforeJournal.getLocalDateAddRecord());
-            journal.setLocalTimeAddRecord(beforeJournal.getLocalTimeAddRecord());
+        Journal beforeJournal = journalRepository.findById(journal.getId()).orElse(null);
 
-            setMedicalCode(beforeJournal,journal,medical,cause);
-            normalJournalDataService.setNormalJournalData(beforeJournal.getNormal_data(),journal);
-            journalRepository.save(journal);
-            log.info("After edit record: {}", journal);
-        }
+        if (beforeJournal == null) return;
+
+        setMedicalCode(beforeJournal,journal,medical,cause);
+        normalJournalDataService.setNormalJournalData(beforeJournal.getNormal_data(),journal);
+        journalRepository.save(journal);
+        journalInfoService.editJournalInfo(journal,beforeJournal);
+        log.info("After edit record: {}", journal);
+
 
     }
 
