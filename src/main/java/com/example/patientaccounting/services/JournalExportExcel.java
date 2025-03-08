@@ -335,7 +335,7 @@ public class JournalExportExcel {
         for (int i = 0; i < journals.size(); i++){
 
             setDefaultSettings(workbook,sheet,i+8,i+8,0,2,
-                    String.join(" ",journals.get(i).getFull_name(), "\n№",
+                    String.join(" ",journals.get(i).getPatient().getFull_name(), "\n№",
                             journals.get(i).getId().toString()), HorizontalAlignment.LEFT,true,
                     0,false, fontHeightHead,false,false,true);
 

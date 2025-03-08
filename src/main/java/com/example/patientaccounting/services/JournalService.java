@@ -2,6 +2,7 @@ package com.example.patientaccounting.services;
 
 import com.example.patientaccounting.models.Journal;
 import com.example.patientaccounting.models.NormalJournalData;
+import com.example.patientaccounting.models.Patients;
 import com.example.patientaccounting.repository.JournalRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -24,6 +25,7 @@ public class JournalService {
     private final MedicalService medicalService;
     private final NormalJournalDataService normalJournalDataService;
     private final JournalInfoService journalInfoService;
+    private final PatientsService patientsService;
 
     public List<Journal> journalList(String fullName){
         if (fullName != null){
@@ -34,11 +36,14 @@ public class JournalService {
         return journalRepository.findAll();
     }
 
-    public void saveRecord(Journal journal, String medical, String cause) {
+    public void saveRecord(Journal journal, Patients patient, String medical, String cause) {
 
+        NormalJournalData normalJournalData = new NormalJournalData();
 
         setMedicalCode(null,journal,medical,cause);
-        normalJournalDataService.setNormalJournalData(new NormalJournalData(),journal);
+        normalJournalDataService.setNormalJournalData(normalJournalData,journal);
+        patientsService.savePatient(patient,normalJournalData);
+        journal.setPatient(patient);
         journalRepository.save(journal);
         journalInfoService.saveJournalInfo(journal);
         log.info("Save record with id = {}", journal.getId());

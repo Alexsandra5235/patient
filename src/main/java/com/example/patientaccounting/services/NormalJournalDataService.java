@@ -2,6 +2,7 @@ package com.example.patientaccounting.services;
 
 import com.example.patientaccounting.models.Journal;
 import com.example.patientaccounting.models.NormalJournalData;
+import com.example.patientaccounting.models.Patients;
 import com.example.patientaccounting.repository.NormalJournalDataRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -20,7 +21,6 @@ public class NormalJournalDataService {
     public void setNormalJournalData(NormalJournalData normalJournalData, Journal journal) {
 
         if (normalJournalData == null || journal == null) return;
-        normalJournalData.setStr_birth_day(getNormalData(journal.getBirth_day()));
         normalJournalData.setStr_date_receipt(getNormalData(journal.getDate_receipt()));
         normalJournalData.setStr_date_time_alcohol(getNormalDataTime(journal.getDate_time_alcohol()));
         normalJournalData.setStr_date_time_inform(getNormalDataTime(journal.getDate_time_inform()));
@@ -31,7 +31,17 @@ public class NormalJournalDataService {
 
     }
 
-    private String getNormalData(LocalDate data){
+    public void setNormalJournalData(NormalJournalData normalJournalData, Patients patient) {
+
+        if (normalJournalData == null || patient == null) return;
+        normalJournalData.setStr_birth_day(getNormalData(patient.getBirth_day()));
+
+        normalJournalDataRepository.save(normalJournalData);
+        patient.setNormal_data(normalJournalData);
+
+    }
+
+    public String getNormalData(LocalDate data){
         if (data == null) return null;
 
         int yearDischarge = data.getYear();
@@ -41,7 +51,7 @@ public class NormalJournalDataService {
         return String.format("%02d.%02d.%04d", dayDischarge, monthDischarge, yearDischarge);
     }
 
-    private String getNormalDataTime(LocalDateTime data){
+    public String getNormalDataTime(LocalDateTime data){
         if (data == null) return null;
 
         int yearDischarge = data.getYear();

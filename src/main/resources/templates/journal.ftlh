@@ -80,9 +80,9 @@
                         <tr>
                             <td><#if journal.normal_data?? && journal.normal_data.str_date_receipt??> ${journal.normal_data.str_date_receipt} </#if></td>
                             <td><#if journal.string_time_receipt??> ${journal.string_time_receipt} </#if></td>
-                            <td><#if journal.full_name??> ${journal.full_name} </#if></td>
-                            <td><#if journal.normal_data?? && journal.normal_data.str_birth_day??> ${journal.normal_data.str_birth_day} </#if></td>
-                            <td><#if journal.medical_card??> ${journal.medical_card} </#if></td>
+                            <td><#if journal.patient?? && journal.patient.full_name??> ${journal.patient.full_name} </#if></td>
+                            <td><#if journal.patient?? && journal.patient.normal_data?? && journal.patient.normal_data.str_birth_day??> ${journal.normal_data.str_birth_day} </#if></td>
+                            <td><#if journal.patient?? && journal.patient.medical_card??> ${journal.patient.medical_card} </#if></td>
                             <td>
                                 <#if journal.outcome_hospitalization != "">Пациент ${journal.outcome_hospitalization} </#if><br>
                                 <#if journal.normal_data?? && journal.normal_data.str_local_date_time_discharge??>Дата и время исхода: ${journal.normal_data.str_local_date_time_discharge} </#if><br>

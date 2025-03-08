@@ -1,11 +1,9 @@
 package com.example.patientaccounting.controllers;
 
+import com.example.patientaccounting.models.Patients;
 import com.example.patientaccounting.models.Report;
-import com.example.patientaccounting.services.JournalExportExcel;
+import com.example.patientaccounting.services.*;
 import com.example.patientaccounting.models.Journal;
-import com.example.patientaccounting.services.JournalService;
-import com.example.patientaccounting.services.MedicalService;
-import com.example.patientaccounting.services.ReportService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
@@ -29,6 +27,7 @@ public class JournalController {
     private final JournalService journalService;
     private final JournalExportExcel journalExportExcel;
     private final MedicalService medicalService;
+    private final NormalJournalDataService normalJournalDataService;
 
     @GetMapping("/")
     public String journal(@RequestParam(name = "full_name", required = false) String fullName,
@@ -67,9 +66,10 @@ public class JournalController {
     }
 
     @PostMapping("/journal/add")
-    public String addJournal(Journal journal, @RequestParam(name = "medical_str", required = false) String medical,
+    public String addJournal(Journal journal, Patients patient,
+                             @RequestParam(name = "medical_str", required = false) String medical,
                              @RequestParam(name = "cause_injury_str", required = false) String cause) {
-        journalService.saveRecord(journal,medical,cause);
+        journalService.saveRecord(journal, patient, medical,cause);
         return "redirect:/";
     }
 
@@ -78,11 +78,14 @@ public class JournalController {
     @GetMapping("/journal/edit/{id}")
     public String editJournal(@PathVariable Long id, Model model) {
 
-        model.addAttribute("journal", journalService.getRecordById(id));
+        Journal journal = journalService.getRecordById(id);
+        model.addAttribute("journal", journal);
         model.addAttribute("options", options);
         model.addAttribute("optionsGender", optionsGender);
         model.addAttribute("optionsDelivered", optionsDelivered);
         model.addAttribute("optionsReason", optionsReason);
+        model.addAttribute("datetime_create_record", normalJournalDataService.getNormalDataTime(journal.getJournalInfo().getDate_time_create_record()));
+        model.addAttribute("datetime_edit_record", normalJournalDataService.getNormalDataTime(journal.getJournalInfo().getDate_time_edit_record()));
 
         return "edit";
     }
@@ -138,8 +141,11 @@ public class JournalController {
 
     @GetMapping("/journal/info/{id}")
     public String infoJournal(@PathVariable Long id, Model model) {
-        model.addAttribute("journal", journalService.getRecordById(id));
+        Journal journal = journalService.getRecordById(id);
+        model.addAttribute("journal", journal);
         model.addAttribute("option", options.get(1));
+        model.addAttribute("datetime_create_record", normalJournalDataService.getNormalDataTime(journal.getJournalInfo().getDate_time_create_record()));
+        model.addAttribute("datetime_edit_record", normalJournalDataService.getNormalDataTime(journal.getJournalInfo().getDate_time_edit_record()));
         return "infoJournal";
     }
 

@@ -199,7 +199,7 @@
                 </select>
 
                 <label class="form-label" for="date_time_discharge">Дата и время исхода</label>
-                <input class="form-control mb-4" type="datetime-local" id="date_time_discharge" name="date_time_discharge" autocomplete="off">
+                <input class="form-control mb-4" type="datetime-local" id="date_time_discharge" name="local_date_time_discharge" autocomplete="off">
 
                 <div id="medicalOrgField">
                     <label class="form-label" for="medical_organization_transferred">Наименование медицинской организации, куда переведен пациент</label>

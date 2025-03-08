@@ -9,6 +9,6 @@ import java.util.stream.Collectors;
 public interface JournalRepository extends JpaRepository<Journal, Long> {
     default List<Journal> findByFullName(String fullName) {
         return this.findAll().stream().filter(journal ->
-                journal.getFull_name().toLowerCase().contains(fullName.toLowerCase())).collect(Collectors.toList());
+                journal.getPatient().getFull_name().toLowerCase().contains(fullName.toLowerCase())).collect(Collectors.toList());
     }
 }
