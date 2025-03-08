@@ -94,7 +94,7 @@ public class JournalService {
         return journalRepository.findById(id).orElse(null);
     }
 
-    public void editRecord(Journal journal, String medical, String cause) {
+    public void editRecord(Journal journal, Patients patient, String medical, String cause) {
 
         if (journal == null) return;
 
@@ -102,8 +102,12 @@ public class JournalService {
 
         if (beforeJournal == null) return;
 
+        NormalJournalData normalJournalData = beforeJournal.getNormal_data();
+
         setMedicalCode(beforeJournal,journal,medical,cause);
-        normalJournalDataService.setNormalJournalData(beforeJournal.getNormal_data(),journal);
+        normalJournalDataService.setNormalJournalData(normalJournalData,journal);
+        patientsService.editPatient(patient, journal.getPatient(), normalJournalData);
+        journal.setPatient(patient);
         journalRepository.save(journal);
         journalInfoService.editJournalInfo(journal,beforeJournal);
         log.info("After edit record: {}", journal);

@@ -91,9 +91,10 @@ public class JournalController {
     }
 
     @PostMapping("/journal/save/edit/{id}")
-    public String saveEditJournal(Journal journal, @RequestParam(name = "medical_str", required = false) String medical,
+    public String saveEditJournal(Journal journal, Patients patient,
+                                  @RequestParam(name = "medical_str", required = false) String medical,
                                   @RequestParam(name = "cause_injury_str", required = false) String cause) {
-        journalService.editRecord(journal, medical, cause);
+        journalService.editRecord(journal, patient, medical, cause);
         return "redirect:/";
     }
 

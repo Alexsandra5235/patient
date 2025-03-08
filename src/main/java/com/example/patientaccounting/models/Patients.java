@@ -18,7 +18,7 @@ public class Patients {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne
     private NormalJournalData normal_data;
 
     private String full_name;

@@ -25,4 +25,12 @@ public class PatientsService {
         if (normalJournalData == null) return;
         normalJournalDataService.setNormalJournalData(normalJournalData,patient);
     }
+
+    public void editPatient(Patients patient, Patients beforePatient, NormalJournalData normalJournalData) {
+        if (patient == null || beforePatient == null) return;
+        if (!patient.getBirth_day().equals(beforePatient.getBirth_day())){
+            normalJournalDataService.setNormalJournalData(normalJournalData,patient);
+        }
+        patientsRepository.save(patient);
+    }
 }

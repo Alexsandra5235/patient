@@ -184,7 +184,19 @@
 
         <#else>
             <div class="container-fluid pt-4">
-                <p>Ошибка загрузки данных</p>
+                <div class="card bg-dark text-white">
+                    <div class="card-body">
+                        <nav aria-label="breadcrumb">
+                            <ol class="breadcrumb">
+                                <li class="breadcrumb-item"><a href="/" style="padding-right: 14px">Главная</a>></li>
+                                <li class="breadcrumb-item active text-white" aria-current="page" style="padding-left: 0">Просмотр записи</li>
+                            </ol>
+                        </nav>
+                        <div class="card-text">
+                            Ошибка загрузки данных
+                        </div>
+                    </div>
+                </div>
             </div>
     </#if>
 

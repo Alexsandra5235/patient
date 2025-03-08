@@ -23,8 +23,10 @@ public class Journal {
 
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "journal")
     private JournalInfo journalInfo;
+
     @OneToOne(cascade = CascadeType.ALL)
     private NormalJournalData normal_data;
+
     @OneToOne(cascade = CascadeType.REFRESH)
     private Medical medical;
     @OneToOne(cascade = CascadeType.REFRESH)
