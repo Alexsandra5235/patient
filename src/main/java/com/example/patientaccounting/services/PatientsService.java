@@ -1,6 +1,6 @@
 package com.example.patientaccounting.services;
 
-import com.example.patientaccounting.models.NormalJournalData;
+import com.example.patientaccounting.models.NormalData;
 import com.example.patientaccounting.models.Patients;
 import com.example.patientaccounting.repository.PatientsRepository;
 import lombok.RequiredArgsConstructor;
@@ -13,24 +13,25 @@ import org.springframework.stereotype.Service;
 public class PatientsService {
 
     private final PatientsRepository patientsRepository;
-    private final NormalJournalDataService normalJournalDataService;
+    private final NormalDataService normalDataService;
 
-    public void savePatient(Patients patient, NormalJournalData normalJournalData) {
+    public void savePatient(Patients patient, NormalData normalData) {
         if (patient == null) return;
-        setNormalPatientData(patient, normalJournalData);
+        setNormalPatientData(patient, normalData);
         patientsRepository.save(patient);
     }
 
-    private void setNormalPatientData(Patients patient, NormalJournalData normalJournalData){
-        if (normalJournalData == null) return;
-        normalJournalDataService.setNormalJournalData(normalJournalData,patient);
+    private void setNormalPatientData(Patients patient, NormalData normalData){
+        if (normalData == null) return;
+        normalDataService.setNormalJournalData(normalData,patient);
     }
 
-    public void editPatient(Patients patient, Patients beforePatient, NormalJournalData normalJournalData) {
-        if (patient == null || beforePatient == null) return;
+    public void editPatient(Patients patient, Patients beforePatient, NormalData normalData) {
+        if (patient == null) return;
         if (!patient.getBirth_day().equals(beforePatient.getBirth_day())){
-            normalJournalDataService.setNormalJournalData(normalJournalData,patient);
+            normalDataService.setNormalJournalData(normalData,patient);
         }
+        patient.setNormal_data(normalData);
         patientsRepository.save(patient);
     }
 }

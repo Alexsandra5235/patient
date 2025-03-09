@@ -1,13 +1,9 @@
 package com.example.patientaccounting.controllers;
 
-import com.example.patientaccounting.models.Journal;
 import com.example.patientaccounting.models.Report;
 import com.example.patientaccounting.services.ReportService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,9 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import java.sql.Blob;
 import java.time.LocalDate;
-import java.util.Comparator;
 import java.util.List;
 import java.util.Objects;
 
@@ -28,7 +22,7 @@ public class ReportController {
 
     private final ReportService reportService;
 
-    @GetMapping("journal/report/get")
+    @GetMapping("/log/report/get")
     public String report(@RequestParam(name = "search_date", required = false) LocalDate search_date,
                          @RequestParam(name = "valueSelect", required = false) String valueSelect,
                          @RequestParam(name = "start_data", required = false) LocalDate start_data,
@@ -64,7 +58,7 @@ public class ReportController {
         return "report";
     }
 
-    @GetMapping("/journal/report/get/{id}")
+    @GetMapping("/log/report/get/{id}")
     public ResponseEntity<byte[]> getReport(@PathVariable Long id) {
         return reportService.getReport(id);
     }

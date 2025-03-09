@@ -1,31 +1,28 @@
 package com.example.patientaccounting.models;
 
-import com.example.patientaccounting.repository.NormalJournalDataRepository;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
 
 @Entity
-@Table(name = "journal")
+@Table(name = "log")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Journal {
+public class Log {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @OneToOne(cascade = CascadeType.ALL, mappedBy = "journal")
-    private JournalInfo journalInfo;
+//    @OneToOne(cascade = CascadeType.ALL, mappedBy = "log", fetch = FetchType.LAZY)
+//    private LogInfo logInfo;
 
     @OneToOne(cascade = CascadeType.ALL)
-    private NormalJournalData normal_data;
+    private NormalData normal_data;
 
     @OneToOne(cascade = CascadeType.REFRESH)
     private Medical medical;

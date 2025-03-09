@@ -1,11 +1,11 @@
 <#import "blocks/template.ftlh" as t>
 
-<@t.page namePage="journal" titlePage="ЖУРНАЛ УЧЕТА ПРИЕМА ПАЦИЕНТОВ">
+<@t.page namePage="log" titlePage="ЖУРНАЛ УЧЕТА ПРИЕМА ПАЦИЕНТОВ">
 
         <div style="height: 100vh; width: 100vw; overflow-y: auto; position: relative; padding: 0" class="container">
             <div class="container-fluid">
                 <h5 class="my-4">Просмотр журнала учета пациентов
-                    <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-journal-text" viewBox="0 0 16 16">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-log-text" viewBox="0 0 16 16">
                         <path d="M5 10.5a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 0 1h-2a.5.5 0 0 1-.5-.5zm0-2a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5zm0-2a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5zm0-2a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5z"/>
                         <path d="M3 0h10a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2v-1h1v1a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H3a1 1 0 0 0-1 1v1H1V2a2 2 0 0 1 2-2z"/>
                         <path d="M1 5v-.5a.5.5 0 0 1 1 0V5h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1zm0 3v-.5a.5.5 0 0 1 1 0V8h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1zm0 3v-.5a.5.5 0 0 1 1 0v.5h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1z"/>
@@ -31,7 +31,7 @@
                 </form>
                 <hr>
                 <#if lastJournal??>
-                    <a href="/journal/info/${lastJournal.id}" class="btn btn-primary mb-4" id="btn-show" role="button">
+                    <a href="/log/info/${lastLogAdd.id}" class="btn btn-primary mb-4" id="btn-show" role="button">
                         Просмотр последней добавленной записи
                         <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor" class="bi bi-eye" viewBox="0 0 16 16">
                             <path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8zM1.173 8a13.133 13.133 0 0 1 1.66-2.043C4.12 4.668 5.88 3.5 8 3.5c2.12 0 3.879 1.168 5.168 2.457A13.133 13.133 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12.5 8 12.5c-2.12 0-3.879-1.168-5.168-2.457A13.134 13.134 0 0 1 1.172 8z"/>
@@ -76,20 +76,20 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <#list journals as journal>
+                    <#list logs as log>
                         <tr>
-                            <td><#if journal.normal_data?? && journal.normal_data.str_date_receipt??> ${journal.normal_data.str_date_receipt} </#if></td>
-                            <td><#if journal.string_time_receipt??> ${journal.string_time_receipt} </#if></td>
-                            <td><#if journal.patient?? && journal.patient.full_name??> ${journal.patient.full_name} </#if></td>
-                            <td><#if journal.patient?? && journal.patient.normal_data?? && journal.patient.normal_data.str_birth_day??> ${journal.normal_data.str_birth_day} </#if></td>
-                            <td><#if journal.patient?? && journal.patient.medical_card??> ${journal.patient.medical_card} </#if></td>
+                            <td><#if log.normal_data?? && log.normal_data.str_date_receipt??> ${log.normal_data.str_date_receipt} </#if></td>
+                            <td><#if log.string_time_receipt??> ${log.string_time_receipt} </#if></td>
+                            <td><#if log.patient?? && log.patient.full_name??> ${log.patient.full_name} </#if></td>
+                            <td><#if log.patient?? && log.patient.normal_data?? && log.patient.normal_data.str_birth_day??> ${log.patient.normal_data.str_birth_day} </#if></td>
+                            <td><#if log.patient?? && log.patient.medical_card??> ${log.patient.medical_card} </#if></td>
                             <td>
-                                <#if journal.outcome_hospitalization != "">Пациент ${journal.outcome_hospitalization} </#if><br>
-                                <#if journal.normal_data?? && journal.normal_data.str_local_date_time_discharge??>Дата и время исхода: ${journal.normal_data.str_local_date_time_discharge} </#if><br>
-                                <#if journal.medical_organization_transferred != "">Переведен: ${journal.medical_organization_transferred} </#if><br>
+                                <#if log.outcome_hospitalization != "">Пациент ${log.outcome_hospitalization} </#if><br>
+                                <#if log.normal_data?? && log.normal_data.str_local_date_time_discharge??>Дата и время исхода: ${log.normal_data.str_local_date_time_discharge} </#if><br>
+                                <#if log.medical_organization_transferred != "">Переведен: ${log.medical_organization_transferred} </#if><br>
                             </td>
                             <td>
-                                <a href="/journal/info/${journal.id}" class="btn btn-primary" role="button">
+                                <a href="/log/info/${log.id}" class="btn btn-primary" role="button">
                                     Просмотр
                                     <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor" class="bi bi-eye" viewBox="0 0 16 16">
                                         <path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8zM1.173 8a13.133 13.133 0 0 1 1.66-2.043C4.12 4.668 5.88 3.5 8 3.5c2.12 0 3.879 1.168 5.168 2.457A13.133 13.133 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12.5 8 12.5c-2.12 0-3.879-1.168-5.168-2.457A13.134 13.134 0 0 1 1.172 8z"/>
@@ -100,7 +100,7 @@
                         </tr>
                     <#else>
                         <h3 class="m-4">Данные не найдены.</h3>
-                        <p class="m-4">Для того, чтобы данные отобразились необходимо их <a style="font-weight: bold" href="/journal/save">добавить.</a></p>
+                        <p class="m-4">Для того, чтобы данные отобразились необходимо их <a style="font-weight: bold" href="/log/save">добавить.</a></p>
                     </#list>
                     </tbody>
                 </table>
@@ -116,7 +116,7 @@
 <#--                <h5 class="h4 my-4">Просмотр журнала приема и выписки пациентов</h5>-->
 <#--                <p class="card-text">На этой странице отображается краткая информация о пациентах.-->
 <#--                    При необходимости просмотра полной информации нажмите на соответствующую кнопку.</p>-->
-<#--                <a href="/journal/info/${lastJournal.id}" class="btn btn-primary" id="btn-show" role="button">-->
+<#--                <a href="/log/info/${lastJournal.id}" class="btn btn-primary" id="btn-show" role="button">-->
 <#--                    Просмотр последней добавленной записи-->
 <#--                    <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor" class="bi bi-eye" viewBox="0 0 16 16">-->
 <#--                        <path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8zM1.173 8a13.133 13.133 0 0 1 1.66-2.043C4.12 4.668 5.88 3.5 8 3.5c2.12 0 3.879 1.168 5.168 2.457A13.133 13.133 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12.5 8 12.5c-2.12 0-3.879-1.168-5.168-2.457A13.134 13.134 0 0 1 1.172 8z"/>-->
@@ -155,20 +155,20 @@
 <#--                            </tr>-->
 <#--                        </thead>-->
 <#--                        <tbody>-->
-<#--                           <#list journals as journal>-->
+<#--                           <#list logs as log>-->
 <#--                               <tr>-->
-<#--                                   <td><#if journal.normal_date??> ${journal.normal_date} </#if></td>-->
-<#--                                   <td><#if journal.string_time_receipt??> ${journal.string_time_receipt} </#if></td>-->
-<#--                                   <td><#if journal.full_name??> ${journal.full_name} </#if></td>-->
-<#--                                   <td><#if journal.birth_day??> ${journal.normal_birth_day} </#if></td>-->
-<#--                                   <td><#if journal.medical_card??> ${journal.medical_card} </#if></td>-->
+<#--                                   <td><#if log.normal_date??> ${log.normal_date} </#if></td>-->
+<#--                                   <td><#if log.string_time_receipt??> ${log.string_time_receipt} </#if></td>-->
+<#--                                   <td><#if log.full_name??> ${log.full_name} </#if></td>-->
+<#--                                   <td><#if log.birth_day??> ${log.normal_birth_day} </#if></td>-->
+<#--                                   <td><#if log.medical_card??> ${log.medical_card} </#if></td>-->
 <#--                                   <td>-->
-<#--                                       <#if journal.outcome_hospitalization != "">Пациент ${journal.outcome_hospitalization} </#if><br>-->
-<#--                                       <#if journal.date_time_discharge != "">Дата и время исхода: ${journal.date_time_discharge} </#if><br>-->
-<#--                                       <#if journal.medical_organization_transferred != "">Переведен: ${journal.medical_organization_transferred} </#if><br>-->
+<#--                                       <#if log.outcome_hospitalization != "">Пациент ${log.outcome_hospitalization} </#if><br>-->
+<#--                                       <#if log.date_time_discharge != "">Дата и время исхода: ${log.date_time_discharge} </#if><br>-->
+<#--                                       <#if log.medical_organization_transferred != "">Переведен: ${log.medical_organization_transferred} </#if><br>-->
 <#--                                   </td>-->
 <#--                                   <td>-->
-<#--                                       <a href="/journal/info/${journal.id}" class="btn btn-primary" id="btn-show" role="button">-->
+<#--                                       <a href="/log/info/${log.id}" class="btn btn-primary" id="btn-show" role="button">-->
 <#--                                           Просмотр-->
 <#--                                           <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor" class="bi bi-eye" viewBox="0 0 16 16">-->
 <#--                                               <path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8zM1.173 8a13.133 13.133 0 0 1 1.66-2.043C4.12 4.668 5.88 3.5 8 3.5c2.12 0 3.879 1.168 5.168 2.457A13.133 13.133 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12.5 8 12.5c-2.12 0-3.879-1.168-5.168-2.457A13.134 13.134 0 0 1 1.172 8z"/>-->

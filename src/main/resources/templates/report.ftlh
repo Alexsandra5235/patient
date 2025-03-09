@@ -32,13 +32,13 @@
                     </select>
                     <hr>
 
-                    <form action="/journal/report/get" method="get" id="containerSearch" <#if valueSelect == 'null' || valueSelect != "1">style="display: none"</#if>>
+                    <form action="/log/report/get" method="get" id="containerSearch" <#if valueSelect == 'null' || valueSelect != "1">style="display: none"</#if>>
                         <p class="card-text" id="titleSearch">Введите пожалуйста дату создания отчета</p>
                         <input name="valueSelect" id="valueSelect" style="display: none" <#if valueSelect??>value="${valueSelect}"</#if>>
                         <div class="input-group mb-2">
                             <input class="form-control" name="search_date" id="search_date" type="date" <#if search_date??>value="${search_date}"</#if>>
                             <div class="input-group-append">
-                                <a href="/journal/report/get" class="btn btn-danger">
+                                <a href="/log/report/get" class="btn btn-danger">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-x-lg" viewBox="0 0 16 16">
                                         <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8z"/>
                                     </svg>
@@ -48,7 +48,7 @@
                         <input class="btn btn-primary" type="submit" value="Поиск">
                     </form>
 
-                    <form action="/journal/report/get" method="get" id="containerSearch3" <#if valueSelect == 'null' || valueSelect != "3">style="display: none"</#if>>
+                    <form action="/log/report/get" method="get" id="containerSearch3" <#if valueSelect == 'null' || valueSelect != "3">style="display: none"</#if>>
                         <p class="card-text" id="titleSearch3">Введите пожалуйста начальную и конечную дату формирования отчета</p>
                         <input name="valueSelect" id="valueSelect3" style="display: none" <#if valueSelect??>value="${valueSelect}"</#if>>
                         <div class="input-group mb-2">
@@ -56,7 +56,7 @@
                             <input class="form-control" type="date" name="start_data" id="data1" max="2999-12-31" <#if start_data??> value="${start_data}" </#if>>
                             <input class="form-control" type="date" name="end_data" id="data2" max="2999-12-31" <#if end_data??> value="${end_data}" </#if>>
                             <div class="input-group-append">
-                                <a href="/journal/report/get" class="btn btn-danger">
+                                <a href="/log/report/get" class="btn btn-danger">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-x-lg" viewBox="0 0 16 16">
                                         <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8z"/>
                                     </svg>
@@ -66,7 +66,7 @@
                         <input class="btn btn-primary" type="submit" value="Поиск">
                     </form>
 
-                    <form action="/journal/report/get" method="get" id="containerSearch2" <#if valueSelect == 'null' || valueSelect != "2">style="display: none"</#if>>
+                    <form action="/log/report/get" method="get" id="containerSearch2" <#if valueSelect == 'null' || valueSelect != "2">style="display: none"</#if>>
                         <p class="card-text" id="titleSearch2">Выбирите подходящие тип отчета для поиска</p>
                         <input name="valueSelect" id="valueSelect2" style="display: none" <#if valueSelect??>value="${valueSelect}"</#if>>
                         <div class="form-check">
@@ -82,7 +82,7 @@
                             </label>
                         </div>
                         <input class="btn btn-primary" type="submit" value="Поиск">
-                        <a href="/journal/report/get" class="btn btn-danger">
+                        <a href="/log/report/get" class="btn btn-danger">
                             Отчистить поиск
                         </a>
                     </form>
@@ -132,7 +132,7 @@
                                                                 ${report.fileName}
                                                             </a>
                                                             <ul class="dropdown-menu">
-                                                                <li> <a class="dropdown-item" href="/journal/report/get/${report.id}">Скачать отчет</a></li>
+                                                                <li> <a class="dropdown-item" href="/log/report/get/${report.id}">Скачать отчет</a></li>
                                                                 <li><button class="dropdown-item" onclick="viewReport(${report.id})">Посмотреть отчет</button></li>
                                                             </ul>
                                                         </div>
@@ -146,7 +146,7 @@
                                                                 ${report.fileName}
                                                             </a>
                                                             <ul class="dropdown-menu">
-                                                                <li> <a class="dropdown-item" href="/journal/report/get/${report.id}">Скачать отчет</a></li>
+                                                                <li> <a class="dropdown-item" href="/log/report/get/${report.id}">Скачать отчет</a></li>
                                                                 <li><button class="dropdown-item" onclick="viewReport(${report.id})">Посмотреть отчет</button></li>
                                                             </ul>
                                                         </div>

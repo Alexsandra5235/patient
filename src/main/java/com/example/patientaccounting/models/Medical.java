@@ -28,8 +28,8 @@ public class Medical {
     private List<Medical> groupData = new ArrayList<>();
 
 //    @OneToOne(cascade = CascadeType.REFRESH)
-//    private Journal journal_medical;
+//    private Log journal_medical;
 //    @OneToOne(cascade = CascadeType.REFRESH)
-//    private Journal journal_cause_injury;
+//    private Log journal_cause_injury;
 
 }

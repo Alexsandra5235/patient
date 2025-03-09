@@ -2,24 +2,6 @@
 
 <@t.page titlePage="ДОБАВЛЕНИЕ ЗАПИСИ" namePage="addJournal">
 
-
-
-<#--        <div class="edit-header container-fluid py-4">-->
-<#--            <div class="card">-->
-<#--                <div class="card-body">-->
-<#--                    <h5 class="card-title">Добавление новой записи</h5>-->
-<#--                    <p class="card-text">Выбирите действие, если необходимо <span class="card-text" style="color: darkgreen">добавить</span> новую запись в журнал учета.</p>-->
-<#--                    <button type="submit" class="btn btn-success">-->
-<#--                        Добавить запись-->
-<#--                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-person-plus-fill" viewBox="0 0 16 16">-->
-<#--                            <path d="M1 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>-->
-<#--                            <path fill-rule="evenodd" d="M13.5 5a.5.5 0 0 1 .5.5V7h1.5a.5.5 0 0 1 0 1H14v1.5a.5.5 0 0 1-1 0V8h-1.5a.5.5 0 0 1 0-1H13V5.5a.5.5 0 0 1 .5-.5z"/>-->
-<#--                        </svg>-->
-<#--                    </button>-->
-<#--                </div>-->
-<#--            </div>-->
-<#--        </div>-->
-
     <div class="container" style="height: 100vh; width: 100vw; overflow-y: auto; position: relative; ">
         <span class="d-flex text-dark justify-content-center" style="padding: 20px 0 20px 0; font-weight: bold">
             <svg xmlns="http://www.w3.org/2000/svg" width="60" height="60" fill="currentColor" class="bi bi-person-add" viewBox="0 0 16 16">
@@ -31,7 +13,7 @@
         <div class="container text-white blurBG" style="justify-content: center; width: 50vw; border-radius: 7px">
             <h4 style="padding-top: 16px">Добавление записи</h4>
             <hr>
-            <form action="/journal/add" method="post" autocomplete="off" id="formAddJournal" style="padding: 10px; margin-bottom: 20px">
+            <form action="/log/add" method="post" autocomplete="off" id="formAddJournal" style="padding: 10px; margin-bottom: 20px">
                 <label class="form-label" for="date_receipt">Дата поступления
                     <a href="#" style="text-decoration: none"
                        data-bs-toggle="tooltip" data-bs-placement="top"

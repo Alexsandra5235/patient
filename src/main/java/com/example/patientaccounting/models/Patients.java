@@ -19,7 +19,7 @@ public class Patients {
     private Long id;
 
     @OneToOne
-    private NormalJournalData normal_data;
+    private NormalData normal_data;
 
     private String full_name;
     private LocalDate birth_day;

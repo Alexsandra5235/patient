@@ -4,19 +4,19 @@
 
 <div class="container" style="height: 100vh; width: 100vw; overflow-y: auto; position: relative;">
 
-    <#if journal.patient??>
+    <#if log.patient??>
         <div class="container-fluid pt-4">
             <div class="card bg-dark text-white">
                 <div class="card-body">
                     <nav aria-label="breadcrumb">
                         <ol class="breadcrumb">
                             <li class="breadcrumb-item"><a href="/" style="padding-right: 14px">Главная</a>></li>
-                            <li class="breadcrumb-item"><a href="/journal/info/${journal.id}" style="padding-right: 14px">Просмотр записи</a>></li>
+                            <li class="breadcrumb-item"><a href="/log/info/${log.id}" style="padding-right: 14px">Просмотр записи</a>></li>
                             <li class="breadcrumb-item active text-white" aria-current="page" style="padding-left: 0">Редактирование записи</li>
                         </ol>
                     </nav>
-                    <#if journal.patient.full_name??>
-                        <h5 class="card-title">Редактирование информации по пациенту <span class="h5" style="color: dodgerblue"> ${journal.patient.full_name}</span></h5>
+                    <#if log.patient.full_name??>
+                        <h5 class="card-title">Редактирование информации по пациенту <span class="h5" style="color: dodgerblue"> ${log.patient.full_name}</span></h5>
                     </#if>
                     <#if datetime_create_record??>
                         <p class="card-text">Дата и время создания записи: ${datetime_create_record}</p>
@@ -40,7 +40,7 @@
             <h4 style="padding-top: 16px">Редактирование записи</h4>
             <hr>
 
-            <form action="/journal/save/edit/${journal.id}" method="post" autocomplete="off" style="padding: 10px; margin-bottom: 20px">
+            <form action="/log/save/edit/${log.id}" method="post" autocomplete="off" style="padding: 10px; margin-bottom: 20px">
                 <button type="submit" hidden="hidden" id="btnSaveEdit"></button>
                 <label class="form-label" for="date_receipt">Дата поступления
                     <a href="#" style="text-decoration: none"
@@ -52,7 +52,7 @@
                         </svg>
                     </a>
                 </label><br>
-                <input class="form-control mb-4" type="date" name="date_receipt" id="date_receipt" <#if journal.date_receipt??>value="${journal.date_receipt}"</#if> required>
+                <input class="form-control mb-4" type="date" name="date_receipt" id="date_receipt" <#if log.date_receipt??>value="${log.date_receipt}"</#if> required>
 
                 <label class="form-label" for="string_time_receipt">Время поступления
                     <a href="#" style="text-decoration: none"
@@ -64,7 +64,7 @@
                         </svg>
                     </a>
                 </label><br>
-                <input class="form-control mb-4" type="time" name="string_time_receipt" id="string_time_receipt" <#if journal.string_time_receipt??>value="${journal.string_time_receipt}"</#if> required>
+                <input class="form-control mb-4" type="time" name="string_time_receipt" id="string_time_receipt" <#if log.string_time_receipt??>value="${log.string_time_receipt}"</#if> required>
 
                 <label class="form-label" for="full_name">Фамилия, имя, отчестов (при наличии)
                     <a href="#" style="text-decoration: none"
@@ -76,7 +76,7 @@
                         </svg>
                     </a>
                 </label><br>
-                <input class="form-control mb-4" type="text" name="full_name" id="full_name" placeholder="Иванов Иван Иванович" autocomplete="off" <#if journal.patient.full_name??>value="${journal.patient.full_name}"</#if> required>
+                <input class="form-control mb-4" type="text" name="full_name" id="full_name" placeholder="Иванов Иван Иванович" autocomplete="off" <#if log.patient.full_name??>value="${log.patient.full_name}"</#if> required>
 
                 <label class="form-label" for="birth_day">Дата рождения (число, месяц, год):
                     <a href="#" style="text-decoration: none"
@@ -88,7 +88,7 @@
                         </svg>
                     </a>
                 </label><br>
-                <input class="form-control mb-4" type="date" name="birth_day" id="birth_day" <#if journal.patient.birth_day??>value="${journal.patient.birth_day}"</#if> required>
+                <input class="form-control mb-4" type="date" name="birth_day" id="birth_day" <#if log.patient.birth_day??>value="${log.patient.birth_day}"</#if> required>
 
                 <label class="form-label" for="gender">Пол (мужской, женский)
                     <a href="#" style="text-decoration: none"
@@ -103,23 +103,23 @@
                 <select class="form-select mb-4" name="gender" id="gender" size="1" required>
                     <option value="" style="font-weight: bold">Пожалуйста, сделайте выбор</option>
                     <#list optionsGender as option>
-                        <option value="${option}" <#if journal.patient.gender?? && journal.patient.gender == option>selected</#if>>${option}</option>
+                        <option value="${option}" <#if log.patient.gender?? && log.patient.gender == option>selected</#if>>${option}</option>
                     </#list>
                 </select>
 
                 <label class="form-label" for="password">Серия и номер паспорта или иного документа, удостоверяющего личность (при наличии)</label><br>
-                <input class="form-control mb-4" type="text" name="password" id="password" oninput="formatPassportInput(this)" maxlength="12" placeholder="XX XX XXXXXX" <#if journal.patient.password??>value="${journal.patient.password}"</#if>>
+                <input class="form-control mb-4" type="text" name="password" id="password" oninput="formatPassportInput(this)" maxlength="12" placeholder="XX XX XXXXXX" <#if log.patient.password??>value="${log.patient.password}"</#if>>
 
                 <label class="form-label" for="nationality">Гражданство</label><br>
-                <input class="form-control mb-4" type="text" id="nationality" name="nationality" <#if journal.patient.nationality??>value="${journal.patient.nationality}"</#if>>
+                <input class="form-control mb-4" type="text" id="nationality" name="nationality" <#if log.patient.nationality??>value="${log.patient.nationality}"</#if>>
                 <div id="suggestions_country"></div>
 
                 <label class="form-label" for="address">Регистрация по месту жительсва</label><br>
-                <input class="form-control mb-4" type="text" id="address" name="address" autocomplete="off" size="100" <#if journal.patient.address??>value="${journal.patient.address}"</#if>>
+                <input class="form-control mb-4" type="text" id="address" name="address" autocomplete="off" size="100" <#if log.patient.address??>value="${log.patient.address}"</#if>>
                 <div id="suggestions"></div>
 
                 <label class="form-label" for="registration_place_stay">Регистрация по месту пребывания пациента</label><br>
-                <input type="text" class="form-control" name="registration_place_stay" id="registration_place_stay" <#if journal.patient.registration_place_stay??>value="${journal.patient.registration_place_stay}"</#if>>
+                <input type="text" class="form-control" name="registration_place_stay" id="registration_place_stay" <#if log.patient.registration_place_stay??>value="${log.patient.registration_place_stay}"</#if>>
                 <div id="suggestions-stay" style="margin-top: 0"></div>
                 <label class="mb-4">
                     <input type="checkbox" class="custom-checkbox" value="Совпадает с местом регистрации" onclick="copyText()">
@@ -128,21 +128,21 @@
 
                 <label class="form-label" for="number_phone_representative">Номер телефона законного представителя, лица, которому может
                     быть передана информация о состоянии здоровья пациента</label>
-                <input class="form-control mb-4" type="text" id="number_phone_representative" name="number_phone_representative" maxlength="18" placeholder="8 (XXX) XXX XX XX" oninput="formatPhone(this)" autocomplete="off" <#if journal.number_phone_representative??>value="${journal.number_phone_representative}"</#if>>
+                <input class="form-control mb-4" type="text" id="number_phone_representative" name="number_phone_representative" maxlength="18" placeholder="8 (XXX) XXX XX XX" oninput="formatPhone(this)" autocomplete="off" <#if log.number_phone_representative??>value="${log.number_phone_representative}"</#if>>
 
                 <label class="form-label" for="snils">СНИСЛ (при наличии)</label>
-                <input class="form-control mb-4" type="text" id="snils" name="snils" maxlength="14" oninput="formatSnils(this)" placeholder="XXX-XXX-XXX XX" autocomplete="off" <#if journal.patient.snils??>value="${journal.patient.snils}"</#if>>
+                <input class="form-control mb-4" type="text" id="snils" name="snils" maxlength="14" oninput="formatSnils(this)" placeholder="XXX-XXX-XXX XX" autocomplete="off" <#if log.patient.snils??>value="${log.patient.snils}"</#if>>
 
                 <label class="form-label" for="polis">Полис обязательного медицинского страхования (при наличии)</label>
                 <input class="form-control mb-4" type="text" id="polis" name="polis" maxlength="16" autocomplete="off"
                        placeholder="XXXXXXXXXXXXXXXX" oninput="this.value = this.value.replace(/[^0-9]/g, '')"
-                       <#if journal.patient.polis??>value="${journal.patient.polis}"</#if>>
+                       <#if log.patient.polis??>value="${log.patient.polis}"</#if>>
 
                 <label class="form-label" for="delivered">Пациент доставлен (направлен)</label>
                 <select class="form-select mb-4" name="delivered" id="delivered" size="1">
                     <option value="" style="font-weight: bold">Пожалуйста, сделайте выбор</option>
                     <#list optionsDelivered as option>
-                        <option value="${option}" <#if journal.delivered == option>selected</#if>>${option}</option>
+                        <option value="${option}" <#if log.delivered == option>selected</#if>>${option}</option>
                     </#list>
                 </select>
 
@@ -157,7 +157,7 @@
                     </a>
                 </label><br>
                 <input class="form-control mb-4" type="text" name="medical_card" id="medical_card" required
-                       <#if journal.patient.medical_card??>value="${journal.patient.medical_card}"</#if>>
+                       <#if log.patient.medical_card??>value="${log.patient.medical_card}"</#if>>
 
                 <label class="form-label" for="medical">Диагноз заболевания (состояния), поставленный направившей медицинской организацией,<br>
                     выездной бригадой скорой медицинской помощи (код по МКБ)
@@ -172,7 +172,7 @@
                     </a>
                 </label>
                 <input class="form-control mb-4" type="text" id="medical" name="medical_str" oninput="toUpperCaseInput(this)"
-                       <#if journal.medical?? && journal.medical.code??>value="${journal.medical.code}"</#if>>
+                       <#if log.medical?? && log.medical.code??>value="${log.medical.code}"</#if>>
                 <div id="suggestions_medical"></div>
 
                 <label class="form-label" for="cause_injury">Причина и обстоятельства трамвы (в том числе при дорожно-транспортных проишествиях)
@@ -187,62 +187,62 @@
                         </svg>
                     </a>
                 </label>
-                <input class="form-control mb-4" type="text" id="cause_injury" name="cause_injury_str" oninput="toUpperCaseInput(this)" <#if journal.cause_injury?? && journal.cause_injury.code??>value="${journal.cause_injury.code}"</#if>>
+                <input class="form-control mb-4" type="text" id="cause_injury" name="cause_injury_str" oninput="toUpperCaseInput(this)" <#if log.cause_injury?? && log.cause_injury.code??>value="${log.cause_injury.code}"</#if>>
                 <div id="suggestions_cause"></div>
 
                 <label class="form-label" for="fact_alcohol">Факт употребления алкоголя и иных психоактивных веществ,
                     установление наличия или отсутствия признаков состояния опьянения при поступленим пациента
                     в медицинскую организацию</label>
                 <input class="form-control mb-4" type="text" id="fact_alcohol" name="fact_alcohol" autocomplete="off"
-                       <#if journal.fact_alcohol??>value="${journal.fact_alcohol}"</#if>>
+                       <#if log.fact_alcohol??>value="${log.fact_alcohol}"</#if>>
 
                 <label class="form-label" for="date_time_alcohol">Дата и время взятия пробы</label>
                 <input class="form-control mb-4" type="datetime-local" id="date_time_alcohol" name="date_time_alcohol"
-                       <#if journal.date_time_alcohol??>value="${journal.date_time_alcohol}"</#if>>
+                       <#if log.date_time_alcohol??>value="${log.date_time_alcohol}"</#if>>
 
                 <label class="form-label" for="result_research">Результаты лабораторных исследований</label>
                 <input class="form-control mb-4" type="text" id="result_research" name="result_research"
-                       <#if journal.result_research??>value="${journal.result_research}"</#if>>
+                       <#if log.result_research??>value="${log.result_research}"</#if>>
 
                 <label class="form-label" for="department_medical_organization">Отделение медицинской организации, в которое направлен пациент</label>
                 <input class="form-control mb-4" type="text" id="department_medical_organization"
                        name="department_medical_organization" autocomplete="off"
-                       <#if journal.department_medical_organization??>value="${journal.department_medical_organization}"</#if>>
+                       <#if log.department_medical_organization??>value="${log.department_medical_organization}"</#if>>
 
                 <label class="form-label" for="outcome_hospitalization">Исход госпитализации</label>
                 <select class="form-select mb-4" name="outcome_hospitalization" id="outcome_hospitalization" size="1"
                         onchange="toggleMedicalOrgField()">
                     <option value="" style="font-weight: bold">Пожалуйста, сделайте выбор</option>
                     <#list options as option>
-                        <option value="${option}"<#if journal.outcome_hospitalization == option> selected </#if>>${option}</option>
+                        <option value="${option}"<#if log.outcome_hospitalization == option> selected </#if>>${option}</option>
                     </#list>
                 </select>
 
                 <label class="form-label" for="local_date_time_discharge">Дата и время исхода</label>
                 <input class="form-control mb-4" type="datetime-local" id="local_date_time_discharge"
                        name="local_date_time_discharge" autocomplete="off"
-                       <#if journal.local_date_time_discharge??>value="${journal.local_date_time_discharge}"</#if>>
+                       <#if log.local_date_time_discharge??>value="${log.local_date_time_discharge}"</#if>>
 
                 <div id="medicalOrgField">
                     <label class="form-label" for="medical_organization_transferred">Наименование медицинской организации, куда переведен пациент</label>
                     <input class="form-control mb-4" type="text" id="medical_organization_transferred"
                            name="medical_organization_transferred" autocomplete="off"
-                           <#if journal.medical_organization_transferred??>value="${journal.medical_organization_transferred}"</#if>>
+                           <#if log.medical_organization_transferred??>value="${log.medical_organization_transferred}"</#if>>
                 </div>
 
                 <label class="form-label" for="date_time_inform"> Дата и время сообщения законному представителю, иному лицу<br>
                     или медицинской организации, направившей пациента, о госпитализации (отказе в госпитализации) пациента, ее исходе</label>
                 <input class="form-control mb-4" type="datetime-local" id="date_time_inform" name="date_time_inform"
-                       autocomplete="off" <#if journal.date_time_inform??>value="${journal.date_time_inform}"</#if>>
+                       autocomplete="off" <#if log.date_time_inform??>value="${log.date_time_inform}"</#if>>
 
                 <h4> В случае отказа в госпитализации в стационар, дневной стационар</h4>
 
                 <label class="form-label" for="reason_refusal">Причина отказа в гослитализации</label>
                 <select class="form-select mb-4" name="reason_refusal" id="reason_refusal" size="1"
-                        <#if journal.reason_refusal??>value="${journal.reason_refusal}"</#if>>
+                        <#if log.reason_refusal??>value="${log.reason_refusal}"</#if>>
                     <option value="" style="font-weight: bold">Пожалуйста, сделайте выбор</option>
                     <#list optionsReason as option>
-                        <option value="${option}" <#if journal.reason_refusal == option>selected</#if>>${option}</option>
+                        <option value="${option}" <#if log.reason_refusal == option>selected</#if>>${option}</option>
                     </#list>
                 </select>
 
@@ -250,11 +250,11 @@
                     зафиксировавшего причину отказа в госпитализации</label>
                 <input class="form-control mb-4" type="text" id="full_name_medical_worker" name="full_name_medical_worker"
                        autocomplete="off" placeholder="Иванов Иван Иванович"
-                       <#if journal.full_name_medical_worker??>value="${journal.full_name_medical_worker}"</#if>>
+                       <#if log.full_name_medical_worker??>value="${log.full_name_medical_worker}"</#if>>
 
                 <label class="form-label" for="additional_information">Дополнительные сведения</label>
                 <input class="form-control mb-4" type="text" id="additional_information" name="additional_information"
-                       autocomplete="off" <#if journal.additional_information??>value="${journal.additional_information}"</#if>>
+                       autocomplete="off" <#if log.additional_information??>value="${log.additional_information}"</#if>>
             </form>
         </div>
         <#else>
@@ -264,7 +264,7 @@
                         <nav aria-label="breadcrumb">
                             <ol class="breadcrumb">
                                 <li class="breadcrumb-item"><a href="/" style="padding-right: 14px">Главная</a>></li>
-                                <li class="breadcrumb-item"><a href="/journal/info/${journal.id}" style="padding-right: 14px">Просмотр записи</a>></li>
+                                <li class="breadcrumb-item"><a href="/log/info/${log.id}" style="padding-right: 14px">Просмотр записи</a>></li>
                                 <li class="breadcrumb-item active text-white" aria-current="page" style="padding-left: 0">Редактирование записи</li>
                             </ol>
                         </nav>

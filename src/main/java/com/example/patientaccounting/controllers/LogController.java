@@ -1,9 +1,9 @@
 package com.example.patientaccounting.controllers;
 
+import com.example.patientaccounting.models.Log;
+import com.example.patientaccounting.models.LogInfo;
 import com.example.patientaccounting.models.Patients;
-import com.example.patientaccounting.models.Report;
 import com.example.patientaccounting.services.*;
-import com.example.patientaccounting.models.Journal;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
 import java.time.LocalDate;
-import java.util.Comparator;
 import java.util.List;
 
 import static com.example.patientaccounting.Constants.*;
@@ -22,40 +21,41 @@ import static com.example.patientaccounting.Constants.*;
 @Controller
 @RequiredArgsConstructor
 @Slf4j
-public class JournalController {
+public class LogController {
 
-    private final JournalService journalService;
+    private final LogService logService;
     private final JournalExportExcel journalExportExcel;
     private final MedicalService medicalService;
-    private final NormalJournalDataService normalJournalDataService;
+    private final NormalDataService normalDataService;
+    private final LogInfoService logInfoService;
 
     @GetMapping("/")
     public String journal(@RequestParam(name = "full_name", required = false) String fullName,
                           @RequestParam(name = "sortData", required = false, defaultValue = "desc") String sort,
                           Model model) {
 
-        List<Journal> journals = journalService.journalList(fullName);
-        Journal journal = journalService.getLastRecord();
+        List<Log> logs = logService.getLogList(fullName);
+        Log lastLogAdd = logService.getLastRecord();
 
-        if (journal != null) model.addAttribute("lastJournal", journal);
+        if (log != null) model.addAttribute("lastLogAdd", lastLogAdd);
 
         if (fullName != null) model.addAttribute("full_name", fullName);
 
         model.addAttribute("sort", sort);
 
-        if (sort != null) journalService.makeComparingJournal(sort,journals);
+        if (sort != null) logService.makeComparingJournal(sort, logs);
 
-        model.addAttribute("journals", journals);
+        model.addAttribute("logs", logs);
 
         return "journal";
     }
 
-    @GetMapping("/journal/save")
+    @GetMapping("/log/save")
     public String saveJournal(Model model) {
-        String full_time = String.format(LocalDate.now() + " " + journalService.getLocalTime());
+        String full_time = String.format(LocalDate.now() + " " + logService.getLocalTime());
 
         model.addAttribute("date_now", LocalDate.now());
-        model.addAttribute("time_now", journalService.getLocalTime());
+        model.addAttribute("time_now", logService.getLocalTime());
         model.addAttribute("full_time", full_time);
 
         model.addAttribute("options", options);
@@ -65,42 +65,44 @@ public class JournalController {
         return "addJournal";
     }
 
-    @PostMapping("/journal/add")
-    public String addJournal(Journal journal, Patients patient,
+    @PostMapping("/log/add")
+    public String addJournal(Log log, Patients patient,
                              @RequestParam(name = "medical_str", required = false) String medical,
                              @RequestParam(name = "cause_injury_str", required = false) String cause) {
-        journalService.saveRecord(journal, patient, medical,cause);
+        logService.saveRecord(log, patient, medical,cause);
         return "redirect:/";
     }
 
 
 
-    @GetMapping("/journal/edit/{id}")
+    @GetMapping("/log/edit/{id}")
     public String editJournal(@PathVariable Long id, Model model) {
 
-        Journal journal = journalService.getRecordById(id);
-        model.addAttribute("journal", journal);
+        Log log = logService.getRecordById(id);
+        LogInfo logInfo = logInfoService.getLogInfoByLogId(id);
+
+        model.addAttribute("log", log);
         model.addAttribute("options", options);
         model.addAttribute("optionsGender", optionsGender);
         model.addAttribute("optionsDelivered", optionsDelivered);
         model.addAttribute("optionsReason", optionsReason);
-        model.addAttribute("datetime_create_record", normalJournalDataService.getNormalDataTime(journal.getJournalInfo().getDate_time_create_record()));
-        model.addAttribute("datetime_edit_record", normalJournalDataService.getNormalDataTime(journal.getJournalInfo().getDate_time_edit_record()));
+        model.addAttribute("datetime_create_record", normalDataService.getNormalDataTime(logInfo.getDate_time_create_record()));
+        model.addAttribute("datetime_edit_record", normalDataService.getNormalDataTime(logInfo.getDate_time_edit_record()));
 
         return "edit";
     }
 
-    @PostMapping("/journal/save/edit/{id}")
-    public String saveEditJournal(Journal journal, Patients patient,
+    @PostMapping("/log/save/edit/{id}")
+    public String saveEditJournal(Log log, Patients patient,
                                   @RequestParam(name = "medical_str", required = false) String medical,
                                   @RequestParam(name = "cause_injury_str", required = false) String cause) {
-        journalService.editRecord(journal, patient, medical, cause);
+        logService.editRecord(log, patient, medical, cause);
         return "redirect:/";
     }
 
-    @PostMapping("/journal/delete/{id}")
+    @PostMapping("/log/delete/{id}")
     public String deleteJournal(@PathVariable Long id) {
-        journalService.deleteRecord(id);
+        logService.deleteRecord(id);
         return "redirect:/";
     }
 
@@ -113,16 +115,6 @@ public class JournalController {
         return "mkd";
     }
 
-//    @GetMapping("/export/excel")
-//    public ResponseEntity<byte[]> exportToExcel(@RequestParam(name = "data1", required = false) LocalDate data1,
-//                                                @RequestParam(name = "data2", required = false) LocalDate data2,
-//                                                @RequestParam(name = "typeReport", required = false) String typeReport) throws IOException {
-//
-//        List<Journal> journals = journalService.getFilterByDate(data1, data2);
-//
-//        return journalExportExcel.exportToExcel(journals, journalService.getNormalDate(data1), journalService.getNormalDate(data2), typeReport);
-//    }
-
     @GetMapping("/export/excel")
     public ResponseEntity<byte[]> openToExcel(@RequestParam(name = "data1", required = false) LocalDate data1,
                                               @RequestParam(name = "data2", required = false) LocalDate data2,
@@ -130,32 +122,34 @@ public class JournalController {
                                               @RequestParam(name = "open", required = false) String open)
                                               throws IOException {
 
-        List<Journal> journals = journalService.getFilterByDate(data1, data2);
+        List<Log> logs = logService.getFilterByDate(data1, data2);
 
         if (open != null) {
-            return journalExportExcel.openToExcel(journals, journalService.getNormalDate(data1), journalService.getNormalDate(data2));
+            return journalExportExcel.openToExcel(logs, logService.getNormalDate(data1), logService.getNormalDate(data2));
         } else {
-            return journalExportExcel.exportToExcel(journals, journalService.getNormalDate(data1), journalService.getNormalDate(data2), typeReport);
+            return journalExportExcel.exportToExcel(logs, logService.getNormalDate(data1), logService.getNormalDate(data2), typeReport);
 
         }
     }
 
-    @GetMapping("/journal/info/{id}")
+    @GetMapping("/log/info/{id}")
     public String infoJournal(@PathVariable Long id, Model model) {
-        Journal journal = journalService.getRecordById(id);
-        model.addAttribute("journal", journal);
+        Log log = logService.getRecordById(id);
+        LogInfo logInfo = logInfoService.getLogInfoByLogId(id);
+
+        model.addAttribute("log", log);
         model.addAttribute("option", options.get(1));
-        model.addAttribute("datetime_create_record", normalJournalDataService.getNormalDataTime(journal.getJournalInfo().getDate_time_create_record()));
-        model.addAttribute("datetime_edit_record", normalJournalDataService.getNormalDataTime(journal.getJournalInfo().getDate_time_edit_record()));
+        model.addAttribute("datetime_create_record", normalDataService.getNormalDataTime(logInfo.getDate_time_create_record()));
+        model.addAttribute("datetime_edit_record", normalDataService.getNormalDataTime(logInfo.getDate_time_edit_record()));
         return "infoJournal";
     }
 
-    @GetMapping("/journal/excel/day")
+    @GetMapping("/log/excel/day")
     public String dayReport(){
         return "dayReport";
     }
 
-    @GetMapping("/journal/excel/month")
+    @GetMapping("/log/excel/month")
     public String monthReport(){
         return "monthReport";
     }

@@ -193,7 +193,7 @@
             <div class="bg-dark d-flex flex-column vh-100 p-3" style="width: 25%">
 
                 <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-journals" viewBox="0 0 16 16">-->
+                    <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-logs" viewBox="0 0 16 16">-->
                         <path d="M5 0h8a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2 2 2 0 0 1-2 2H3a2 2 0 0 1-2-2h1a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V4a1 1 0 0 0-1-1H3a1 1 0 0 0-1 1H1a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v9a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H5a1 1 0 0 0-1 1H3a2 2 0 0 1 2-2"/>
                         <path d="M1 6v-.5a.5.5 0 0 1 1 0V6h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1zm0 3v-.5a.5.5 0 0 1 1 0V9h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1zm0 2.5v.5H.5a.5.5 0 0 0 0 1h2a.5.5 0 0 0 0-1H2v-.5a.5.5 0 0 0-1 0"/>
                     </svg>
@@ -211,7 +211,7 @@
                             </a>
                         </li>
                         <li>
-                            <a href="/journal/save" class="nav-link text-white" aria-current="page" style="text-wrap: wrap">
+                            <a href="/log/save" class="nav-link text-white" aria-current="page" style="text-wrap: wrap">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-plus-square" viewBox="0 0 16 16">
                                     <path d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h12zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z"/>
                                     <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
@@ -236,10 +236,10 @@
                                 Формирование отчетов
                             </a>
                             <ul class="dropdown-menu dropdown-menu-dark text-small shadow" style="text-wrap: wrap">
-                                <li><a class="dropdown-item" href="/journal/excel/day">Ежедневный отчет</a></li>
-                                <li><a class="dropdown-item" href="/journal/excel/month">Ежемесячный отчет</a></li>
+                                <li><a class="dropdown-item" href="/log/excel/day">Ежедневный отчет</a></li>
+                                <li><a class="dropdown-item" href="/log/excel/month">Ежемесячный отчет</a></li>
                                 <li><hr class="dropdown-divider"></li>
-                                <li><a class="dropdown-item" href="/journal/report/get">История формирования отчетов</a></li>
+                                <li><a class="dropdown-item" href="/log/report/get">История формирования отчетов</a></li>
                             </ul>
                         </li>
                         <#if namePage = "addJournal">

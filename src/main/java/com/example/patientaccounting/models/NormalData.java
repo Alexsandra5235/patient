@@ -5,16 +5,12 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
-
 @Data
 @Entity
 @Table(name = "normal_data")
 @AllArgsConstructor
 @NoArgsConstructor
-public class NormalJournalData {
+public class NormalData {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

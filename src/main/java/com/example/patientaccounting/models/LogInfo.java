@@ -9,10 +9,10 @@ import java.time.LocalDateTime;
 
 @Data
 @Entity
-@Table(name = "journal_info")
+@Table(name = "log_info")
 @AllArgsConstructor
 @NoArgsConstructor
-public class JournalInfo {
+public class LogInfo {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -20,9 +20,9 @@ public class JournalInfo {
 
     private LocalDateTime date_time_create_record;
     private LocalDateTime date_time_edit_record;
-    @OneToOne
-    @JoinColumn(name = "journal_id")
-    private Journal journal;
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "log_id")
+    private Log log;
 
     @PrePersist
     private void onCreate(){
