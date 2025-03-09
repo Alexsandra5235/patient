@@ -52,7 +52,8 @@
                         </svg>
                     </a>
                 </label><br>
-                <input class="form-control mb-4" type="date" name="date_receipt" id="date_receipt" <#if log.date_receipt??>value="${log.date_receipt}"</#if> required>
+                <input class="form-control mb-4" type="date" name="date_receipt" id="date_receipt"
+                       <#if log.log_receipt?? && log.log_receipt.date_receipt??>value="${log.log_receipt.date_receipt}"</#if> required>
 
                 <label class="form-label" for="string_time_receipt">Время поступления
                     <a href="#" style="text-decoration: none"
@@ -64,7 +65,8 @@
                         </svg>
                     </a>
                 </label><br>
-                <input class="form-control mb-4" type="time" name="string_time_receipt" id="string_time_receipt" <#if log.string_time_receipt??>value="${log.string_time_receipt}"</#if> required>
+                <input class="form-control mb-4" type="time" name="string_time_receipt" id="string_time_receipt"
+                       <#if log.log_receipt?? && log.log_receipt.string_time_receipt??>value="${log.log_receipt.string_time_receipt}"</#if> required>
 
                 <label class="form-label" for="full_name">Фамилия, имя, отчестов (при наличии)
                     <a href="#" style="text-decoration: none"
@@ -128,7 +130,9 @@
 
                 <label class="form-label" for="number_phone_representative">Номер телефона законного представителя, лица, которому может
                     быть передана информация о состоянии здоровья пациента</label>
-                <input class="form-control mb-4" type="text" id="number_phone_representative" name="number_phone_representative" maxlength="18" placeholder="8 (XXX) XXX XX XX" oninput="formatPhone(this)" autocomplete="off" <#if log.number_phone_representative??>value="${log.number_phone_representative}"</#if>>
+                <input class="form-control mb-4" type="text" id="number_phone_representative" name="number_phone_representative"
+                       maxlength="18" placeholder="8 (XXX) XXX XX XX" oninput="formatPhone(this)" autocomplete="off"
+                       <#if log.log_receipt?? && log.log_receipt.number_phone_representative??>value="${log.log_receipt.number_phone_representative}"</#if>>
 
                 <label class="form-label" for="snils">СНИСЛ (при наличии)</label>
                 <input class="form-control mb-4" type="text" id="snils" name="snils" maxlength="14" oninput="formatSnils(this)" placeholder="XXX-XXX-XXX XX" autocomplete="off" <#if log.patient.snils??>value="${log.patient.snils}"</#if>>
@@ -142,7 +146,7 @@
                 <select class="form-select mb-4" name="delivered" id="delivered" size="1">
                     <option value="" style="font-weight: bold">Пожалуйста, сделайте выбор</option>
                     <#list optionsDelivered as option>
-                        <option value="${option}" <#if log.delivered == option>selected</#if>>${option}</option>
+                        <option value="${option}" <#if log.log_receipt?? && log.log_receipt.delivered == option>selected</#if>>${option}</option>
                     </#list>
                 </select>
 
@@ -194,20 +198,21 @@
                     установление наличия или отсутствия признаков состояния опьянения при поступленим пациента
                     в медицинскую организацию</label>
                 <input class="form-control mb-4" type="text" id="fact_alcohol" name="fact_alcohol" autocomplete="off"
-                       <#if log.fact_alcohol??>value="${log.fact_alcohol}"</#if>>
+                       <#if log.log_receipt?? && log.log_receipt.fact_alcohol??>value="${log.log_receipt.fact_alcohol}"</#if>>
 
                 <label class="form-label" for="date_time_alcohol">Дата и время взятия пробы</label>
                 <input class="form-control mb-4" type="datetime-local" id="date_time_alcohol" name="date_time_alcohol"
-                       <#if log.date_time_alcohol??>value="${log.date_time_alcohol}"</#if>>
+                       <#if log.log_receipt?? && log.log_receipt.date_time_alcohol??>value="${log.log_receipt.date_time_alcohol}"</#if>>
 
                 <label class="form-label" for="result_research">Результаты лабораторных исследований</label>
                 <input class="form-control mb-4" type="text" id="result_research" name="result_research"
-                       <#if log.result_research??>value="${log.result_research}"</#if>>
+                       <#if log.log_receipt?? && log.log_receipt.result_research??>value="${log.log_receipt.result_research}"</#if>>
 
                 <label class="form-label" for="department_medical_organization">Отделение медицинской организации, в которое направлен пациент</label>
                 <input class="form-control mb-4" type="text" id="department_medical_organization"
                        name="department_medical_organization" autocomplete="off"
-                       <#if log.department_medical_organization??>value="${log.department_medical_organization}"</#if>>
+                       <#if log.log_receipt?? && log.log_receipt.department_medical_organization??>
+                value="${log.log_receipt.department_medical_organization}"</#if>>
 
                 <label class="form-label" for="outcome_hospitalization">Исход госпитализации</label>
                 <select class="form-select mb-4" name="outcome_hospitalization" id="outcome_hospitalization" size="1"

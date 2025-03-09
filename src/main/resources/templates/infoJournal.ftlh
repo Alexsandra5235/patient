@@ -51,7 +51,7 @@
                     <hr>
 
                     <label class="form-label" for="string_time_receipt">Время поступления:</label>
-                    <p id="string_time_receipt"><#if log.string_time_receipt??>${log.string_time_receipt}</#if></p>
+                    <p id="string_time_receipt"><#if log.log_receipt?? && log.log_receipt.string_time_receipt??>${log.log_receipt.string_time_receipt}</#if></p>
                     <hr>
 
                     <label class="form-label" for="full_name">Фамилия, имя, отчестов (при наличии):</label>
@@ -87,8 +87,8 @@
 
                     <label class="form-label" for="number_phone_representative">Номер телефона законного представителя, лица, которому может
                         быть передана информация о состоянии здоровья пациента</label>
-                    <p id="number_phone_representative"><#if log.number_phone_representative??>
-                            ${log.number_phone_representative}</#if></p>
+                    <p id="number_phone_representative"><#if log.log_receipt?? && log.log_receipt.number_phone_representative??>
+                            ${log.log_receipt.number_phone_representative}</#if></p>
                     <hr>
 
                     <label class="form-label" for="snils">СНИСЛ (при наличии)</label>
@@ -100,7 +100,7 @@
                     <hr>
 
                     <label class="form-label" for="delivered">Пациент доставлен (направлен)</label>
-                    <p id="delivered"><#if log.delivered??>${log.delivered}</#if></p>
+                    <p id="delivered"><#if log.log_receipt?? && log.log_receipt.delivered??>${log.log_receipt.delivered}</#if></p>
                     <hr>
 
                     <label class="form-label" for="medical_card">Номер медицинской карты</label>
@@ -121,7 +121,7 @@
                     <label class="form-label" for="fact_alcohol">Факт употребления алкоголя и иных психоактивных веществ,
                         установление наличия или отсутствия признаков состояния опьянения при поступленим пациента
                         в медицинскую организацию</label>
-                    <p id="fact_alcohol"><#if log.fact_alcohol??>${log.fact_alcohol}</#if></p>
+                    <p id="fact_alcohol"><#if log.log_receipt?? && log.log_receipt.fact_alcohol??>${log.log_receipt.fact_alcohol}</#if></p>
                     <hr>
 
                     <label class="form-label" for="date_time_alcohol">Дата и время взятия пробы</label>
@@ -130,13 +130,13 @@
                     <hr>
 
                     <label class="form-label" for="result_research">Результаты лабораторных исследований</label>
-                    <p id="result_research"><#if log.result_research??>${log.result_research}</#if></p>
+                    <p id="result_research"><#if log.log_receipt?? && log.log_receipt.result_research??>${log.log_receipt.result_research}</#if></p>
                     <hr>
 
                     <label class="form-label" for="department_medical_organization">Отделение медицинской организации, в которое
                         направлен пациент</label>
-                    <p id="department_medical_organization"><#if log.department_medical_organization??>
-                            ${log.department_medical_organization}</#if></p>
+                    <p id="department_medical_organization"><#if log.log_receipt?? && log.log_receipt.department_medical_organization??>
+                            ${log.log_receipt.department_medical_organization}</#if></p>
                     <hr>
 
                     <label class="form-label" for="outcome_hospitalization">Исход госпитализации</label>

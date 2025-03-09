@@ -18,9 +18,6 @@ public class Patients {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @OneToOne
-    private NormalData normal_data;
-
     private String full_name;
     private LocalDate birth_day;
     private String gender;

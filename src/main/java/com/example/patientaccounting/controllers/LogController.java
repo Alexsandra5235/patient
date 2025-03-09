@@ -2,6 +2,7 @@ package com.example.patientaccounting.controllers;
 
 import com.example.patientaccounting.models.Log;
 import com.example.patientaccounting.models.LogInfo;
+import com.example.patientaccounting.models.LogReceipt;
 import com.example.patientaccounting.models.Patients;
 import com.example.patientaccounting.services.*;
 import lombok.RequiredArgsConstructor;
@@ -43,9 +44,10 @@ public class LogController {
 
         model.addAttribute("sort", sort);
 
-        if (sort != null) logService.makeComparingJournal(sort, logs);
+        if (sort != null) logService.getSortedLogs(sort, logs);
 
-        model.addAttribute("logs", logs);
+        if (logs == null) model.addAttribute("logs", logService.getLogList(fullName));
+        else model.addAttribute("logs", logs);
 
         return "journal";
     }
@@ -66,10 +68,10 @@ public class LogController {
     }
 
     @PostMapping("/log/add")
-    public String addJournal(Log log, Patients patient,
+    public String addJournal(Log log, Patients patient, LogReceipt logReceipt,
                              @RequestParam(name = "medical_str", required = false) String medical,
                              @RequestParam(name = "cause_injury_str", required = false) String cause) {
-        logService.saveRecord(log, patient, medical,cause);
+        logService.saveRecord(log, patient, logReceipt, medical,cause);
         return "redirect:/";
     }
 
@@ -93,10 +95,10 @@ public class LogController {
     }
 
     @PostMapping("/log/save/edit/{id}")
-    public String saveEditJournal(Log log, Patients patient,
+    public String saveEditJournal(Log log, Patients patient, LogReceipt logReceipt,
                                   @RequestParam(name = "medical_str", required = false) String medical,
                                   @RequestParam(name = "cause_injury_str", required = false) String cause) {
-        logService.editRecord(log, patient, medical, cause);
+        logService.editRecord(log, patient, logReceipt, medical, cause);
         return "redirect:/";
     }
 

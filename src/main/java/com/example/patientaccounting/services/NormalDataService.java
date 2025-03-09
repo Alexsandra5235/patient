@@ -21,8 +21,6 @@ public class NormalDataService {
     public void setNormalJournalData(NormalData normalData, Log log) {
 
         if (normalData == null || log == null) return;
-        normalData.setStr_date_receipt(getNormalData(log.getDate_receipt()));
-        normalData.setStr_date_time_alcohol(getNormalDataTime(log.getDate_time_alcohol()));
         normalData.setStr_date_time_inform(getNormalDataTime(log.getDate_time_inform()));
         normalData.setStr_local_date_time_discharge(getNormalDataTime(log.getLocal_date_time_discharge()));
 
@@ -33,11 +31,11 @@ public class NormalDataService {
 
     public void setNormalJournalData(NormalData normalData, Patients patient) {
 
-        if (normalData == null || patient == null) return;
-        normalData.setStr_birth_day(getNormalData(patient.getBirth_day()));
-
-        normalDataRepository.save(normalData);
-        patient.setNormal_data(normalData);
+//        if (normalData == null || patient == null) return;
+//        normalData.setStr_birth_day(getNormalData(patient.getBirth_day()));
+//
+//        normalDataRepository.save(normalData);
+//        patient.setNormal_data(normalData);
 
     }
 

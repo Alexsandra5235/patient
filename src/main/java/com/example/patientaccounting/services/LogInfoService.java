@@ -32,4 +32,9 @@ public class LogInfoService {
     public LogInfo getLogInfoByLogId(Long id) {
         return logInfoRepository.findJournalInfoByLogId(id);
     }
+
+    public void deleteByLogId(Long id){
+        Long idLongInfo = getLogInfoByLogId(id).getId();
+        logInfoRepository.deleteById(idLongInfo);
+    }
 }

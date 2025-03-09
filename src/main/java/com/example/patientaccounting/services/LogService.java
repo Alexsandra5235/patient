@@ -1,18 +1,23 @@
 package com.example.patientaccounting.services;
 
 import com.example.patientaccounting.models.Log;
+import com.example.patientaccounting.models.LogReceipt;
 import com.example.patientaccounting.models.NormalData;
 import com.example.patientaccounting.models.Patients;
 import com.example.patientaccounting.repository.LogRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+
+import static java.util.Comparator.nullsLast;
 
 @Service
 @Slf4j
@@ -24,6 +29,7 @@ public class LogService {
     private final NormalDataService normalDataService;
     private final LogInfoService logInfoService;
     private final PatientsService patientsService;
+    private final LogReceiptService logReceiptService;
 
     public List<Log> getLogList(String fullName){
         if (fullName != null){
@@ -34,7 +40,7 @@ public class LogService {
         return logRepository.findAll();
     }
 
-    public void saveRecord(Log log, Patients patient, String medical, String cause) {
+    public void saveRecord(Log log, Patients patient, LogReceipt logReceipt, String medical, String cause) {
 
         NormalData normalData = new NormalData();
 
@@ -42,6 +48,8 @@ public class LogService {
         normalDataService.setNormalJournalData(normalData, log);
         patientsService.savePatient(patient, normalData);
         log.setPatient(patient);
+        logReceiptService.saveLogReceipt(logReceipt, normalData);
+        log.setLog_receipt(logReceipt);
         logRepository.save(log);
         logInfoService.saveLogInfo(log);
         LogService.log.info("Save record with id = {}", log.getId());
@@ -73,17 +81,29 @@ public class LogService {
         return null;
     }
 
-    public void makeComparingJournal(String sort, List<Log> logs){
-        if (sort.equals("asc")) {
-            logs.sort(Comparator.comparing(Log::getDate_receipt)
-                    .thenComparing(Log::getString_time_receipt));
+    private LogReceipt getLogReceiptById(Log log){
+        return new LogReceipt();
+
+    }
+
+    public void getSortedLogs(String sort, List<Log> logs) {
+
+        if (sort.equals("asc")){
+            logs.sort(Comparator
+                    .comparing((Log log) -> log.getLog_receipt() != null ? log.getLog_receipt().getDate_receipt() : null)
+                    .thenComparing(log -> log.getLog_receipt() != null ? log.getLog_receipt().getString_time_receipt() : null));
         } else if (sort.equals("desc")) {
-            logs.sort(Comparator.comparing(Log::getDate_receipt)
-                    .thenComparing(Log::getString_time_receipt).reversed());
+            logs.sort(Comparator
+                    .comparing((Log log) -> log.getLog_receipt() != null ? log.getLog_receipt().getDate_receipt() : null)
+                    .reversed()
+                    .thenComparing(log -> log.getLog_receipt() != null ? log.getLog_receipt().getString_time_receipt() : null)
+                    .reversed());
         }
+
     }
 
     public void deleteRecord(Long id) {
+        logInfoService.deleteByLogId(id);
         logRepository.deleteById(id);
         log.info("Delete record with id = {}", id);
     }
@@ -92,7 +112,7 @@ public class LogService {
         return logRepository.findById(id).orElse(null);
     }
 
-    public void editRecord(Log log, Patients patient, String medical, String cause) {
+    public void editRecord(Log log, Patients patient, LogReceipt logReceipt, String medical, String cause) {
 
         if (log == null) return;
 
@@ -104,7 +124,7 @@ public class LogService {
 
         setMedicalCode(beforeLog, log,medical,cause);
         normalDataService.setNormalJournalData(normalData, log);
-        patientsService.editPatient(patient, beforeLog.getPatient(), normalData);
+        patientsService.savePatient(patient, normalData);
         log.setPatient(patient);
         logRepository.save(log);
         logInfoService.editLogInfo(log, beforeLog);
@@ -150,9 +170,9 @@ public class LogService {
 
         return getLogList(null).stream()
                 .filter(journal ->
-                        (!getAdmissionDateTime(journal.getDate_receipt(),LocalTime.parse(journal.getString_time_receipt()))
+                        (!getAdmissionDateTime(journal.getLog_receipt().getDate_receipt(),LocalTime.parse(journal.getLog_receipt().getString_time_receipt()))
                                 .isBefore(startDateTime))
-                        && (!getAdmissionDateTime(journal.getDate_receipt(),LocalTime.parse(journal.getString_time_receipt()))
+                        && (!getAdmissionDateTime(journal.getLog_receipt().getDate_receipt(),LocalTime.parse(journal.getLog_receipt().getString_time_receipt()))
                                 .isAfter(endDateTime))).toList();
 
 

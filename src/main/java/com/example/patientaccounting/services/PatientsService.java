@@ -23,15 +23,14 @@ public class PatientsService {
 
     private void setNormalPatientData(Patients patient, NormalData normalData){
         if (normalData == null) return;
-        normalDataService.setNormalJournalData(normalData,patient);
+        normalData.setStr_birth_day(normalDataService.getNormalData(patient.getBirth_day()));
     }
 
     public void editPatient(Patients patient, Patients beforePatient, NormalData normalData) {
         if (patient == null) return;
-        if (!patient.getBirth_day().equals(beforePatient.getBirth_day())){
-            normalDataService.setNormalJournalData(normalData,patient);
-        }
-        patient.setNormal_data(normalData);
+
+        setNormalPatientData(patient, normalData);
+
         patientsRepository.save(patient);
     }
 }

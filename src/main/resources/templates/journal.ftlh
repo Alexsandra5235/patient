@@ -79,9 +79,9 @@
                     <#list logs as log>
                         <tr>
                             <td><#if log.normal_data?? && log.normal_data.str_date_receipt??> ${log.normal_data.str_date_receipt} </#if></td>
-                            <td><#if log.string_time_receipt??> ${log.string_time_receipt} </#if></td>
+                            <td><#if log.log_receipt?? && log.log_receipt.string_time_receipt??> ${log.log_receipt.string_time_receipt} </#if></td>
                             <td><#if log.patient?? && log.patient.full_name??> ${log.patient.full_name} </#if></td>
-                            <td><#if log.patient?? && log.patient.normal_data?? && log.patient.normal_data.str_birth_day??> ${log.patient.normal_data.str_birth_day} </#if></td>
+                            <td><#if log.normal_data?? && log.normal_data.str_birth_day??> ${log.normal_data.str_birth_day} </#if></td>
                             <td><#if log.patient?? && log.patient.medical_card??> ${log.patient.medical_card} </#if></td>
                             <td>
                                 <#if log.outcome_hospitalization != "">Пациент ${log.outcome_hospitalization} </#if><br>
