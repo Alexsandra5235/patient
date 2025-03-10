@@ -25,12 +25,4 @@ public class PatientsService {
         if (normalData == null) return;
         normalData.setStr_birth_day(normalDataService.getNormalData(patient.getBirth_day()));
     }
-
-    public void editPatient(Patients patient, Patients beforePatient, NormalData normalData) {
-        if (patient == null) return;
-
-        setNormalPatientData(patient, normalData);
-
-        patientsRepository.save(patient);
-    }
 }

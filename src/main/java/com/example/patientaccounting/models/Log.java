@@ -30,13 +30,6 @@ public class Log {
     @OneToOne(cascade = CascadeType.ALL)
     private LogReceipt log_receipt;
 
-
-
-    private LocalDateTime local_date_time_discharge;
-    private LocalDateTime date_time_inform;
-    private String outcome_hospitalization;
-    private String medical_organization_transferred;
-
     private String reason_refusal;
     private String full_name_medical_worker;
     private String additional_information;

@@ -45,14 +45,20 @@ public class LogService {
         NormalData normalData = new NormalData();
 
         setMedicalCode(null, log, medical,cause);
-        normalDataService.setNormalJournalData(normalData, log);
         patientsService.savePatient(patient, normalData);
         log.setPatient(patient);
         logReceiptService.saveLogReceipt(logReceipt, normalData);
         log.setLog_receipt(logReceipt);
+        setNormalData(normalData,log);
+        log.setNormal_data(normalData);
         logRepository.save(log);
         logInfoService.saveLogInfo(log);
         LogService.log.info("Save record with id = {}", log.getId());
+    }
+
+    private void setNormalData(NormalData normalData, Log log) {
+        normalData.setStr_date_time_inform(normalDataService.getNormalDataTime(log.getDate_time_inform()));
+        normalData.setStr_local_date_time_discharge(normalDataService.getNormalDataTime(log.getLocal_date_time_discharge()));
     }
 
     private void setMedicalCode(Log beforeLog, Log log, String medical, String cause){
@@ -79,11 +85,6 @@ public class LogService {
 //                .thenComparing(Log::getLocalTimeAddRecord));
 //        return journals.get(journals.size() - 1);
         return null;
-    }
-
-    private LogReceipt getLogReceiptById(Log log){
-        return new LogReceipt();
-
     }
 
     public void getSortedLogs(String sort, List<Log> logs) {
@@ -126,6 +127,8 @@ public class LogService {
         normalDataService.setNormalJournalData(normalData, log);
         patientsService.savePatient(patient, normalData);
         log.setPatient(patient);
+        logReceiptService.saveLogReceipt(logReceipt, normalData);
+        log.setLog_receipt(logReceipt);
         logRepository.save(log);
         logInfoService.editLogInfo(log, beforeLog);
         LogService.log.info("After edit record: {}", log);

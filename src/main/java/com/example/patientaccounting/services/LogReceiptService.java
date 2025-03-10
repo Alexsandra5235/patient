@@ -16,8 +16,14 @@ public class LogReceiptService {
     private final NormalDataService normalDataService;
 
     public void saveLogReceipt(LogReceipt logReceipt, NormalData normalData) {
+        if (logReceipt == null) return;
+        setNormalData(logReceipt, normalData);
+        logReceiptRepository.save(logReceipt);
+    }
+
+    private void setNormalData(LogReceipt logReceipt, NormalData normalData) {
+        if (normalData == null) return;
         normalData.setStr_date_receipt(normalDataService.getNormalData(logReceipt.getDate_receipt()));
         normalData.setStr_date_time_alcohol(normalDataService.getNormalDataTime(logReceipt.getDate_time_alcohol()));
-        logReceiptRepository.save(logReceipt);
     }
 }
