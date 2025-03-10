@@ -115,7 +115,7 @@ public class LogService {
         return logRepository.findById(id).orElse(null);
     }
 
-    public void editRecord(Log log, Patients patient, LogReceipt logReceipt, String medical, String cause) {
+    public void editRecord(Log log, Patients patient, LogReceipt logReceipt, LogDischarge logDischarge, String medical, String cause) {
 
         if (log == null) return;
 
@@ -126,11 +126,13 @@ public class LogService {
         NormalData normalData = beforeLog.getNormal_data();
 
         setMedicalCode(beforeLog, log,medical,cause);
-//        normalDataService.setNormalJournalData(normalData, log);
         patientsService.savePatient(patient, normalData);
         log.setPatient(patient);
         logReceiptService.saveLogReceipt(logReceipt, normalData);
         log.setLog_receipt(logReceipt);
+        logDischargeService.saveLogDischarge(logDischarge, normalData);
+        log.setLog_discharge(logDischarge);
+        log.setNormal_data(normalData);
         logRepository.save(log);
         logInfoService.editLogInfo(log, beforeLog);
         LogService.log.info("After edit record: {}", log);

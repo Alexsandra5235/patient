@@ -92,10 +92,10 @@ public class LogController {
     }
 
     @PostMapping("/log/save/edit/{id}")
-    public String saveEditJournal(Log log, Patients patient, LogReceipt logReceipt,
+    public String saveEditJournal(Log log, Patients patient, LogReceipt logReceipt, LogDischarge logDischarge,
                                   @RequestParam(name = "medical_str", required = false) String medical,
                                   @RequestParam(name = "cause_injury_str", required = false) String cause) {
-        logService.editRecord(log, patient, logReceipt, medical, cause);
+        logService.editRecord(log, patient, logReceipt, logDischarge, medical, cause);
         return "redirect:/";
     }
 
