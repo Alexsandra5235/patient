@@ -219,26 +219,26 @@
                         onchange="toggleMedicalOrgField()">
                     <option value="" style="font-weight: bold">Пожалуйста, сделайте выбор</option>
                     <#list options as option>
-                        <option value="${option}"<#if log.outcome_hospitalization == option> selected </#if>>${option}</option>
+                        <option value="${option}"<#if log.log_discharge?? && log.log_discharge.outcome_hospitalization == option> selected </#if>>${option}</option>
                     </#list>
                 </select>
 
                 <label class="form-label" for="local_date_time_discharge">Дата и время исхода</label>
                 <input class="form-control mb-4" type="datetime-local" id="local_date_time_discharge"
                        name="local_date_time_discharge" autocomplete="off"
-                       <#if log.local_date_time_discharge??>value="${log.local_date_time_discharge}"</#if>>
+                       <#if log.log_discharge?? && log.log_discharge.local_date_time_discharge??>value="${log.log_discharge.local_date_time_discharge}"</#if>>
 
                 <div id="medicalOrgField">
                     <label class="form-label" for="medical_organization_transferred">Наименование медицинской организации, куда переведен пациент</label>
                     <input class="form-control mb-4" type="text" id="medical_organization_transferred"
                            name="medical_organization_transferred" autocomplete="off"
-                           <#if log.medical_organization_transferred??>value="${log.medical_organization_transferred}"</#if>>
+                           <#if log.log_discharge?? && log.log_discharge.medical_organization_transferred??>value="${log.log_discharge.medical_organization_transferred}"</#if>>
                 </div>
 
                 <label class="form-label" for="date_time_inform"> Дата и время сообщения законному представителю, иному лицу<br>
                     или медицинской организации, направившей пациента, о госпитализации (отказе в госпитализации) пациента, ее исходе</label>
                 <input class="form-control mb-4" type="datetime-local" id="date_time_inform" name="date_time_inform"
-                       autocomplete="off" <#if log.date_time_inform??>value="${log.date_time_inform}"</#if>>
+                       autocomplete="off" <#if log.normal_data?? && log.normal_data.date_time_inform??>value="${log.normal_data.date_time_inform}"</#if>>
 
                 <h4> В случае отказа в госпитализации в стационар, дневной стационар</h4>
 

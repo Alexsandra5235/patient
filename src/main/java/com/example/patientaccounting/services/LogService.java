@@ -1,9 +1,6 @@
 package com.example.patientaccounting.services;
 
-import com.example.patientaccounting.models.Log;
-import com.example.patientaccounting.models.LogReceipt;
-import com.example.patientaccounting.models.NormalData;
-import com.example.patientaccounting.models.Patients;
+import com.example.patientaccounting.models.*;
 import com.example.patientaccounting.repository.LogRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -30,6 +27,7 @@ public class LogService {
     private final LogInfoService logInfoService;
     private final PatientsService patientsService;
     private final LogReceiptService logReceiptService;
+    private final LogDischargeService logDischargeService;
 
     public List<Log> getLogList(String fullName){
         if (fullName != null){
@@ -40,26 +38,30 @@ public class LogService {
         return logRepository.findAll();
     }
 
-    public void saveRecord(Log log, Patients patient, LogReceipt logReceipt, String medical, String cause) {
+    public void saveRecord(Log log, Patients patient, LogReceipt logReceipt, LogDischarge logDischarge, String medical, String cause) {
 
         NormalData normalData = new NormalData();
 
+        // установка МКД
         setMedicalCode(null, log, medical,cause);
+        // сохранение пациента (установка даты в normalData)
         patientsService.savePatient(patient, normalData);
+        // установка пациента в журнал
         log.setPatient(patient);
+        // сохранение журнала приема (устновка даты в normalData)
         logReceiptService.saveLogReceipt(logReceipt, normalData);
+        // установка журнала приема в журнал
         log.setLog_receipt(logReceipt);
-        setNormalData(normalData,log);
+        // сохранение журнала выписки (установка normalData)
+        logDischargeService.saveLogDischarge(logDischarge, normalData);
+        log.setLog_discharge(logDischarge);
         log.setNormal_data(normalData);
         logRepository.save(log);
         logInfoService.saveLogInfo(log);
         LogService.log.info("Save record with id = {}", log.getId());
     }
 
-    private void setNormalData(NormalData normalData, Log log) {
-        normalData.setStr_date_time_inform(normalDataService.getNormalDataTime(log.getDate_time_inform()));
-        normalData.setStr_local_date_time_discharge(normalDataService.getNormalDataTime(log.getLocal_date_time_discharge()));
-    }
+
 
     private void setMedicalCode(Log beforeLog, Log log, String medical, String cause){
 
@@ -124,7 +126,7 @@ public class LogService {
         NormalData normalData = beforeLog.getNormal_data();
 
         setMedicalCode(beforeLog, log,medical,cause);
-        normalDataService.setNormalJournalData(normalData, log);
+//        normalDataService.setNormalJournalData(normalData, log);
         patientsService.savePatient(patient, normalData);
         log.setPatient(patient);
         logReceiptService.saveLogReceipt(logReceipt, normalData);

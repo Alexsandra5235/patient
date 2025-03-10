@@ -140,8 +140,8 @@
                     <hr>
 
                     <label class="form-label" for="outcome_hospitalization">Исход госпитализации</label>
-                    <p id="outcome_hospitalization"><#if log.outcome_hospitalization??>
-                            ${log.outcome_hospitalization}</#if></p>
+                    <p id="outcome_hospitalization"><#if log.log_discharge?? && log.log_discharge.outcome_hospitalization??>
+                            ${log.log_discharge.outcome_hospitalization}</#if></p>
                     <hr>
 
                     <label class="form-label" for="date_time_discharge">Дата и время исхода</label>
@@ -149,10 +149,10 @@
                             ${log.normal_data.str_local_date_time_discharge}</#if></p>
                     <hr>
 
-                    <#if log.outcome_hospitalization == option>
+                    <#if log.log_discharge?? && log.log_discharge.outcome_hospitalization == option>
                         <label class="form-label" for="medical_organization_transferred">Наименование медицинской организации,
                             куда переведен пациент</label>
-                        <p id="medical_organization_transferred">${log.medical_organization_transferred}</p>
+                        <p id="medical_organization_transferred">${log.log_discharge.medical_organization_transferred}</p>
                         <hr>
                     </#if>
 

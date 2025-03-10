@@ -18,16 +18,16 @@ public class NormalDataService {
 
     private final NormalDataRepository normalDataRepository;
 
-    public void setNormalJournalData(NormalData normalData, Log log) {
-
-        if (normalData == null || log == null) return;
-        normalData.setStr_date_time_inform(getNormalDataTime(log.getDate_time_inform()));
-        normalData.setStr_local_date_time_discharge(getNormalDataTime(log.getLocal_date_time_discharge()));
-
-        normalDataRepository.save(normalData);
-        log.setNormal_data(normalData);
-
-    }
+//    public void setNormalJournalData(NormalData normalData, Log log) {
+//
+//        if (normalData == null || log == null) return;
+//        normalData.setStr_date_time_inform(getNormalDataTime(log.getDate_time_inform()));
+//        normalData.setStr_local_date_time_discharge(getNormalDataTime(log.getLocal_date_time_discharge()));
+//
+//        normalDataRepository.save(normalData);
+//        log.setNormal_data(normalData);
+//
+//    }
 
     public void setNormalJournalData(NormalData normalData, Patients patient) {
 

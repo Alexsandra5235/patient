@@ -1,9 +1,6 @@
 package com.example.patientaccounting.controllers;
 
-import com.example.patientaccounting.models.Log;
-import com.example.patientaccounting.models.LogInfo;
-import com.example.patientaccounting.models.LogReceipt;
-import com.example.patientaccounting.models.Patients;
+import com.example.patientaccounting.models.*;
 import com.example.patientaccounting.services.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -68,10 +65,10 @@ public class LogController {
     }
 
     @PostMapping("/log/add")
-    public String addJournal(Log log, Patients patient, LogReceipt logReceipt,
+    public String addJournal(Log log, Patients patient, LogReceipt logReceipt, LogDischarge logDischarge,
                              @RequestParam(name = "medical_str", required = false) String medical,
                              @RequestParam(name = "cause_injury_str", required = false) String cause) {
-        logService.saveRecord(log, patient, logReceipt, medical,cause);
+        logService.saveRecord(log, patient, logReceipt, logDischarge, medical,cause);
         return "redirect:/";
     }
 

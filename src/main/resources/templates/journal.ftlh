@@ -84,9 +84,11 @@
                             <td><#if log.normal_data?? && log.normal_data.str_birth_day??> ${log.normal_data.str_birth_day} </#if></td>
                             <td><#if log.patient?? && log.patient.medical_card??> ${log.patient.medical_card} </#if></td>
                             <td>
-                                <#if log.outcome_hospitalization != "">Пациент ${log.outcome_hospitalization} </#if><br>
+                                <#if log.log_discharge?? && log.log_discharge.outcome_hospitalization != "">
+                                Пациент ${log.log_discharge.outcome_hospitalization} </#if><br>
                                 <#if log.normal_data?? && log.normal_data.str_local_date_time_discharge??>Дата и время исхода: ${log.normal_data.str_local_date_time_discharge} </#if><br>
-                                <#if log.medical_organization_transferred != "">Переведен: ${log.medical_organization_transferred} </#if><br>
+                                <#if log.log_discharge?? && log.log_discharge.medical_organization_transferred != "">
+                                Переведен: ${log.log_discharge.medical_organization_transferred} </#if><br>
                             </td>
                             <td>
                                 <a href="/log/info/${log.id}" class="btn btn-primary" role="button">

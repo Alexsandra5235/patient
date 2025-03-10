@@ -29,6 +29,8 @@ public class Log {
     private Patients patient;
     @OneToOne(cascade = CascadeType.ALL)
     private LogReceipt log_receipt;
+    @OneToOne(cascade = CascadeType.ALL)
+    private LogDischarge log_discharge;
 
     private String reason_refusal;
     private String full_name_medical_worker;
