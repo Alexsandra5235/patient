@@ -306,6 +306,7 @@
                                 </button>
                             </div>
                         </#if>
+
 <#--                        <#if namePage="journal">-->
 <#--                            <#if lastLogAdd??>-->
 <#--                                <button onclick="forLastAdd()" class="btn btn-primary mb-4" id="btn-show" role="button">-->

@@ -79,15 +79,19 @@ public class LogService {
     }
 
     public Log getLastAddRecord(){
-        List<LogInfo> infoList = logInfoService.getLogsInfo();
+        List<LogInfo> infoList = new java.util.ArrayList<>(logInfoService.getLogsInfo().
+                stream().filter(item -> item.getDate_time_create_record() != null).toList());
 
+        if (infoList.isEmpty()) return null;
         infoList.sort(Comparator.comparing(LogInfo::getDate_time_create_record));
         return getRecordById(infoList.get(infoList.size() - 1).getLog().getId());
 
     }
     public Log getLastEditRecord(){
-        List<LogInfo> infoList = logInfoService.getLogsInfo();
+        List<LogInfo> infoList = new java.util.ArrayList<>(logInfoService.getLogsInfo().stream()
+                .filter(item -> item.getDate_time_edit_record() != null).toList());
 
+        if (infoList.isEmpty()) return null;
         infoList.sort(Comparator.comparing(LogInfo::getDate_time_edit_record));
         return getRecordById(infoList.get(infoList.size() - 1).getLog().getId());
 
