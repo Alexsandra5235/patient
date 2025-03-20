@@ -16,13 +16,13 @@
                         </ol>
                     </nav>
                     <#if log.patient.full_name??>
-                        <h5 class="card-title">Полная информация по пациенту<span class="h5" style="color: dodgerblue"> ${log.patient.full_name}</span></h5>
+                        <h5 class="card-title mb-2">Полная информация по пациенту<span class="h5" style="color: dodgerblue"> ${log.patient.full_name}</span></h5>
                     </#if>
                     <#if datetime_create_record??>
-                        <p class="card-text">Дата и время создания записи: ${datetime_create_record}</p>
+                        <p class="card-text mb-1">Дата и время создания записи: ${datetime_create_record}</p>
                     </#if>
                     <#if datetime_edit_record??>
-                        <p class="card-text" style="margin-bottom: 8px">Дата и время последнего редактирования записи: ${datetime_edit_record}</p>
+                        <p class="card-text mb-1" style="margin-bottom: 8px">Дата и время последнего редактирования записи: ${datetime_edit_record}</p>
                     </#if>
 
                 </div>
@@ -166,17 +166,17 @@
                     <h4> В случае отказа в госпитализации в стационар, дневной стационар</h4>
 
                     <label class="form-label" for="reason_refusal">Причина отказа в гослитализации</label>
-                    <p id="reason_refusal"><#if log.reason_refusal??>${log.reason_refusal}</#if></p>
+                    <p id="reason_refusal"><#if log.log_reject?? && log.log_reject.reason_refusal??>${log.log_reject.reason_refusal}</#if></p>
                     <hr>
 
                     <label class="form-label" for="full_name_medical_worker">Фамилия, имя, отчество (при наличии) медицинского
                         работника, зафиксировавшего причину отказа в госпитализации</label>
-                    <p id="full_name_medical_worker"><#if log.full_name_medical_worker??>
-                            ${log.full_name_medical_worker}</#if></p>
+                    <p id="full_name_medical_worker"><#if log.log_reject?? && log.log_reject.full_name_medical_worker??>
+                            ${log.log_reject.full_name_medical_worker}</#if></p>
                     <hr>
 
                     <label class="form-label" for="additional_information">Дополнительные сведения</label>
-                    <p id="additional_information"><#if log.additional_information??>${log.additional_information}</#if></p>
+                    <p id="additional_information"><#if log.log_reject?? && log.log_reject.additional_information??>${log.log_reject.additional_information}</#if></p>
                     <hr>
                 </div>
             </fieldset>

@@ -1,6 +1,6 @@
 <#import "templateReport.ftlh" as t>
 
-<#macro page titlePage typeReport="" namePage="">
+<#macro page titlePage typeReport="" namePage="" >
     <!DOCTYPE html>
     <html lang="ru">
     <head>
@@ -306,6 +306,26 @@
                                 </button>
                             </div>
                         </#if>
+<#--                        <#if namePage="journal">-->
+<#--                            <#if lastLogAdd??>-->
+<#--                                <button onclick="forLastAdd()" class="btn btn-primary mb-4" id="btn-show" role="button">-->
+<#--                                    Просмотр последней добавленной записи-->
+<#--                                    <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor" class="bi bi-eye" viewBox="0 0 16 16">-->
+<#--                                        <path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8zM1.173 8a13.133 13.133 0 0 1 1.66-2.043C4.12 4.668 5.88 3.5 8 3.5c2.12 0 3.879 1.168 5.168 2.457A13.133 13.133 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12.5 8 12.5c-2.12 0-3.879-1.168-5.168-2.457A13.134 13.134 0 0 1 1.172 8z"/>-->
+<#--                                        <path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z"/>-->
+<#--                                    </svg>-->
+<#--                                </button>-->
+<#--                            </#if>-->
+<#--                            <#if lastLogEdit??>-->
+<#--                                <button onclick="forSaveEdit()" class="btn btn-primary mb-4" id="btn-show" role="button">-->
+<#--                                    Просмотр последней редактированной записи-->
+<#--                                    <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor" class="bi bi-eye" viewBox="0 0 16 16">-->
+<#--                                        <path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8zM1.173 8a13.133 13.133 0 0 1 1.66-2.043C4.12 4.668 5.88 3.5 8 3.5c2.12 0 3.879 1.168 5.168 2.457A13.133 13.133 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12.5 8 12.5c-2.12 0-3.879-1.168-5.168-2.457A13.134 13.134 0 0 1 1.172 8z"/>-->
+<#--                                        <path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z"/>-->
+<#--                                    </svg>-->
+<#--                                </button>-->
+<#--                            </#if>-->
+<#--                        </#if>-->
 
                     </ul>
                     <hr class="text-white">
@@ -339,6 +359,16 @@
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
         <script>
+
+            function forLastAdd(){
+                let btb_add = document.getElementById('lastAdd');
+                btb_add.click();
+            }
+
+            function forLastEdit(){
+                let btb_edit = document.getElementById('lastEdit');
+                btb_edit.click();
+            }
 
             function forAdd(){
                 let btnForm = document.getElementById('btnFormAdd');

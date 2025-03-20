@@ -1,5 +1,6 @@
 package com.example.patientaccounting.models;
 
+import com.example.patientaccounting.repository.LogRepository;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -20,7 +21,6 @@ public class Log {
 
     @OneToOne(cascade = CascadeType.ALL)
     private NormalData normal_data;
-
     @OneToOne(cascade = CascadeType.REFRESH)
     private Medical medical;
     @OneToOne(cascade = CascadeType.REFRESH)
@@ -31,10 +31,10 @@ public class Log {
     private LogReceipt log_receipt;
     @OneToOne(cascade = CascadeType.ALL)
     private LogDischarge log_discharge;
+    @OneToOne(cascade = CascadeType.ALL)
+    private LogReject log_reject;
 
-    private String reason_refusal;
-    private String full_name_medical_worker;
-    private String additional_information;
+
 
     @PreUpdate
     protected void onUpdate() {

@@ -28,7 +28,7 @@
                         <option <#if valueSelect?? && valueSelect == "0">selected</#if> style="font-weight: bold" value="0">Выбирите параметр...</option>
                         <option <#if valueSelect?? && valueSelect == "1">selected</#if> value="1">Посик по дате создания отчета</option>
                         <option value="2">Поиск по типу отчета</option>
-                        <option <#if valueSelect?? && valueSelect == "3">selected</#if> value="3">Поиск по начальной и конченой дате создания отчета</option>
+                        <option <#if valueSelect?? && valueSelect == "3">selected</#if> value="3">Поиск по отчетному периоду</option>
                     </select>
                     <hr>
 
@@ -49,7 +49,7 @@
                     </form>
 
                     <form action="/log/report/get" method="get" id="containerSearch3" <#if valueSelect == 'null' || valueSelect != "3">style="display: none"</#if>>
-                        <p class="card-text" id="titleSearch3">Введите пожалуйста начальную и конечную дату формирования отчета</p>
+                        <p class="card-text" id="titleSearch3">Введите пожалуйста отчетный период</p>
                         <input name="valueSelect" id="valueSelect3" style="display: none" <#if valueSelect??>value="${valueSelect}"</#if>>
                         <div class="input-group mb-2">
                             <span class="input-group-text">От / До</span>

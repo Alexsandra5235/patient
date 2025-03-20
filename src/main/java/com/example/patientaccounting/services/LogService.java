@@ -23,7 +23,7 @@ public class LogService {
 
     private final LogRepository logRepository;
     private final MedicalService medicalService;
-    private final NormalDataService normalDataService;
+    private final LogRejectService logRejectService;
     private final LogInfoService logInfoService;
     private final PatientsService patientsService;
     private final LogReceiptService logReceiptService;
@@ -38,7 +38,8 @@ public class LogService {
         return logRepository.findAll();
     }
 
-    public void saveRecord(Log log, Patients patient, LogReceipt logReceipt, LogDischarge logDischarge, String medical, String cause) {
+    public void saveRecord(Log log, Patients patient, LogReceipt logReceipt, LogDischarge logDischarge, LogReject logReject,
+                           String medical, String cause) {
 
         NormalData normalData = new NormalData();
 
@@ -55,6 +56,8 @@ public class LogService {
         // сохранение журнала выписки (установка normalData)
         logDischargeService.saveLogDischarge(logDischarge, normalData);
         log.setLog_discharge(logDischarge);
+        logRejectService.saveLogReject(logReject);
+        log.setLog_reject(logReject);
         log.setNormal_data(normalData);
         logRepository.save(log);
         logInfoService.saveLogInfo(log);
@@ -75,18 +78,19 @@ public class LogService {
 
     }
 
-    public Log getLastRecord(){
-//        List<Log> journals = new java.util.ArrayList<>(logRepository.findAll().stream()
-//                .filter(
-//                        item -> item.getLocalDateAddRecord() != null && item.getLocalTimeAddRecord() != null
-//                )
-//                .toList());
-//        if (journals.isEmpty()) return null;
-//
-//        journals.sort(Comparator.comparing(Log::getLocalDateAddRecord)
-//                .thenComparing(Log::getLocalTimeAddRecord));
-//        return journals.get(journals.size() - 1);
-        return null;
+    public Log getLastAddRecord(){
+        List<LogInfo> infoList = logInfoService.getLogsInfo();
+
+        infoList.sort(Comparator.comparing(LogInfo::getDate_time_create_record));
+        return getRecordById(infoList.get(infoList.size() - 1).getLog().getId());
+
+    }
+    public Log getLastEditRecord(){
+        List<LogInfo> infoList = logInfoService.getLogsInfo();
+
+        infoList.sort(Comparator.comparing(LogInfo::getDate_time_edit_record));
+        return getRecordById(infoList.get(infoList.size() - 1).getLog().getId());
+
     }
 
     public void getSortedLogs(String sort, List<Log> logs) {
@@ -115,7 +119,8 @@ public class LogService {
         return logRepository.findById(id).orElse(null);
     }
 
-    public void editRecord(Log log, Patients patient, LogReceipt logReceipt, LogDischarge logDischarge, String medical, String cause) {
+    public void editRecord(Log log, Patients patient, LogReceipt logReceipt, LogDischarge logDischarge, LogReject logReject,
+                           String medical, String cause) {
 
         if (log == null) return;
 
@@ -132,6 +137,8 @@ public class LogService {
         log.setLog_receipt(logReceipt);
         logDischargeService.saveLogDischarge(logDischarge, normalData);
         log.setLog_discharge(logDischarge);
+        logRejectService.saveLogReject(logReject);
+        log.setLog_reject(logReject);
         log.setNormal_data(normalData);
         logRepository.save(log);
         logInfoService.editLogInfo(log, beforeLog);

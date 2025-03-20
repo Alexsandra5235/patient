@@ -33,9 +33,12 @@ public class LogController {
                           Model model) {
 
         List<Log> logs = logService.getLogList(fullName);
-        Log lastLogAdd = logService.getLastRecord();
+        Log lastLogAdd = logService.getLastAddRecord();
+        Log lastLogEdit = logService.getLastEditRecord();
 
-        if (log != null) model.addAttribute("lastLogAdd", lastLogAdd);
+        model.addAttribute("lastLogAdd", lastLogAdd);
+
+        model.addAttribute("lastLogEdit", lastLogEdit);
 
         if (fullName != null) model.addAttribute("full_name", fullName);
 
@@ -66,9 +69,10 @@ public class LogController {
 
     @PostMapping("/log/add")
     public String addJournal(Log log, Patients patient, LogReceipt logReceipt, LogDischarge logDischarge,
+                             LogReject logReject,
                              @RequestParam(name = "medical_str", required = false) String medical,
                              @RequestParam(name = "cause_injury_str", required = false) String cause) {
-        logService.saveRecord(log, patient, logReceipt, logDischarge, medical,cause);
+        logService.saveRecord(log, patient, logReceipt, logDischarge, logReject, medical,cause);
         return "redirect:/";
     }
 
@@ -93,9 +97,10 @@ public class LogController {
 
     @PostMapping("/log/save/edit/{id}")
     public String saveEditJournal(Log log, Patients patient, LogReceipt logReceipt, LogDischarge logDischarge,
+                                  LogReject logReject,
                                   @RequestParam(name = "medical_str", required = false) String medical,
                                   @RequestParam(name = "cause_injury_str", required = false) String cause) {
-        logService.editRecord(log, patient, logReceipt, logDischarge, medical, cause);
+        logService.editRecord(log, patient, logReceipt, logDischarge, logReject, medical, cause);
         return "redirect:/";
     }
 

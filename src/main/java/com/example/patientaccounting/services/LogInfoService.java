@@ -8,6 +8,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Service
 @Slf4j
@@ -36,5 +37,8 @@ public class LogInfoService {
     public void deleteByLogId(Long id){
         Long idLongInfo = getLogInfoByLogId(id).getId();
         logInfoRepository.deleteById(idLongInfo);
+    }
+    public List<LogInfo> getLogsInfo(){
+        return logInfoRepository.findAll();
     }
 }

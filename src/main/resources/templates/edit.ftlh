@@ -16,10 +16,10 @@
                         </ol>
                     </nav>
                     <#if log.patient.full_name??>
-                        <h5 class="card-title">Редактирование информации по пациенту <span class="h5" style="color: dodgerblue"> ${log.patient.full_name}</span></h5>
+                        <h5 class="card-title mb-2">Редактирование информации по пациенту <span class="h5" style="color: dodgerblue"> ${log.patient.full_name}</span></h5>
                     </#if>
                     <#if datetime_create_record??>
-                        <p class="card-text">Дата и время создания записи: ${datetime_create_record}</p>
+                        <p class="card-text mb-1">Дата и время создания записи: ${datetime_create_record}</p>
                     </#if>
                     <#if datetime_edit_record??>
                         <p class="card-text" style="margin-bottom: 8px">Дата и время последнего редактирования записи: ${datetime_edit_record}</p>
@@ -238,16 +238,16 @@
                 <label class="form-label" for="date_time_inform"> Дата и время сообщения законному представителю, иному лицу<br>
                     или медицинской организации, направившей пациента, о госпитализации (отказе в госпитализации) пациента, ее исходе</label>
                 <input class="form-control mb-4" type="datetime-local" id="date_time_inform" name="date_time_inform"
-                       autocomplete="off" <#if log.normal_data?? && log.normal_data.date_time_inform??>value="${log.normal_data.date_time_inform}"</#if>>
+                       autocomplete="off" <#if log.log_discharge?? && log.log_discharge.date_time_inform??>value="${log.log_discharge.date_time_inform}"</#if>>
 
                 <h4> В случае отказа в госпитализации в стационар, дневной стационар</h4>
 
                 <label class="form-label" for="reason_refusal">Причина отказа в гослитализации</label>
                 <select class="form-select mb-4" name="reason_refusal" id="reason_refusal" size="1"
-                        <#if log.reason_refusal??>value="${log.reason_refusal}"</#if>>
+                        <#if log.log_reject?? && log.log_reject.reason_refusal??>value="${log.log_reject.reason_refusal}"</#if>>
                     <option value="" style="font-weight: bold">Пожалуйста, сделайте выбор</option>
                     <#list optionsReason as option>
-                        <option value="${option}" <#if log.reason_refusal == option>selected</#if>>${option}</option>
+                        <option value="${option}" <#if log.log_reject?? && log.log_reject.reason_refusal == option>selected</#if>>${option}</option>
                     </#list>
                 </select>
 
@@ -255,11 +255,11 @@
                     зафиксировавшего причину отказа в госпитализации</label>
                 <input class="form-control mb-4" type="text" id="full_name_medical_worker" name="full_name_medical_worker"
                        autocomplete="off" placeholder="Иванов Иван Иванович"
-                       <#if log.full_name_medical_worker??>value="${log.full_name_medical_worker}"</#if>>
+                       <#if log.log_reject?? && log.log_reject.full_name_medical_worker??>value="${log.log_reject.full_name_medical_worker}"</#if>>
 
                 <label class="form-label" for="additional_information">Дополнительные сведения</label>
                 <input class="form-control mb-4" type="text" id="additional_information" name="additional_information"
-                       autocomplete="off" <#if log.additional_information??>value="${log.additional_information}"</#if>>
+                       autocomplete="off" <#if log.log_reject?? && log.log_reject.additional_information??>value="${log.log_reject.additional_information}"</#if>>
             </form>
         </div>
         <#else>
