@@ -466,15 +466,11 @@ public class JournalExportExcel {
     /**
      * Генерация отчетных данных по результатам отчетного периода на странице 2
      */
-    public void setReportDataSheetTwo(Workbook workbook,Sheet sheet,List<Log> logs){
+    public void setReportDataSheetTwo(Workbook workbook,Sheet sheet,List<Log> logs, List<Log> logsDischarge){
 
-        for (int i = 0; i < logs.size(); i++){
+        int size = Math.max(logs.size(), logsDischarge.size());
 
-            setDefaultSettings(workbook,sheet,i+8,i+8,0,2,
-                    String.join(" ", logs.get(i).getPatient().getFull_name(), "\n№",
-                            logs.get(i).getPatient().getMedical_card()), HorizontalAlignment.LEFT,true,
-                    0,false, fontHeightHead,false,false,true);
-
+        for (int i = 0; i < size; i++){
 
             rowCurrent = sheet.getRow(i+8); // Индекс 17 соответствует 18-й строке
             if (rowCurrent == null) {
@@ -483,29 +479,33 @@ public class JournalExportExcel {
 
             rowCurrent.setHeightInPoints(45);
 
-
-        }
-        for (int i = 0; i < logs.size(); i++) {
-
-            setDefaultSettings(workbook, sheet, i + 8, i + 8, 6, 8,
-                    String.join(" ", logs.get(i).getPatient().getFull_name(), "\n№",
-                            logs.get(i).getPatient().getMedical_card()), HorizontalAlignment.LEFT, true,
-                    0, false, fontHeightHead, false, false, true);
-
-
-            for (int j = 1; j < colFirstSheetPatientNums.size(); j++) {
+            for (int j = 0; j < colFirstSheetPatientNums.size(); j++) {
                 int colEndNum = colEndSheetPatientNums.get(j);
                 int colStartNum = colFirstSheetPatientNums.get(j);
 
-                if (colStartNum != 6) {
-                    setDefaultSettings(workbook, sheet, i+8, i+8, colStartNum, colEndNum,
-                            null, HorizontalAlignment.CENTER, true, 0,
-                            false, fontHeightHead, false, false, true);
-                }
-
-
+                setDefaultSettings(workbook, sheet, i+8, i+8, colStartNum, colEndNum,
+                        null, HorizontalAlignment.CENTER, true, 0,
+                        false, fontHeightHead, false, false, true);
 
             }
+
+
+        }
+        for (int i = 0; i < logs.size(); i++){
+            setDefaultSettings(workbook,sheet,i+8,i+8,0,0,
+                    String.join(" ", logs.get(i).getPatient().getFull_name(), "\n№",
+                            logs.get(i).getPatient().getMedical_card()), HorizontalAlignment.LEFT,true,
+                    0,false, fontHeightHead,false,false,true);
+        }
+        for (int i = 0; i < logsDischarge.size(); i++) {
+
+            setDefaultSettings(workbook, sheet, i + 8, i + 8, 6, 6,
+                    String.join(" ", logsDischarge.get(i).getPatient().getFull_name(), "\n№",
+                            logsDischarge.get(i).getPatient().getMedical_card()), HorizontalAlignment.LEFT, true,
+                    0, false, fontHeightHead, false, false, true);
+
+
+
         }
 
     }
@@ -513,7 +513,7 @@ public class JournalExportExcel {
     /**
      * Заполнение документа
      */
-    private Workbook setSettings(List<Log> logs, String date1, String date2){
+    private Workbook setSettings(List<Log> logs, List<Log> logsDischarge, String date1, String date2){
         Workbook workbook = new XSSFWorkbook();
         Sheet sheet = workbook.createSheet("Результат");
         Sheet sheetPatient = workbook.createSheet("стр.2");
@@ -536,7 +536,7 @@ public class JournalExportExcel {
 
         createColumnsSheetPatient(workbook,sheetPatient);
 
-        setReportDataSheetTwo(workbook,sheetPatient, logs);
+        setReportDataSheetTwo(workbook,sheetPatient, logs, logsDischarge);
 
         return workbook;
     }
@@ -590,9 +590,9 @@ public class JournalExportExcel {
     /**
      * Генерация отчета с его сохранением в базе данных и на локальной машине пользователя
      */
-    public ResponseEntity<byte[]> exportToExcel(List<Log> logs, String date1, String date2, String typeReport) throws IOException {
+    public ResponseEntity<byte[]> exportToExcel(List<Log> logs, List<Log> logsDischarge, String date1, String date2, String typeReport) throws IOException {
 
-        byte[] bytes = readOutputStream(setSettings(logs,date1,date2));
+        byte[] bytes = readOutputStream(setSettings(logs, logsDischarge, date1,date2));
         HttpHeaders headers = setHeadersForExport(date1,date2);
         saveReport(typeReport,date1, date2, bytes);
 
@@ -620,9 +620,9 @@ public class JournalExportExcel {
     /**
      * Генерация отчета и его открытие без скачивания
      */
-    public ResponseEntity<byte[]> openToExcel(List<Log> logs, String date1, String date2) throws IOException {
+    public ResponseEntity<byte[]> openToExcel(List<Log> logs, List<Log> logsDischarge, String date1, String date2) throws IOException {
 
-        byte[] bytes = readOutputStream(setSettings(logs,date1,date2));
+        byte[] bytes = readOutputStream(setSettings(logs, logsDischarge,date1,date2));
         HttpHeaders headers = setHeadersForOpen(date1,date2);
         return new ResponseEntity<>(bytes, headers, HttpStatus.OK);
     }

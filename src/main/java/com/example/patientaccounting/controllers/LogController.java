@@ -127,11 +127,12 @@ public class LogController {
                                               throws IOException {
 
         List<Log> logs = logService.getFilterByDate(data1, data2);
+        List<Log> logsDischarge = logService.getFilterByDateDischarge(data1,data2);
 
         if (open != null) {
-            return journalExportExcel.openToExcel(logs, logService.getNormalDate(data1), logService.getNormalDate(data2));
+            return journalExportExcel.openToExcel(logs, logsDischarge, logService.getNormalDate(data1), logService.getNormalDate(data2));
         } else {
-            return journalExportExcel.exportToExcel(logs, logService.getNormalDate(data1), logService.getNormalDate(data2), typeReport);
+            return journalExportExcel.exportToExcel(logs, logsDischarge, logService.getNormalDate(data1), logService.getNormalDate(data2), typeReport);
 
         }
     }
@@ -142,6 +143,7 @@ public class LogController {
                                               @RequestParam(name = "open", required = false) String open) throws IOException {
 
         List<Log> logs = logService.getFilterByDate(data1, data2);
+        List<Log> logsDischarge = logService.getFilterByDateDischarge(data1, data2);
 
         if (open != null) {
             return journalExportExcel.openToExcelSummarySheet(logs, logService.getNormalDate(data1), logService.getNormalDate(data2));

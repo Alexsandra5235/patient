@@ -194,5 +194,19 @@ public class LogService {
                                 .isAfter(endDateTime))).toList();
 
 
+
+    }
+    public List<Log> getFilterByDateDischarge(LocalDate data1, LocalDate data2) {
+
+        LocalTime time1 = LocalTime.of(8, 0);
+        LocalTime time2 = LocalTime.of(7, 59);
+        // Временной интервал
+        LocalDateTime startDateTime = LocalDateTime.of(data1, time1);
+        LocalDateTime endDateTime = LocalDateTime.of(data2, time2);
+
+        return getLogList(null).stream()
+                .filter(journal -> (journal.getLog_discharge().getLocal_date_time_discharge() != null)
+                        && (!journal.getLog_discharge().getLocal_date_time_discharge().isBefore(startDateTime))
+                                && (!journal.getLog_discharge().getLocal_date_time_discharge().isAfter(endDateTime))).toList();
     }
 }
