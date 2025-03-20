@@ -137,6 +137,28 @@ public class JournalExportExcel {
     }
 
     /**
+     * Создание шапки страницы (справа)
+     */
+    public void createHeadRightSummarySheet(Workbook workbook,Sheet sheet){
+
+        for (int i = 2; i < 6; i++){
+            if (i==3) setDefaultSettings(workbook,sheet,i,i,19,24, "Учетная форма № 016/y",HorizontalAlignment.CENTER,
+                    false,0, false, fontHeightHead, false, false,
+                    true);
+            else setDefaultSettings(workbook,sheet,i,i,19,24, headsRight.get(i-2),HorizontalAlignment.CENTER,
+                    false,0, false, fontHeightHead, false, false,
+                    true);
+        }
+        setDefaultSettings(workbook,sheet,0,0,19,21,order,HorizontalAlignment.RIGHT,
+                false,0, false, fontHeightHead, false, false,
+                true);
+        setDefaultSettings(workbook,sheet,0,0,22,24,null, HorizontalAlignment.CENTER,
+                false,0, false, fontHeightHead, false, true,
+                true);
+
+    }
+
+    /**
      * Генерация шапки (центр страницы)
      */
     public void createTitle(Workbook workbook, Sheet sheet,String date1, String date2){
@@ -150,6 +172,25 @@ public class JournalExportExcel {
                     false,0,false, fontHeightHead,false, false,
                     true);
             else setDefaultSettings(workbook,sheet,i,i,0,24, titles.get(i-8), HorizontalAlignment.CENTER,
+                    false,0,false, fontHeightTitle,true, false,
+                    true);
+        }
+    }
+
+    /**
+     * Генерация шапки (центр страницы)
+     */
+    public void createTitleSummarySheet(Workbook workbook, Sheet sheet,String date1, String date2){
+
+        String title4 = "за период с " + date1 + " 08:00 по " + date2 + " 07:59";
+
+        List<String> titles = List.of(titleSummary1, titleSummary2, titleSummary3, title4, titleSummary4);
+
+        for (int i = 8; i < 13; i++){
+            if (i == 12) setDefaultSettings(workbook,sheet,i,i,0,23, titles.get(i-8), HorizontalAlignment.CENTER,
+                    false,0,false, fontHeightHead,false, false,
+                    true);
+            else setDefaultSettings(workbook,sheet,i,i,0,23, titles.get(i-8), HorizontalAlignment.CENTER,
                     false,0,false, fontHeightTitle,true, false,
                     true);
         }
@@ -180,6 +221,16 @@ public class JournalExportExcel {
                 true,0,false,fontHeightHead,false,false,
                 true);
     }
+    /**
+     * Генерация глав (нумерация колонок)
+     */
+    public void createNumsRowSummerySheet(Workbook workbook, Sheet sheet){
+        for (int i = 0; i < 24; i++){
+            setDefaultSettings(workbook,sheet,19,19,i,i, String.valueOf(i+1),HorizontalAlignment.CENTER,
+                    true,0,false,fontHeightHead,false,false,
+                    true);
+        }
+    }
 
     /**
      * Измнение размеров ячеек
@@ -197,6 +248,27 @@ public class JournalExportExcel {
             }
 
             if (i != 17) rowCurrent.setHeightInPoints(32);
+            else rowCurrent.setHeightInPoints(200);
+
+        }
+    }
+
+    /**
+     * Измнение размеров ячеек
+     */
+    public void setSizeColumnSummarySheet(Sheet sheet){
+
+        // Устанавливаем ширину столбца для лучшего отображения
+        sheet.setColumnWidth(0, 9000);
+
+        for (int i = 15; i < 19; i++){
+            // Устанавливаем высоту 18-й строки
+            rowCurrent = sheet.getRow(i); // Индекс 17 соответствует 18-й строке
+            if (rowCurrent == null) {
+                rowCurrent = sheet.createRow(i);
+            }
+
+            if (i != 18) rowCurrent.setHeightInPoints(32);
             else rowCurrent.setHeightInPoints(200);
 
         }
@@ -228,6 +300,26 @@ public class JournalExportExcel {
     }
 
     /**
+     * Генерация заголовков строк, которые показывают итоговые данные по отчету
+     */
+    public void createColumnReportSummarySheet(Workbook workbook,Sheet sheet){
+
+        setDefaultSettings(workbook,sheet,20,20,0,0,nameRowTotal,HorizontalAlignment.RIGHT,
+                true,0,false,fontHeightHead,true,false,
+                true);
+
+        setDefaultSettings(workbook,sheet,21,21,0,0,nameRowDayHospital,HorizontalAlignment.LEFT,
+                true,0,false,fontHeightTableReport,true,false,
+                true);
+        for (int i = 22; i < 24; i++){
+            setDefaultSettings(workbook,sheet,i,i,0,0, nameRowsReport.get(i-22), HorizontalAlignment.RIGHT,
+                    true,0,false,fontHeightHead,false,false,
+                    false);
+        }
+
+    }
+
+    /**
      * Генерация колонок с вертикальным отображением текста
      */
     public void createColumnVertical(Workbook workbook, Sheet sheet){
@@ -241,13 +333,39 @@ public class JournalExportExcel {
 
         }
     }
+    /**
+     * Генерация колонок с вертикальным отображением текста
+     */
+    public void createColumnVerticalSummarySheet(Workbook workbook, Sheet sheet){
+        for (int i = 1; i < 24; i++){
+            int firstRow = cellsFirstVerticalSummarySheet.get(i-1);
+            String nameCol = nameColumnsVerticalsSummarySheet.get(i-1);
+
+            setDefaultSettings(workbook,sheet,firstRow,18, i, i, nameCol,HorizontalAlignment.CENTER,
+                    true, 90, false, fontHeightHead, false, false,
+                    true);
+
+        }
+    }
 
     /**
-     * Генерация грац таблицы
+     * Генерация границ таблицы
      */
     public void createBorder(Workbook workbook, Sheet sheet){
         for (int row = 19; row < 23; row++){
             for (int col = 1; col < 25; col++){
+                setDefaultSettings(workbook,sheet,row,row,col,col,null,HorizontalAlignment.CENTER,
+                        true,0,false,fontHeightHead,false,false,
+                        true);
+            }
+        }
+    }
+    /**
+     * Генерация границ таблицы
+     */
+    public void createBorderSummarySheet(Workbook workbook, Sheet sheet){
+        for (int row = 20; row < 24; row++){
+            for (int col = 1; col < 24; col++){
                 setDefaultSettings(workbook,sheet,row,row,col,col,null,HorizontalAlignment.CENTER,
                         true,0,false,fontHeightHead,false,false,
                         true);
@@ -266,6 +384,24 @@ public class JournalExportExcel {
             int colEnd = ColEnd.get(i);
 
             String nameCol = nameColumnsHorizontal.get(i);
+
+            setDefaultSettings(workbook,sheet,firstRow,rowEnd, colFirst, colEnd, nameCol,HorizontalAlignment.CENTER,
+                    true, 0, false, fontHeightHead, false, false,
+                    true);
+        }
+    }
+
+    /**
+     * Генерация колонок с горизонтальным отображением текста
+     */
+    public void createColumnHorizontalSummarySheet(Workbook workbook, Sheet sheet){
+        for (int i = 0; i < 12; i++){
+            int firstRow = RowFirstSummarySheet.get(i);
+            int rowEnd = RowEndSummarySheet.get(i);
+            int colFirst = ColFirstSummarySheet.get(i);
+            int colEnd = ColEndSummarySheet.get(i);
+
+            String nameCol = nameColumnsHorizontalSummarySheet.get(i);
 
             setDefaultSettings(workbook,sheet,firstRow,rowEnd, colFirst, colEnd, nameCol,HorizontalAlignment.CENTER,
                     true, 0, false, fontHeightHead, false, false,
@@ -391,6 +527,32 @@ public class JournalExportExcel {
     }
 
     /**
+     * Заполнение документа
+     */
+    private Workbook setSettingsSummarySheet(List<Log> logs, String date1, String date2){
+        Workbook workbook = new XSSFWorkbook();
+        Sheet sheet = workbook.createSheet("Результат");
+
+        setSizeColumnSummarySheet(sheet);
+
+        createHeadRightSummarySheet(workbook,sheet);
+        createHeadLeft(workbook,sheet);
+        createTitleSummarySheet(workbook,sheet,date1,date2);
+
+        createColumnVerticalSummarySheet(workbook,sheet);
+        createColumnHorizontalSummarySheet(workbook,sheet);
+
+        createNumsRowSummerySheet(workbook,sheet);
+        createColumnReportSummarySheet(workbook,sheet);
+
+        createBorderSummarySheet(workbook,sheet);
+
+
+
+        return workbook;
+    }
+
+    /**
      * Сохранение отчета в базе данных
      */
     private void saveReport(String typeReport, String date1, String date2, byte[] bytes){
@@ -416,6 +578,21 @@ public class JournalExportExcel {
     public ResponseEntity<byte[]> exportToExcel(List<Log> logs, String date1, String date2, String typeReport) throws IOException {
 
         byte[] bytes = readOutputStream(setSettings(logs,date1,date2));
+        HttpHeaders headers = setHeadersForExport(date1,date2);
+        saveReport(typeReport,date1, date2, bytes);
+
+        return ResponseEntity.ok()
+                .headers(headers)
+                .contentType(MediaType.APPLICATION_OCTET_STREAM)
+                .body(bytes);
+    }
+
+    /**
+     * Генерация отчета с его сохранением в базе данных и на локальной машине пользователя
+     */
+    public ResponseEntity<byte[]> exportToExcelSummarySheet(List<Log> logs, String date1, String date2, String typeReport) throws IOException {
+
+        byte[] bytes = readOutputStream(setSettingsSummarySheet(logs,date1,date2));
         HttpHeaders headers = setHeadersForExport(date1,date2);
         saveReport(typeReport,date1, date2, bytes);
 

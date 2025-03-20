@@ -128,12 +128,14 @@ public class LogController {
 
         List<Log> logs = logService.getFilterByDate(data1, data2);
 
-        if (open != null) {
-            return journalExportExcel.openToExcel(logs, logService.getNormalDate(data1), logService.getNormalDate(data2));
-        } else {
-            return journalExportExcel.exportToExcel(logs, logService.getNormalDate(data1), logService.getNormalDate(data2), typeReport);
+        return journalExportExcel.exportToExcelSummarySheet(logs,logService.getNormalDate(data1),logService.getNormalDate(data2),typeReport);
 
-        }
+//        if (open != null) {
+//            return journalExportExcel.openToExcel(logs, logService.getNormalDate(data1), logService.getNormalDate(data2));
+//        } else {
+//            return journalExportExcel.exportToExcel(logs, logService.getNormalDate(data1), logService.getNormalDate(data2), typeReport);
+//
+//        }
     }
 
     @GetMapping("/log/info/{id}")

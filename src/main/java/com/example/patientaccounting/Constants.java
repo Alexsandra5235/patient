@@ -132,6 +132,81 @@ public interface Constants {
 
     List<String> optionsReason = List.of("отказался пациент","отсутствие показаний","помощь оказана в приемном отделении медицинской организации","направлен в другую медицинскую организацию","иная причина");
 
+    String nameColumnSummarySheet1 = "Наименование профиля коек";
+    String nameColumnSummarySheet2 = "Число коек";
+    String nameColumnSummarySheet3 = "Число коек";
+    String nameColumnSummarySheet4 = "в том числе койки, на которые не осуществляется госпитализация по установленному " +
+            "профилю (в переод ремонта и по иным причинам) (из графы 2)";
+    String nameColumnSummarySheet5 = "Среднемесячных (среднегодовых) коек";
+    String nameColumnSummarySheet6 = "Состояло пациентов на начало отчетного переода";
+    String nameColumnSummarySheet7 = "За отчетный период";
+    String nameColumnSummarySheet8 = "Поступило пациентов";
+    String nameColumnSummarySheet9 = "Всего";
+    String nameColumnSummarySheet10 = "В том числе из дневного стационара";
+    String nameColumnSummarySheet11 = "Поступило пациентов (из графы 6)";
+    String nameColumnSummarySheet12 = "Сельских жителей";
+    String nameColumnSummarySheet13 = "Дети 0-17 лет";
+    String nameColumnSummarySheet14 = "Лиц старше трудоспособного возраста";
+    String nameColumnSummarySheet15 = "Переведено пациентов внутри стационара";
+    String nameColumnSummarySheet16 = "Из других отделений";
+    String nameColumnSummarySheet17 = "В другие отделения";
+    String nameColumnSummarySheet18 = "Выписано пациентов";
+    String nameColumnSummarySheet19 = "Всего";
+    String nameColumnSummarySheet20 = "В том числе, лиц старше трудоспособного возраста (из графы 13)";
+    String nameColumnSummarySheet21 = "Выписано пациентов (из графы 13)";
+    String nameColumnSummarySheet22 = "В дневной стационар";
+    String nameColumnSummarySheet23 = "Переведено в стационары";
+    String nameColumnSummarySheet24 = "Умерло пациентов";
+    String nameColumnSummarySheet25 = "Всего";
+    String nameColumnSummarySheet26 = "В том числе (из графы 17)";
+    String nameColumnSummarySheet27 = "Дети 0-17 лет";
+    String nameColumnSummarySheet28 = "Лиц старше трудоспособного возраста";
+    String nameColumnSummarySheet29 = "Состояло пациентов на начало дня после окончания отчетного периода";
+    String nameColumnSummarySheet30 = "Проведено пациентами койко-дней в стационаре (пациенто-дней в дневном стационаре)";
+    String nameColumnSummarySheet31 = "Всего";
+    String nameColumnSummarySheet32 = "В том числе (из графы 21) лицами старше трудоспособного возраста";
+    String nameColumnSummarySheet33 = "Кроме того:";
+    String nameColumnSummarySheet34 = "Число койко-дней (пациенто-дней) в отношении коек, на которые не осуществлялась " +
+            "госпитализация по установленному профилю (в период ремонта и по иным причинам)";
+    String nameColumnSummarySheet35 = "Проведено койко-дней (пациенто-дней) по уходу за пациентом";
+
+    List<String> nameColumnsVerticalsSummarySheet = List.of(nameColumnSummarySheet3, nameColumnSummarySheet4,nameColumnSummarySheet5,
+            nameColumnSummarySheet6,nameColumnSummarySheet9,nameColumnSummarySheet10,nameColumnSummarySheet12,nameColumnSummarySheet13,
+            nameColumnSummarySheet14,nameColumnSummarySheet16,nameColumnSummarySheet17,nameColumnSummarySheet19,nameColumnSummarySheet20,
+            nameColumnSummarySheet22,nameColumnSummarySheet23,nameColumnSummarySheet25,nameColumnSummarySheet27,nameColumnSummarySheet28,
+            nameColumnSummarySheet29,nameColumnSummarySheet31,nameColumnSummarySheet32,nameColumnSummarySheet34,nameColumnSummarySheet35);
+
+
+    List<String> nameColumnsHorizontalSummarySheet = List.of(nameColumnSummarySheet1,nameColumnSummarySheet2,nameColumnSummarySheet7,
+            nameColumnSummarySheet8,nameColumnSummarySheet11,nameColumnSummarySheet15,nameColumnSummarySheet18,nameColumnSummarySheet21,nameColumnSummarySheet24,
+            nameColumnSummarySheet26,nameColumnSummarySheet30,nameColumnSummarySheet33);
+
+    List<Integer> RowFirstSummarySheet = List.of(14,14,14,15,17,15,15,16,15,16,14,16);
+    List<Integer> RowEndSummarySheet = List.of(  18,15,14,16,17,17,15,16,15,16,15,16);
+    List<Integer> ColFirstSummarySheet = List.of(0, 1, 5, 5, 7, 10,12,14,16,17,20,22);
+    List<Integer> ColEndSummarySheet = List.of(  0, 2, 18,9, 9, 11,15,15,18,18,23,23);
+
+    List<Integer> cellsFirstVerticalSummarySheet = List.of(16,16,14,14,17,17,18,18,18,18,18,16,16,17,17,16,17,17,14,16,16,17,17);
+
+    String titleSummary1 = "СВОДНАЯ ВЕДОМОСТЬ УЧЕТА ДВИЖЕНИЯ ПАЦИЕНТОВ И КОНЕЧНОГО ФОНДА";
+    String titleSummary2 = "МЕДИЦИНСКОЙ ОРГАНИЗАЦИИ, ОКАЗЫВАЮЩЕЙ МЕДИЦИНСКУЮ ПОМОЩЬ В СТАЦИОНАРНЫХ УСЛОВИЯХ,";
+    String titleSummary3 = "В УСЛОВИЯХ ДНЕВНОГО СТАЦИОНАРА";
+    String titleSummary4 = "Отделения: ВСЕ";
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
