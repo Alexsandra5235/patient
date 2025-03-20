@@ -13,7 +13,7 @@ import lombok.NoArgsConstructor;
 public class NormalData {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String str_date_receipt;
     private String str_birth_day;
