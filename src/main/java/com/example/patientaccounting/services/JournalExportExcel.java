@@ -472,10 +472,10 @@ public class JournalExportExcel {
 
             setDefaultSettings(workbook,sheet,i+8,i+8,0,2,
                     String.join(" ", logs.get(i).getPatient().getFull_name(), "\n№",
-                            logs.get(i).getId().toString()), HorizontalAlignment.LEFT,true,
+                            logs.get(i).getPatient().getMedical_card()), HorizontalAlignment.LEFT,true,
                     0,false, fontHeightHead,false,false,true);
 
-            // Устанавливаем высоту 18-й строки
+
             rowCurrent = sheet.getRow(i+8); // Индекс 17 соответствует 18-й строке
             if (rowCurrent == null) {
                 rowCurrent = sheet.createRow(i+8);
@@ -483,16 +483,31 @@ public class JournalExportExcel {
 
             rowCurrent.setHeightInPoints(45);
 
+
+        }
+        for (int i = 0; i < logs.size(); i++) {
+
+            setDefaultSettings(workbook, sheet, i + 8, i + 8, 6, 8,
+                    String.join(" ", logs.get(i).getPatient().getFull_name(), "\n№",
+                            logs.get(i).getPatient().getMedical_card()), HorizontalAlignment.LEFT, true,
+                    0, false, fontHeightHead, false, false, true);
+
+
             for (int j = 1; j < colFirstSheetPatientNums.size(); j++) {
                 int colEndNum = colEndSheetPatientNums.get(j);
                 int colStartNum = colFirstSheetPatientNums.get(j);
 
-                setDefaultSettings(workbook, sheet, i+8, i+8, colStartNum, colEndNum,
-                        null, HorizontalAlignment.CENTER, true, 0,
-                        false, fontHeightHead, false, false, true);
+                if (colStartNum != 6) {
+                    setDefaultSettings(workbook, sheet, i+8, i+8, colStartNum, colEndNum,
+                            null, HorizontalAlignment.CENTER, true, 0,
+                            false, fontHeightHead, false, false, true);
+                }
+
+
 
             }
         }
+
     }
 
     /**
