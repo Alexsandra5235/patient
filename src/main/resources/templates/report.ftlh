@@ -1,6 +1,6 @@
 <#import "blocks/template.ftlh" as t>
 
-<@t.page namePage="report" titlePage="ИСТОРИЯ ОТЧЕТОВ">
+<@t.page namePage="report" titlePage="ИСТОРИЯ ФОРМИРОВАНИЯ ОТЧЕТОВ">
 
 <#--    <div class="alert-primary" id="scrollToTop">-->
 <#--        <a href="#" style="text-decoration: none">-->
@@ -67,18 +67,18 @@
                     </form>
 
                     <form action="/log/report/get" method="get" id="containerSearch2" <#if valueSelect == 'null' || valueSelect != "2">style="display: none"</#if>>
-                        <p class="card-text" id="titleSearch2">Выбирите подходящие тип отчета для поиска</p>
+                        <p class="card-text" id="titleSearch2">Выбирите подходящий тип отчета для поиска</p>
                         <input name="valueSelect" id="valueSelect2" style="display: none" <#if valueSelect??>value="${valueSelect}"</#if>>
                         <div class="form-check">
                             <label class="form-check-label">
                                 <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1" value="day" checked>
-                                Ежедневный отчет
+                                Лист ежедневного учета
                             </label>
                         </div>
                         <div class="form-check">
                             <label class="form-check-label">
                                 <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" value="mounth">
-                                Ежемесячный отчет
+                                Сводная ведомость учета
                             </label>
                         </div>
                         <input class="btn btn-primary" type="submit" value="Поиск">

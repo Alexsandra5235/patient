@@ -563,10 +563,10 @@ public class JournalExportExcel {
         report.setFileContent(bytes);
         report.setCreatedAt(LocalDateTime.now());
         if (Objects.equals(typeReport, "day")){
-            report.setTypeReport("Ежедневный отчет");
+            report.setTypeReport("Лист ежедневного учета");
         }
         else if (Objects.equals(typeReport, "month")){
-            report.setTypeReport("Ежемесячный отчет");
+            report.setTypeReport("Сводная ведомость учета");
         }
 
         reportService.saveReportByBD(report);

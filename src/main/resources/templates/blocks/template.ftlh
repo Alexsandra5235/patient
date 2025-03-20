@@ -236,8 +236,8 @@
                                 Формирование отчетов
                             </a>
                             <ul class="dropdown-menu dropdown-menu-dark text-small shadow" style="text-wrap: wrap">
-                                <li><a class="dropdown-item" href="/log/excel/day">Ежедневный отчет</a></li>
-                                <li><a class="dropdown-item" href="/log/excel/month">Ежемесячный отчет</a></li>
+                                <li><a class="dropdown-item" href="/log/excel/day">Лист ежедневного учета</a></li>
+                                <li><a class="dropdown-item" href="/log/excel/month">Сводная ведомость учета</a></li>
                                 <li><hr class="dropdown-divider"></li>
                                 <li><a class="dropdown-item" href="/log/report/get">История формирования отчетов</a></li>
                             </ul>
