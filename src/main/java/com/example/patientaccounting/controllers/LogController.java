@@ -128,14 +128,27 @@ public class LogController {
 
         List<Log> logs = logService.getFilterByDate(data1, data2);
 
-        return journalExportExcel.exportToExcelSummarySheet(logs,logService.getNormalDate(data1),logService.getNormalDate(data2),typeReport);
+        if (open != null) {
+            return journalExportExcel.openToExcel(logs, logService.getNormalDate(data1), logService.getNormalDate(data2));
+        } else {
+            return journalExportExcel.exportToExcel(logs, logService.getNormalDate(data1), logService.getNormalDate(data2), typeReport);
 
-//        if (open != null) {
-//            return journalExportExcel.openToExcel(logs, logService.getNormalDate(data1), logService.getNormalDate(data2));
-//        } else {
-//            return journalExportExcel.exportToExcel(logs, logService.getNormalDate(data1), logService.getNormalDate(data2), typeReport);
-//
-//        }
+        }
+    }
+    @GetMapping("/export/excel/summary")
+    public ResponseEntity<byte[]> openToExcelSummarySheet(@RequestParam(name = "data1", required = false) LocalDate data1,
+                                              @RequestParam(name = "data2", required = false) LocalDate data2,
+                                              @RequestParam(name = "typeReport", required = false) String typeReport,
+                                              @RequestParam(name = "open", required = false) String open) throws IOException {
+
+        List<Log> logs = logService.getFilterByDate(data1, data2);
+
+        if (open != null) {
+            return journalExportExcel.openToExcelSummarySheet(logs, logService.getNormalDate(data1), logService.getNormalDate(data2));
+        } else {
+            return journalExportExcel.exportToExcelSummarySheet(logs, logService.getNormalDate(data1), logService.getNormalDate(data2), typeReport);
+
+        }
     }
 
     @GetMapping("/log/info/{id}")

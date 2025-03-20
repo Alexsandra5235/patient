@@ -613,6 +613,16 @@ public class JournalExportExcel {
     }
 
     /**
+     * Генерация отчета и его открытие без скачивания
+     */
+    public ResponseEntity<byte[]> openToExcelSummarySheet(List<Log> logs, String date1, String date2) throws IOException {
+
+        byte[] bytes = readOutputStream(setSettingsSummarySheet(logs,date1,date2));
+        HttpHeaders headers = setHeadersForOpen(date1,date2);
+        return new ResponseEntity<>(bytes, headers, HttpStatus.OK);
+    }
+
+    /**
      * Назначение заголовка для открытия отчета без его скачивания
      */
     private HttpHeaders setHeadersForOpen(String date1, String date2){
