@@ -209,4 +209,7 @@ public class LogService {
                         && (!journal.getLog_discharge().getLocal_date_time_discharge().isBefore(startDateTime))
                                 && (!journal.getLog_discharge().getLocal_date_time_discharge().isAfter(endDateTime))).toList();
     }
+    public Log getLogByIdPatients(long idPatient){
+        return logRepository.findByIdPatient(idPatient);
+    }
 }

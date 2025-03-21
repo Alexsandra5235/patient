@@ -11,4 +11,9 @@ public interface LogRepository extends JpaRepository<Log, Long> {
         return this.findAll().stream().filter(log ->
                 log.getPatient().getFull_name().toLowerCase().contains(fullName.toLowerCase())).collect(Collectors.toList());
     }
+
+    default Log findByIdPatient(Long idPatient) {
+        return this.findAll().stream().filter(log ->
+                log.getPatient().getId().equals(idPatient)).findFirst().orElse(null);
+    }
 }

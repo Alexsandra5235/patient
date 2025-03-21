@@ -25,4 +25,8 @@ public class PatientsService {
         if (normalData == null) return;
         normalData.setStr_birth_day(normalDataService.getNormalData(patient.getBirth_day()));
     }
+
+    public Patients getPatientByID(Long id) {
+        return patientsRepository.findById(id).orElse(null);
+    }
 }
