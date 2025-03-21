@@ -2,7 +2,8 @@
 
 <@t.page titlePage="ДОБАВЛЕНИЕ ИНДИВИДУАЛЬНОЙ ПРОГРАММЫ ЛЕЧЕНИЯ">
 
-    <section class="container mt-3" style="height: 100vh; width: 100vw; position: relative; ">
+    <section class="container mt-3" style="height: 100vh; width: 100vw; position: relative; "
+             xmlns="http://www.w3.org/1999/html">
         <div class="container" style="justify-content: center; border-radius: 7px">
             <div class="row d-flex justify-content-center align-items-center ">
                 <div class="col-md-12 col-xl-10">
@@ -26,36 +27,39 @@
                                                 <h5 class="modal-title" id="exampleModalScrollableTitle">Добавление данных в программу лечения</h5>
                                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
                                             </div>
-                                            <div class="modal-body">
-                                                <label for="date" class="form-label">Выбирите дату</label>
-                                                <select id="date" class="form-control mb-2" name="date_procedure">
-                                                    <#list dateProcedures as date>
-                                                        <option value="${date}">${date}</option>
-                                                    </#list>
-                                                </select>
-                                                <label for="date" class="form-label">Выбирите время</label>
-                                                <select id="date" class="form-control mb-2" name="time_procedure">
-                                                    <option value="09:00">09:00</option>
-                                                    <option value="10:00">10:00</option>
-                                                    <option value="11:00">11:00</option>
-                                                    <option value="12:00">12:00</option>
-                                                    <option value="13:00">13:00</option>
-                                                    <option value="14:00">14:00</option>
-                                                    <option value="15:00">15:00</option>
-                                                    <option value="16:00">16:00</option>
-                                                    <option value="17:00">17:00</option>
-                                                </select>
-                                                <label for="procedures" class="form-label">Выбирите процедуру</label>
-                                                <select id="procedures" class="form-control mb-2" name="procedure">
-                                                    <#list procedures as procedure>
-                                                        <option value="${procedure}">${procedure.procedureName}</option>
-                                                    </#list>
-                                                </select>
-                                            </div>
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
-                                                <button type="button" class="btn btn-primary">Сохранить изменения</button>
-                                            </div>
+                                            <form action="/patient/${patient.id}/add/destination" method="post">
+                                                <div class="modal-body">
+
+                                                    <label for="date" class="form-label">Выбирите дату</label>
+                                                    <select id="date" class="form-control mb-2" name="date_procedure">
+                                                        <#list dateProcedures as date>
+                                                            <option value="${date}">${date}</option>
+                                                        </#list>
+                                                    </select>
+                                                    <label for="date" class="form-label">Выбирите время</label>
+                                                    <select id="date" class="form-control mb-2" name="time_procedure">
+                                                        <option value="09:00">09:00</option>
+                                                        <option value="10:00">10:00</option>
+                                                        <option value="11:00">11:00</option>
+                                                        <option value="12:00">12:00</option>
+                                                        <option value="13:00">13:00</option>
+                                                        <option value="14:00">14:00</option>
+                                                        <option value="15:00">15:00</option>
+                                                        <option value="16:00">16:00</option>
+                                                        <option value="17:00">17:00</option>
+                                                    </select>
+                                                    <label for="procedures" class="form-label">Выбирите процедуру</label>
+                                                    <select id="procedures" class="form-control mb-2" name="procedure">
+                                                        <#list procedures as procedure>
+                                                            <option value="${procedure.id}">${procedure.procedureName}</option>
+                                                        </#list>
+                                                    </select>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
+                                                    <input type="submit" class="btn btn-primary" value="Сохранить изменения">
+                                                </div>
+                                            </form>
                                         </div>
                                     </div>
                                 </div>

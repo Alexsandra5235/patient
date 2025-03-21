@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Data
 @Entity
@@ -18,6 +19,9 @@ public class Patients {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @OneToMany(cascade = CascadeType.ALL)
+    private List<Destination> destinations;
+
     private String full_name;
     private LocalDate birth_day;
     private String gender;
@@ -29,4 +33,8 @@ public class Patients {
     private String polis;
     private String medical_card;
 
+
+
 }
+
+
