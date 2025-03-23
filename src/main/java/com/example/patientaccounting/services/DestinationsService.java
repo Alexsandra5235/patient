@@ -29,4 +29,9 @@ public class DestinationsService {
         patientsRepository.save(patient);
 
     }
+
+    public List<Destination> getDestinationsByPatientId(Long patientId) {
+        Patients patients = proceduresService.getPatient(patientId);
+        return patients.getDestinations();
+    }
 }

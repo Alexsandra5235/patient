@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import static com.example.patientaccounting.Constants.timeProcedures;
+
 @Controller
 @RequiredArgsConstructor
 @Slf4j
@@ -29,6 +31,8 @@ public class DestinationController {
         model.addAttribute("procedures", proceduresService.getListProcedures());
         model.addAttribute("patient", proceduresService.getPatient(id));
         model.addAttribute("log",logService.getLogByIdPatients(id));
+        model.addAttribute("destinations", destinationsService.getDestinationsByPatientId(id));
+        model.addAttribute("times", timeProcedures);
         return "program";
     }
 

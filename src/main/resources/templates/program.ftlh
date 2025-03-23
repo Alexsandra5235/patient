@@ -81,28 +81,28 @@
                                     <th colspan="9">Время</th>
                                 </tr>
                                 <tr>
-                                    <td>09:00</td>
-                                    <td>10:00</td>
-                                    <td>11:00</td>
-                                    <td>12:00</td>
-                                    <td>13:00</td>
-                                    <td>14:00</td>
-                                    <td>15:00</td>
-                                    <td>16:00</td>
-                                    <td>17:00</td>
+                                    <#list times as time>
+                                        <td>${time}</td>
+                                    </#list>
                                 </tr>
+
                                 <#list dateProcedures as date>
                                     <tr>
                                         <td>${date}</td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
+                                        <#list times as time>
+                                            <td>
+                                                <#assign procedureFound = false>
+                                                <#list destinations as destination>
+                                                    <#if destination.date_procedure == date && destination.time_procedure == time>
+                                                        <#assign procedureFound = true>
+                                                        ${destination.procedure.procedureName}
+                                                    </#if>
+                                                </#list>
+                                                <#if !procedureFound>
+                                                    <!-- Если процедура не найдена, оставляем ячейку пустой -->
+                                                </#if>
+                                            </td>
+                                        </#list>
                                     </tr>
                                 </#list>
 

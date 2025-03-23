@@ -24,6 +24,7 @@
                     <#if datetime_edit_record??>
                         <p class="card-text mb-1" style="margin-bottom: 8px">Дата и время последнего редактирования записи: ${datetime_edit_record}</p>
                     </#if>
+                    <a class="btn btn-primary" href="/patient/${log.patient.id}/programs/add">Добавить план лечения</a>
 
                 </div>
             </div>

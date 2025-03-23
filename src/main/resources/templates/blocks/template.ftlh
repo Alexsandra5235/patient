@@ -362,6 +362,33 @@
 
         <script>
 
+            // Функция для заполнения таблицы процедурами
+            function fillProcedures(destination) {
+                const table = document.querySelector('.table'); // ищем таблицу
+                const rows = table.querySelectorAll('tr'); // получаем все строки таблицы
+                const dateHeaderRow = rows[0]; // первая строка - заголовок
+                const timeHeaderRow = rows[1]; // вторая строка - время
+
+                // Проходим по всем процедурам
+                destination.forEach(item => {
+                    const date = item.date_procedure;
+                    const time = item.time_procedure;
+                    const procedure = item.procedure.procedureName;
+
+                    // Находим индекс строки по дате
+                    const dateRowIndex = Array.from(rows).findIndex(row => row.firstChild.textContent.trim() === date);
+                    // Находим индекс столбца по времени
+                    const timeColumnIndex = Array.from(timeHeaderRow.children).findIndex(cell => cell.textContent.trim() === time);
+
+                    // Если найден индекс строки и столбца
+                    if (dateRowIndex > 0 && timeColumnIndex >= 0) {
+                        // Заполняем соответствующую ячейку
+                        const targetCell = rows[dateRowIndex].children[timeColumnIndex + 1]; // +1, так как первый столбец - это дата
+                        targetCell.textContent = procedure; // устанавливаем название процедуры
+                    }
+                });
+            }
+
             function forLastAdd(){
                 let btb_add = document.getElementById('lastAdd');
                 btb_add.click();
