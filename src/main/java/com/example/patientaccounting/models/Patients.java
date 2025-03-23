@@ -19,7 +19,7 @@ public class Patients {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.REFRESH)
     private List<Destination> destinations;
 
     private String full_name;

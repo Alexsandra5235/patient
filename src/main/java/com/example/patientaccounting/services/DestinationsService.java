@@ -9,6 +9,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Slf4j
@@ -18,6 +19,7 @@ public class DestinationsService {
     private final DestinationsRepository destinationsRepository;
     private final ProceduresService proceduresService;
     private final PatientsRepository patientsRepository;
+    private final PatientsService patientsService;
 
     public void addDestination(Destination destination, Long patientId) {
         destination.setId(null);
@@ -33,5 +35,15 @@ public class DestinationsService {
     public List<Destination> getDestinationsByPatientId(Long patientId) {
         Patients patients = proceduresService.getPatient(patientId);
         return patients.getDestinations();
+    }
+
+    public void deleteDestination(Long id,Long id_destination){
+
+        Patients patient = patientsService.getPatientByID(id);
+        Destination destination = patient.getDestinations().stream()
+                .filter(d -> d.getId().equals(id_destination)).findFirst().orElse(null);
+
+        assert destination != null;
+        destinationsRepository.delete(destination);
     }
 }

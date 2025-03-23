@@ -1,11 +1,15 @@
 package com.example.patientaccounting.services;
 
+import com.example.patientaccounting.models.Destination;
+import com.example.patientaccounting.models.Log;
 import com.example.patientaccounting.models.NormalData;
 import com.example.patientaccounting.models.Patients;
 import com.example.patientaccounting.repository.PatientsRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 @Slf4j
@@ -29,4 +33,5 @@ public class PatientsService {
     public Patients getPatientByID(Long id) {
         return patientsRepository.findById(id).orElse(null);
     }
+
 }

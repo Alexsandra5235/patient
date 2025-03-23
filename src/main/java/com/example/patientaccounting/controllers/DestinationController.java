@@ -42,4 +42,10 @@ public class DestinationController {
         return "redirect:/patient/%d/programs/add".formatted(id);
 
     }
+
+    @PostMapping("/patient/{id}/delete/destination/{id_destination}")
+    private String deleteDestination(@PathVariable long id, @PathVariable long id_destination, Model model) {
+        destinationsService.deleteDestination(id,id_destination);
+        return "redirect:/patient/%d/programs/add".formatted(id);
+    }
 }
