@@ -17,7 +17,9 @@
                                 <h2 class="text-black">Индивидульная программа санаторного лечения</h2>
                                 <a href="/log/info/${log.id}" class="h6 mb-1" style="text-decoration: none; color: black">Пациент: <span style="color: dodgerblue">${patient.full_name}</span></a>
                                 <h6 class="mb-0">Пациент поступил: <span style="color: dodgerblue">${log.normal_data.str_date_receipt} ${log.log_receipt.string_time_receipt}</span></h6>
-                                <h6 class="mb-3">Диагноз пациента: <span style="color: dodgerblue">${log.medical.code} - ${log.medical.value}</span></h6>
+                                <#if log.medical?? && log.medical.code??>
+                                    <h6 class="mb-3">Диагноз пациента: <span style="color: dodgerblue">${log.medical.code} - ${log.medical.value}</span></h6>
+                                </#if>
 
                                 <!-- Вертикально центрированное модальное окно -->
                                 <div class="modal fade" id="exampleModalScrollable" tabindex="-1" aria-labelledby="exampleModalScrollableTitle" style="display: none;" aria-hidden="true">
@@ -119,7 +121,7 @@
                                     </div>
                                 </div>
 
-                                <div class="bd-example input-group" style="width: 100%">
+                                <div class="bd-example input-group mt-2" style="width: 100%">
                                     <a href="#" style="width: 50%" type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModalScrollable">
                                         Дополнить программу лечения
                                         <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-plus-circle-fill" viewBox="0 0 16 16">

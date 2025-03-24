@@ -18,8 +18,14 @@ public class Destination {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @ManyToOne(cascade = CascadeType.REFRESH)
+
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private Procedures procedure;
+
+    @ManyToOne
+    @JoinColumn(name = "patient_id", nullable = false)
+    private Patients patient;
+
     private String date_procedure;
     private String time_procedure;
 }
