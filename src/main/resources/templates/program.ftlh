@@ -12,8 +12,15 @@
                         <div class="card-body">
 
                             <div class="text-center mb-3">
-<#--                                <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-todo-list/check1.webp"-->
-<#--                                     alt="Check" width="60">-->
+
+                                <nav aria-label="breadcrumb">
+                                    <ol class="breadcrumb">
+                                        <li class="breadcrumb-item"><a href="/" style="padding-right: 14px">Главная</a></li>
+                                        <li class="breadcrumb-item"><a href="/log/info/${log.id}" style="padding-right: 14px">Просмотр записи пациента</a></li>
+                                        <li class="breadcrumb-item active text-black" aria-current="page" style="padding-left: 0">План лечения пациента</li>
+                                    </ol>
+                                </nav>
+
                                 <h2 class="text-black">Индивидульная программа санаторного лечения</h2>
                                 <a href="/log/info/${log.id}" class="h6 mb-1" style="text-decoration: none; color: black">Пациент: <span style="color: dodgerblue">${patient.full_name}</span></a>
                                 <h6 class="mb-0">Пациент поступил: <span style="color: dodgerblue">${log.normal_data.str_date_receipt} ${log.log_receipt.string_time_receipt}</span></h6>

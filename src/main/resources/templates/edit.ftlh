@@ -10,9 +10,9 @@
                 <div class="card-body">
                     <nav aria-label="breadcrumb">
                         <ol class="breadcrumb">
-                            <li class="breadcrumb-item"><a href="/" style="padding-right: 14px">Главная</a>></li>
-                            <li class="breadcrumb-item"><a href="/log/info/${log.id}" style="padding-right: 14px">Просмотр записи</a>></li>
-                            <li class="breadcrumb-item active text-white" aria-current="page" style="padding-left: 0">Редактирование записи</li>
+                            <li class="breadcrumb-item"><a href="/" style="padding-right: 14px">Главная</a>/</li>
+                            <li class="breadcrumb-item"><a href="/log/info/${log.id}" style="padding-right: 14px">Просмотр записи пациента</a>/</li>
+                            <li class="breadcrumb-item active text-white" aria-current="page" style="padding-left: 0">Редактирование записи пациента</li>
                         </ol>
                     </nav>
                     <#if log.patient.full_name??>

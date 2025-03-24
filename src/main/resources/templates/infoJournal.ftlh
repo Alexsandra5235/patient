@@ -11,8 +11,8 @@
                 <div class="card-body">
                     <nav aria-label="breadcrumb">
                         <ol class="breadcrumb">
-                            <li class="breadcrumb-item"><a href="/" style="padding-right: 14px">Главная</a>></li>
-                            <li class="breadcrumb-item active text-white" aria-current="page" style="padding-left: 0">Просмотр записи</li>
+                            <li class="breadcrumb-item"><a href="/" style="padding-right: 14px">Главная</a>/</li>
+                            <li class="breadcrumb-item active text-white" aria-current="page" style="padding-left: 0">Просмотр записи пациента</li>
                         </ol>
                     </nav>
                     <#if log.patient.full_name??>
@@ -24,7 +24,7 @@
                     <#if datetime_edit_record??>
                         <p class="card-text mb-1" style="margin-bottom: 8px">Дата и время последнего редактирования записи: ${datetime_edit_record}</p>
                     </#if>
-                    <a class="btn btn-primary" href="/patient/${log.patient.id}/programs/add">Добавить план лечения</a>
+                    <a class="btn btn-primary" href="/patient/${log.patient.id}/programs/add">Просмотр плана лечения</a>
 
                 </div>
             </div>
